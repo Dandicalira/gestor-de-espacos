@@ -8,7 +8,27 @@
         "telefone": null,
         "curso": null,
         "matricula": null,
-        "semestre": null
+        "semestre": null,
+        "agendamentos": [
+          {
+            "localizacao_espaco": null,
+            "tipo_espaco": null,
+            "data_inicial": {
+              "ano": null,
+              "mes": null,
+              "dia": null,
+              "hora": null,
+              "minuto": null
+            },
+            "data_final": {
+              "ano": null,
+              "mes": null,
+              "dia": null,
+              "hora": null,
+              "minuto": null
+            }
+          }
+        ]
       }
     ],
     "servidores": {
@@ -38,10 +58,9 @@
   },
   "espacos": [
     {
-      "id": null,
       "capacidade": null,
-      "h_inicial_disponivel": null,
-      "h_final_disponivel": null,
+      "horario_inicial_disponivel": null,
+      "horario_final_disponivel": null,
       "tipo": null,
       "localizacao": null,
       "equipamentos": [],
