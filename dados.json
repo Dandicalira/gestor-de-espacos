@@ -1,0 +1,68 @@
+{
+  "usuarios": {
+    "alunos": [
+      {
+        "nome": null,
+        "email": null,
+        "senha": null,
+        "telefone": null,
+        "curso": null,
+        "matricula": null,
+        "semestre": null
+      }
+    ],
+    "servidores": {
+      "professores": [
+        {
+          "nome": null,
+          "email": null,
+          "senha": null,
+          "telefone": null,
+          "curso": null,
+          "matricula": null,
+          "cargo": null
+        }
+      ],
+      "administrativos": [
+        {
+          "nome": null,
+          "email": null,
+          "senha": null,
+          "telefone": null,
+          "matricula": null,
+          "cargo": null,
+          "departamento": null
+        }
+      ]
+    }
+  },
+  "espacos": [
+    {
+      "id": null,
+      "capacidade": null,
+      "h_inicial_disponivel": null,
+      "h_final_disponivel": null,
+      "tipo": null,
+      "localizacao": null,
+      "equipamentos": [],
+      "agendamentos": [
+        {
+          "data_inicial": {
+            "ano": null,
+            "mes": null,
+            "dia": null,
+            "hora": null,
+            "minuto": null
+          },
+          "data_final": {
+            "ano": null,
+            "mes": null,
+            "dia": null,
+            "hora": null,
+            "minuto": null
+          }
+        }
+      ]
+    }
+  ]
+}
