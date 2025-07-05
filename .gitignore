@@ -1,4 +1,5 @@
 .project
 .idea
 bin/
-libs/
+lib/
+out/
