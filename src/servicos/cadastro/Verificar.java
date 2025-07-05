@@ -11,7 +11,7 @@ public class Verificar {
 	
 	//Métodos Estáticos de Verificação
 	//Verificador de Nomes
-	public static boolean verificarNome(String nome) {
+	public static void verificarNome(String nome) {
 		if (nome == null || nome.isEmpty()) {
 			throw new CampoVazioException();
 		}
@@ -21,10 +21,9 @@ public class Verificar {
 		if (contemCaractereEspecial(nome)) {
 			throw new TipoInesperadoException("Não insira caracteres especiais em nomes!");
 		}
-		return true;
 	}
 	//Verificador de E-mails de Alunos
-	public static boolean verificarEmailAluno(String email, String matricula) {
+	public static void verificarEmailAluno(String email, String matricula) {
 		if (email == null || email.isEmpty()) {
 			throw new CampoVazioException();
 		}
@@ -36,10 +35,9 @@ public class Verificar {
 				throw new EmailDuplicadoException();
 			}
 		}
-		return true;
 	}
 	//Verificador de E-mails de Servidores
-	public static boolean verificarEmailServidor(String email) {
+	public static void verificarEmailServidor(String email) {
 		if (email == null || email.isEmpty()) {
 			throw new CampoVazioException();
 		}
@@ -54,10 +52,9 @@ public class Verificar {
 				throw new EmailDuplicadoException();
 			}
 		}
-		return true;
 	}
 	//Verificador de Telefones
-	public static boolean verificarTelefone(String telefone) {
+	public static void verificarTelefone(String telefone) {
 		if (telefone == null || telefone.isEmpty()) {
 			throw new CampoVazioException();
 		}
@@ -77,17 +74,24 @@ public class Verificar {
 				throw new TelefoneDuplicadoException();
 			}
 		}
-		return true;
+	}
+	//Verificaro de Cursos
+	public static void verificarCurso(String curso) {
+		if (curso == null || curso.isEmpty()) {
+			throw new CampoVazioException();
+		}
+		if (contemDigito(curso) || contemCaractereEspecial(curso)) {
+			throw new TipoInesperadoException("Por favor, não insira caracteres inválidos no nome do curso!");
+		}
 	}
 	//Verificador de Semestres
-	public static boolean verificarSemestre(int semestre) {
+	public static void verificarSemestre(int semestre) {
 		if (semestre < 1 || semestre > 15) {
 			throw new ForaDoIntervaloException("O semestre deve ser um número entre 1 e 15!");
 		}
-		return true;
 	}
 	//Verificador de Matrículas
-	public static boolean verificarMatricula(String matricula) {
+	public static void verificarMatricula(String matricula) {
 		if (matricula == null || matricula.isEmpty()) {
 			throw new CampoVazioException();
 		}
@@ -102,10 +106,9 @@ public class Verificar {
 				throw new MatriculaDuplicadaException();
 			}
 		}
-		return true;
 	}
 	//Verificador de Matrículas Institucionais
-	public static boolean verificarMatriculaInstitucional(String matriculaInstitucional) {
+	public static void verificarMatriculaInstitucional(String matriculaInstitucional) {
 		if (matriculaInstitucional == null || matriculaInstitucional.isEmpty()) {
 			throw new CampoVazioException();
 		}
@@ -120,10 +123,9 @@ public class Verificar {
 				throw new MatriculaDuplicadaException();
 			}
 		}
-		return true;
 	}
 	//Verificador de Senhas
-	public static boolean verificarSenha(String senha) {
+	public static void verificarSenha(String senha) {
 		if (senha == null || senha.isEmpty()) {
 			throw new CampoVazioException();
 		}
@@ -142,9 +144,43 @@ public class Verificar {
 		if (!contemMaiuscula(senha) || !contemMinuscula(senha)) {
 			throw new SenhaFormatoInvalidoException("Senhas devem possuir, no mínimo, 1 letra maiúscula e 1 letra minúscula");
 		}
-		return true;
 	}
-	
+	//Verificador de Cargos
+		public static void verificarCargo(String cargo) {
+			if (cargo == null || cargo.isEmpty()) {
+				throw new CampoVazioException();
+			}
+			if (contemDigito(cargo)) {
+				throw new TipoInesperadoException("Não insira números em cargos!");
+			}
+			if (contemCaractereEspecial(cargo)) {
+				throw new TipoInesperadoException("Não insira caracteres especiais em cargos!");
+			}
+		}
+		//Verificador de Departamentos
+		public static void verificarDepartamento(String departamento) {
+			if (departamento == null || departamento.isEmpty()) {
+				throw new CampoVazioException();
+			}
+			if (contemDigito(departamento)) {
+				throw new TipoInesperadoException("Não insira números em departamentos!");
+			}
+			if (contemCaractereEspecial(departamento)) {
+				throw new TipoInesperadoException("Não insira caracteres especiais em departamentos!");
+			}
+		}
+		//Verificador de Cargos Acadêmicos
+		public static void verificarCargoAcademico(String cargoAcademico) {
+			if (cargoAcademico == null || cargoAcademico.isEmpty()) {
+				throw new CampoVazioException();
+			}
+			String auxiliar = cargoAcademico.replace(" ", "").toLowerCase();
+			if (auxiliar != "professorauxiliar" && auxiliar != "professorassistente" &&
+			    auxiliar != "professoradjunto" && auxiliar != "professorassociado" && auxiliar != "professortitular") {
+				throw new ForaDoIntervaloException("Insira um cargo acadêmico válido: Professor Auxiliar, Professor Assistente, "
+						                         + "Professor Adjunto, Professor Associado ou Professor Titular");
+			}
+		}
 	//Métodos Estáticos Privados Internos
 	private static boolean contemDigito(String palavra) {
 		for (char caractere : palavra.toCharArray()) {
@@ -157,7 +193,7 @@ public class Verificar {
 	
 	private static boolean contemCaractereEspecial(String palavra) {
 		for (char caractere : palavra.toCharArray() ) {
-			if (!Character.isLetter(caractere) && caractere != ' ' && caractere != '\'' && caractere != '-') {
+			if (!Character.isLetter(caractere) && caractere != ' ' && caractere != '\'' && caractere != '-' && !Character.isDigit(caractere)) {
 				return true;
 			}
 		}

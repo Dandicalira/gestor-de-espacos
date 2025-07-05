@@ -8,21 +8,15 @@ public class Formatar {
 	}
 	
 	//Métodos de Formatação
-	public static String FormatarNome(String nome) {
+	public static String formatarNome(String nome) {
 		if (nome == null) {
 			return null;
 		}
-		return Capitalizar(nome.trim().toLowerCase());
-	}
-	public static String FormatarEmail(String email) {
-		if (email == null) {
-			return null;
-		}
-		return email.trim().toLowerCase();
+		return capitalizar(nome.trim().toLowerCase());
 	}
 	
-	//Métodos Estáticos Privados Internos
-	public static String Capitalizar(String nome) {
+	//Métodos Estáticos Internos
+	public static String capitalizar(String nome) {
 		String novoNome = "";
 		novoNome += Character.toUpperCase(nome.charAt(0));
 		for (int i = 1; i < nome.length(); i++) {

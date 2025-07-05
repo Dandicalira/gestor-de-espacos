@@ -37,7 +37,7 @@ public class Registro {
 		return salasDeEstudos;
 	}
 	
-	//Cadastro de Entidades
+	//Registro de Entidades
 	public static void registrarAluno(Aluno aluno) {
 		alunos.add(aluno);
 	}
@@ -59,23 +59,23 @@ public class Registro {
 	}
 	
 	//Exclusão de Entidades
-	public static void removerAluno(Aluno aluno) {
+	public static void excluirAluno(Aluno aluno) {
 		alunos.remove(aluno);
 	}
 	
-	public static void removerServidor(Servidor servidor) {
+	public static void excluirServidor(Servidor servidor) {
 		servidores.remove(servidor);
 	}
 	
-	public static void removerSalaDeAula(EspacoFisico salaDeAula) {
+	public static void excluirSalaDeAula(EspacoFisico salaDeAula) {
 		salasDeAula.remove(salaDeAula);
 	}
 	
-	public static void removerLaboratorio(EspacoFisico laboratorio) {
+	public static void excluirLaboratorio(EspacoFisico laboratorio) {
 		laboratorios.remove(laboratorio);
 	}
 	
-	public static void removerSalaDeEstudos(EspacoFisico salaDeEstudos) {
+	public static void excluirSalaDeEstudos(EspacoFisico salaDeEstudos) {
 		salasDeEstudos.remove(salaDeEstudos);
 	}
 }
