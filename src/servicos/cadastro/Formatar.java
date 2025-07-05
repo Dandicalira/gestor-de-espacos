@@ -14,18 +14,13 @@ public class Formatar {
 		}
 		return Capitalizar(nome.trim().toLowerCase());
 	}
-	public static String FormatarEmailAluno(String email) {
+	public static String FormatarEmail(String email) {
 		if (email == null) {
 			return null;
 		}
 		return email.trim().toLowerCase();
 	}
-	public static String FormatarEmailServidor(String email) {
-		if (email == null) {
-			return null;
-		}
-		return email.trim().toLowerCase();
-	}
+	
 	//Métodos Estáticos Privados Internos
 	public static String Capitalizar(String nome) {
 		String novoNome = "";

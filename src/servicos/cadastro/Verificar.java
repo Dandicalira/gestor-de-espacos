@@ -31,7 +31,7 @@ public class Verificar {
 		if (!(email.equals((matricula + "@aluno.unb.br")) || email.equals(matricula + "@estudante.unb.br"))) {
 			throw new EmailAlunoFormatoInvalidoException();
 		}
-		for (Aluno aluno : Cadastrar.getAlunos()) {
+		for (Aluno aluno : Registro.getAlunos()) {
 			if (email.equals(aluno.getEmail())) {
 				throw new EmailDuplicadoException();
 			}
@@ -49,7 +49,7 @@ public class Verificar {
 		if (!email.endsWith("@unb.br")) {
 			throw new EmailServidorFormatoInvalidoException();
 		}
-		for (Servidor servidor : Cadastrar.getServidores()) {
+		for (Servidor servidor : Registro.getServidores()) {
 			if (email.equals(servidor.getEmail())) {
 				throw new EmailDuplicadoException();
 			}
@@ -67,12 +67,12 @@ public class Verificar {
 		if (telefone.length() != 11) {
 			throw new ForaDoIntervaloException("Telefones devem ter 11 dígitos: YYXXXXXXXXX");
 		}
-		for (Aluno aluno : Cadastrar.getAlunos()) {
+		for (Aluno aluno : Registro.getAlunos()) {
 			if (telefone.equals(aluno.getTelefone())) {
 				throw new TelefoneDuplicadoException();
 			}
 		}
-		for (Servidor servidor : Cadastrar.getServidores()) {
+		for (Servidor servidor : Registro.getServidores()) {
 			if (telefone.equals(servidor.getTelefone())) {
 				throw new TelefoneDuplicadoException();
 			}
@@ -97,7 +97,7 @@ public class Verificar {
 		if (matricula.length() != 9) {
 			throw new MatriculaFormatoInvalidoException();
 		}
-		for (Aluno aluno : Cadastrar.getAlunos()) {
+		for (Aluno aluno : Registro.getAlunos()) {
 			if (matricula.equals(aluno.getMatricula())) {
 				throw new MatriculaDuplicadaException();
 			}
@@ -115,7 +115,7 @@ public class Verificar {
 		if (matriculaInstitucional.length() < 7 || matriculaInstitucional.length() > 9) {
 			throw new ForaDoIntervaloException("A matrícula institucional não está dentro dos limites permitidos!");
 		}
-		for (Servidor servidor : Cadastrar.getServidores()) {
+		for (Servidor servidor : Registro.getServidores()) {
 			if (matriculaInstitucional.equals(servidor.getMatriculaInstitucional())) {
 				throw new MatriculaDuplicadaException();
 			}
