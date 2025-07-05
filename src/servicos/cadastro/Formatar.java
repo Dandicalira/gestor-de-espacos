@@ -26,30 +26,6 @@ public class Formatar {
 		}
 		return email.trim().toLowerCase();
 	}
-	public static String FormatarTelefone(String telefone) {
-		if (telefone == null) {
-			return null;
-		}
-		return telefone.trim();
-	}
-	public static String FormatarMatricula(String matricula) {
-		if (matricula == null) {
-			return null;
-		}
-		return matricula.trim();
-	}
-	public static String FormatarMatriculaInstitucional(String matriculaInstitucional) {
-		if (matriculaInstitucional == null) {
-			return null;
-		}
-		return matriculaInstitucional.trim();
-	}
-	public static String FormatarSenha(String senha) {
-		if (senha == null) {
-			return null;
-		}
-		return senha.trim();
-	}
 	//Métodos Estáticos Privados Internos
 	public static String Capitalizar(String nome) {
 		String novoNome = "";

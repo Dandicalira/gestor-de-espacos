@@ -28,7 +28,7 @@ public class Verificar {
 		if (email == null || email.isEmpty()) {
 			throw new CampoVazioException();
 		}
-		if (!email.equals((matricula + "@aluno.unb.br"))) {
+		if (!(email.equals((matricula + "@aluno.unb.br")) || email.equals(matricula + "@estudante.unb.br"))) {
 			throw new EmailAlunoFormatoInvalidoException();
 		}
 		for (Aluno aluno : Cadastrar.getAlunos()) {
