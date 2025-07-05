@@ -3,20 +3,20 @@ package entidades;
 public abstract class Servidor extends Usuario{
 	
 	//Atributos da Classe
-	private int matriculaInstitucional;
+	private String matriculaInstitucional;
 	
 	//Métodos Construtores
 	public Servidor() {
 		
 	}
 	
-	public Servidor(String nome, String email, String senha, int telefone, int matriculaInstitucional) {
+	public Servidor(String nome, String email, String senha, String telefone, String matriculaInstitucional) {
 		super(nome, email, senha, telefone);
 		this.matriculaInstitucional = matriculaInstitucional;
 	}
 	
 	//Métodos Getters e Setters
-	public int getMatriculaInstitucional() {
+	public String getMatriculaInstitucional() {
 		return matriculaInstitucional;
 	}
 	
@@ -35,6 +35,6 @@ public abstract class Servidor extends Usuario{
 	
 	@Override
 	public int hashCode() {
-		return Integer.hashCode(matriculaInstitucional);
+		return matriculaInstitucional.hashCode();
 	}
 }

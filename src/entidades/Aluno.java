@@ -3,16 +3,16 @@ package entidades;
 public class Aluno extends Usuario{
 
 	//Atributos da Classe
-	private String curso;
-	private int matricula,
-				semestre;
+	private String curso,
+	               matricula;
+	private int	semestre;
 	
 	//Métodos Construtores
 	public Aluno() {
 		
 	}
 	
-	public Aluno(String nome, String email, String senha, int telefone, String curso, int matricula, int semestre) {
+	public Aluno(String nome, String email, String senha, String telefone, String curso, String matricula, int semestre) {
 		super(nome, email, senha, telefone);
 		this.curso = curso;
 		this.matricula = matricula;
@@ -24,7 +24,7 @@ public class Aluno extends Usuario{
 		return curso;
 	}
 	
-	public int getMatricula() {
+	public String getMatricula() {
 		return matricula;
 	}
 	
@@ -47,6 +47,6 @@ public class Aluno extends Usuario{
 	
 	@Override
 	public int hashCode() {
-		return Integer.hashCode(matricula);
+		return matricula.hashCode();
 	}
 }

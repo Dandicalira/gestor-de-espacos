@@ -11,7 +11,7 @@ public class Professor extends Servidor{
 		
 	}
 	
-	public Professor(String nome, String email, String senha, int telefone, int matriculaInstitucional, String curso, String cargoAcademico) {
+	public Professor(String nome, String email, String senha, String telefone, String matriculaInstitucional, String curso, String cargoAcademico) {
 		super(nome, email, senha, telefone, matriculaInstitucional);
 		this.curso = curso;
 		this.cargoAcademico = cargoAcademico;

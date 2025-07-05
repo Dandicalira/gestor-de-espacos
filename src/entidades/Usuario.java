@@ -5,15 +5,15 @@ public abstract class Usuario {
 	//Atributos da Classe
 	private String nome,
 			       email,
-			       senha;
-	private int telefone;
+			       senha,
+	               telefone;
 	
 	//Métodos Construtores
 	public Usuario() {
 		
 	}
 	
-	public Usuario(String nome, String email, String senha, int telefone) {
+	public Usuario(String nome, String email, String senha, String telefone) {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
@@ -33,7 +33,7 @@ public abstract class Usuario {
 		return senha;
 	}
 	
-	public int getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 }
