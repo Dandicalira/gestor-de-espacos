@@ -21,7 +21,7 @@ public class Cadastrar {
 		return alunos;
 	}
 	
-	public static ArrayList<Servidor> getServidor() {
+	public static ArrayList<Servidor> getServidores() {
 		return servidores;
 	}
 	
