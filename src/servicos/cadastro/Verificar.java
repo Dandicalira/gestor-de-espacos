@@ -12,7 +12,7 @@ public class Verificar {
 	//Métodos Estáticos de Verificação
 	//Verificador de Nomes
 	public static boolean verificarNome(String nome) {
-		if (nome == null || nome.trim().isEmpty()) {
+		if (nome == null || nome.isEmpty()) {
 			throw new CampoVazioException();
 		}
 		if (contemDigito(nome)) {
@@ -25,7 +25,7 @@ public class Verificar {
 	}
 	//Verificador de E-mails de Alunos
 	public static boolean verificarEmailAluno(String email, String matricula) {
-		if (email == null || email.trim().isEmpty()) {
+		if (email == null || email.isEmpty()) {
 			throw new CampoVazioException();
 		}
 		if (!email.equals((matricula + "@aluno.unb.br"))) {
@@ -40,7 +40,7 @@ public class Verificar {
 	}
 	//Verificador de E-mails de Servidores
 	public static boolean verificarEmailServidor(String email) {
-		if (email == null || email.trim().isEmpty()) {
+		if (email == null || email.isEmpty()) {
 			throw new CampoVazioException();
 		}
 		if (email.length() < 8) {
@@ -58,7 +58,7 @@ public class Verificar {
 	}
 	//Verificador de Telefones
 	public static boolean verificarTelefone(String telefone) {
-		if (telefone == null || telefone.trim().isEmpty()) {
+		if (telefone == null || telefone.isEmpty()) {
 			throw new CampoVazioException();
 		}
 		if (contemNaoDigito(telefone)) {
@@ -88,7 +88,7 @@ public class Verificar {
 	}
 	//Verificador de Matrículas
 	public static boolean verificarMatricula(String matricula) {
-		if (matricula == null || matricula.trim().isEmpty()) {
+		if (matricula == null || matricula.isEmpty()) {
 			throw new CampoVazioException();
 		}
 		if (contemNaoDigito(matricula)) {
@@ -106,7 +106,7 @@ public class Verificar {
 	}
 	//Verificador de Matrículas Institucionais
 	public static boolean verificarMatriculaInstitucional(String matriculaInstitucional) {
-		if (matriculaInstitucional == null || matriculaInstitucional.trim().isEmpty()) {
+		if (matriculaInstitucional == null || matriculaInstitucional.isEmpty()) {
 			throw new CampoVazioException();
 		}
 		if (contemNaoDigito(matriculaInstitucional)) {
@@ -124,7 +124,7 @@ public class Verificar {
 	}
 	//Verificador de Senhas
 	public static boolean verificarSenha(String senha) {
-		if (senha == null || senha.trim().isEmpty()) {
+		if (senha == null || senha.isEmpty()) {
 			throw new CampoVazioException();
 		}
 		if (contemEspacos(senha)) {
