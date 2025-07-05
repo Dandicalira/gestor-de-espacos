@@ -48,4 +48,31 @@ public class EspacoFisico {
 	public Equipamento[] getEquipamentos() {
 		return equipamentos;
 	}
+
+	public void adicionarEquipamento(Equipamento equipamento) {
+		Equipamento[] temp = new Equipamento[equipamentos.length + 1];
+		for (int i = 0; i < equipamentos.length; i++) {
+			temp[i] = equipamentos[i];
+		}
+		temp[equipamentos.length] = equipamento;
+		equipamentos = temp;
+	}
+	
+	//Sobrescrita dos Métodos equals e hashCode
+	@Override
+	public boolean equals(Object objeto) {
+		if (this == objeto) {
+			return true;
+		}
+		if (objeto == null || getClass() != objeto.getClass()) {
+			return false;
+		}
+		EspacoFisico espaco = (EspacoFisico) objeto;
+		return localizacao.equals(espaco.localizacao);
+	}
+	
+	@Override
+	public int hashCode() {
+		return localizacao.hashCode();
+	}
 }

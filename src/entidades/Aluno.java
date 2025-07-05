@@ -32,5 +32,21 @@ public class Aluno extends Usuario{
 		return semestre;
 	}
 	
-
+	//Sobrescrita dos Métodos equals e hashCode
+	@Override
+	public boolean equals(Object objeto) {
+		if (this == objeto) {
+			return true;
+		}
+		if (objeto == null || getClass() != objeto.getClass()) {
+			return false;
+		}
+		Aluno aluno = (Aluno) objeto;
+		return matricula == aluno.matricula;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Integer.hashCode(matricula);
+	}
 }

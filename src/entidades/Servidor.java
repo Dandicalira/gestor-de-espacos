@@ -19,5 +19,22 @@ public abstract class Servidor extends Usuario{
 	public int getMatriculaInstitucional() {
 		return matriculaInstitucional;
 	}
-
+	
+	//Sobrescrita dos Métodos equals e hashCode
+	@Override
+	public boolean equals(Object objeto) {
+		if (this == objeto) {
+			return true;
+		}
+		if (objeto == null || getClass() != objeto.getClass()) {
+			return false;
+		}
+		Servidor servidor = (Servidor) objeto;
+		return matriculaInstitucional == servidor.matriculaInstitucional;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Integer.hashCode(matriculaInstitucional);
+	}
 }
