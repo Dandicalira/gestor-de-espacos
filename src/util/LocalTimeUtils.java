@@ -10,4 +10,12 @@ public class LocalTimeUtils {
 			return alvo.isAfter(inicio) && alvo.isBefore(fim);  // (inicio, fim)
 		}
 	}
+
+	public static LocalTime max(LocalTime a, LocalTime b) {
+		return a.isAfter(b) ? a : b;
+	}
+
+	public static LocalTime min(LocalTime a, LocalTime b) {
+		return a.isBefore(b) ? a : b;
+	}
 }
