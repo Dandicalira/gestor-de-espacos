@@ -52,7 +52,8 @@ public class Agendar {
 		LocalTime horarioFinal = dataFim.toLocalTime();
 
 		if (!LocalTimeUtils.isBetween(horarioInicial, min, max, true)
-				|| !LocalTimeUtils.isBetween(horarioFinal, min, max, true)) {
+				|| !LocalTimeUtils.isBetween(horarioFinal, min, max, true)
+				|| horarioFinal.equals(min)) {
 			throw new HorarioNaoElegivelException();
 		}
 	}
