@@ -55,4 +55,5 @@ public abstract class Usuario {
 		agendamentos.remove(agendamento);
 	}
 
+	public abstract String getIdentificacao();
 }

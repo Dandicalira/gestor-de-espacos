@@ -49,4 +49,8 @@ public class Aluno extends Usuario{
 	public int hashCode() {
 		return matricula.hashCode();
 	}
+
+	public String getIdentificacao() {
+		return getMatricula();
+	}
 }

@@ -37,4 +37,8 @@ public abstract class Servidor extends Usuario{
 	public int hashCode() {
 		return matriculaInstitucional.hashCode();
 	}
+
+	public String getIdentificacao() {
+		return getMatriculaInstitucional();
+	}
 }
