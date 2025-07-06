@@ -40,13 +40,13 @@ public class Agendar {
 	}
 
 	private static void verificarHorarioElegivel(EspacoFisico espaco, LocalDateTime dataInicio, LocalDateTime dataFim) {
-		LocalTime horaInicialDisponivel = espaco.getHorarioInicialDisponivel();
-		LocalTime horaFinalDisponivel = espaco.getHorarioFinalDisponivel();
-		LocalTime horaInicialSelecionada = LocalTime.of(dataInicio.getHour(), dataInicio.getMinute());
-		LocalTime horaFinalSelecionada = LocalTime.of(dataFim.getHour(), dataFim.getMinute());
+		LocalTime min = espaco.getHorarioInicialDisponivel();
+		LocalTime max = espaco.getHorarioFinalDisponivel();
+		LocalTime horarioInicial = dataInicio.toLocalTime();
+		LocalTime horarioFinal = dataFim.toLocalTime();
 
-		if (!LocalTimeUtils.isBetween(horaInicialSelecionada, horaInicialDisponivel, horaFinalDisponivel, true)
-				|| !LocalTimeUtils.isBetween(horaFinalSelecionada, horaInicialDisponivel, horaFinalDisponivel, true)) {
+		if (!LocalTimeUtils.isBetween(horarioInicial, min, max, true)
+				|| !LocalTimeUtils.isBetween(horarioFinal, min, max, true)) {
 			throw new HorarioNaoElegivelException();
 		}
 	}
