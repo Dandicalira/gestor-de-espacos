@@ -1,14 +1,22 @@
 package entidades;
+
+import servicos.agendamento.Agendamento;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class EspacoFisico {
 
 	//Atributos da Classe
 	private int capacidade;
 	private String localizacao,
 				   tipo; //Sala de Aula, Laboratório ou Sala de Estudos
-	Horario horarioInicialDisponivel,
-			horarioFinalDisponivel;
-	Equipamento[] equipamentos;
-	
+	private Horario horarioInicialDisponivel,
+				    horarioFinalDisponivel;
+	private Equipamento[] equipamentos;
+	private List<Agendamento> agendamentos = new ArrayList<>();
+
+
 	//Métodos Construtores
 	public EspacoFisico() {
 		
@@ -75,4 +83,13 @@ public class EspacoFisico {
 	public int hashCode() {
 		return localizacao.hashCode();
 	}
+
+	public List<Agendamento> getAgendamentos() {
+		return agendamentos;
+	}
+
+	public void adicionarAgendamento(Agendamento agendamento) {
+		agendamentos.add(agendamento);
+	}
+
 }

@@ -1,5 +1,10 @@
 package entidades;
 
+import servicos.agendamento.Agendamento;
+
+import java.util.List;
+import java.util.ArrayList;
+
 public abstract class Usuario {
 
 	//Atributos da Classe
@@ -7,7 +12,8 @@ public abstract class Usuario {
 			       email,
 			       senha,
 	               telefone;
-	
+	private List<Agendamento> agendamentos = new ArrayList<>();
+
 	//Métodos Construtores
 	public Usuario() {
 		
@@ -36,4 +42,13 @@ public abstract class Usuario {
 	public String getTelefone() {
 		return telefone;
 	}
+
+	public List<Agendamento> getAgendamentos() {
+		return agendamentos;
+	}
+
+	public void adicionarAgendamento(Agendamento agendamento) {
+		agendamentos.add(agendamento);
+	}
+
 }

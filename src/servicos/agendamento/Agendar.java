@@ -2,11 +2,12 @@ package servicos.agendamento;
 
 import entidades.Aluno;
 import entidades.EspacoFisico;
+import entidades.Horario;
 import entidades.Usuario;
 import excecoes.DiasExcedidosException;
+import excecoes.HorarioIndisponivelException;
 import excecoes.HorarioNaoElegivelException;
 import excecoes.PeriodoInvalidoException;
-import entidades.Horario;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -15,7 +16,7 @@ public class Agendar {
 	public static void validarAgendamento(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim, EspacoFisico espaco) {
 		verificarPeriodoValido(dataInicio, dataFim);
 		verificarHorarioElegivel(espaco, dataInicio, dataFim);
-		verificarDisponibilidade();
+		verificarDisponibilidade(espaco, dataInicio, dataFim);
 		if (ehAluno(usuario)) verificarLimiteDias(dataInicio, dataFim);
 
 		agendarEspaco(usuario, dataInicio, dataFim, espaco);
@@ -53,14 +54,18 @@ public class Agendar {
 		}
 	}
 
-	private static void verificarDisponibilidade() {
-		// TODO: Fazer verificação de disponibilidade
-		//throw new HorarioIndisponivelException();
+	private static void verificarDisponibilidade(EspacoFisico espaco, LocalDateTime dataInicio, LocalDateTime dataFim) {
+		for (Agendamento agendamento : espaco.getAgendamentos()) {
+			if (agendamento.sobrepoe(dataInicio, dataFim)) {
+				throw new HorarioIndisponivelException();
+			}
+		}
 	}
 
 	private static void agendarEspaco(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim, EspacoFisico espaco) {
-		// TODO: Fazer o sistema de agendamento
-		// Salvar em EspacoFisico e Usuario
+		Agendamento agendamento = new Agendamento(dataInicio, dataFim, usuario, espaco);
+		espaco.adicionarAgendamento(agendamento);
+		usuario.adicionarAgendamento(agendamento);
 	}
 
 }
