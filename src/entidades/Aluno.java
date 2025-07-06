@@ -42,7 +42,7 @@ public class Aluno extends Usuario{
 			return false;
 		}
 		Aluno aluno = (Aluno) objeto;
-		return matricula == aluno.matricula;
+		return matricula.equals(aluno.matricula);
 	}
 	
 	@Override

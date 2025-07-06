@@ -30,7 +30,7 @@ public abstract class Servidor extends Usuario{
 			return false;
 		}
 		Servidor servidor = (Servidor) objeto;
-		return matriculaInstitucional == servidor.matriculaInstitucional;
+		return matriculaInstitucional.equals(servidor.matriculaInstitucional);
 	}
 	
 	@Override

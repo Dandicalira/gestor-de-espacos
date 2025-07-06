@@ -175,8 +175,8 @@ public class Verificar {
 				throw new CampoVazioException();
 			}
 			String auxiliar = cargoAcademico.replace(" ", "").toLowerCase();
-			if (auxiliar != "professorauxiliar" && auxiliar != "professorassistente" &&
-			    auxiliar != "professoradjunto" && auxiliar != "professorassociado" && auxiliar != "professortitular") {
+			if (!auxiliar.equals("professorauxiliar") && !auxiliar.equals("professoradjunto") && 
+			    !auxiliar.equals("professorassociado") && !auxiliar.equals("professortitular") && !auxiliar.equals("professorassistente")) {
 				throw new ForaDoIntervaloException("Insira um cargo acadêmico válido: Professor Auxiliar, Professor Assistente, "
 						                         + "Professor Adjunto, Professor Associado ou Professor Titular");
 			}
@@ -244,16 +244,9 @@ public class Verificar {
 			}
 		}
 		//Verificador de Tipo
-		public static void verificarTipo(String tipo) {
-			if (tipo == null || tipo.isEmpty()) {
-				throw new CampoVazioException();
-			}
-			String aux = tipo.replace(" ", "").toLowerCase();
-			if (aux != "saladeaula" && aux != "laboratorio" && aux != "laboratório" && aux != "saladeestudos") {
-				throw new TipoInesperadoException("Por favor, insira apenas um dos 3 tipos de Espaço Físico:\n"
-						                        + "Sala de Aula\n"
-						                        + "Laboratório\n"
-						                        + "Sala de Estudos");
+		public static void verificarTipo(int sel) {
+			if (sel < 1 || sel > 3) {
+				throw new ForaDoIntervaloException("Por favor, escolha apenas entre um dos 3 tipos de Espaço Físico!");
 			}
 		}
 	//Métodos Estáticos Privados Internos
