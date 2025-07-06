@@ -3,6 +3,8 @@ import entidades.*;
 import aplicacao.EntradaDeDados;
 import excecoes.*;
 
+import java.time.LocalTime;
+
 public class CadastroService {
 
 	//Método Construtor Privado
@@ -65,8 +67,8 @@ public class CadastroService {
 	public static void cadastrarEspacoFisico() {
 		//Leitura dos Atributos
 		int capacidade = cadastrarCapacidade();
-		Horario horarioInicialDisponivel = cadastrarHorarioInicialDisponivel();
-		Horario horarioFinalDisponivel = cadastrarHorarioFinalDisponivel();
+		LocalTime horarioInicialDisponivel = cadastrarHorarioInicialDisponivel();
+		LocalTime horarioFinalDisponivel = cadastrarHorarioFinalDisponivel();
 		String localizacao = cadastrarLocalizacao();
 		String tipo = cadastrarTipo();
 		Equipamento[] equipamentos = new Equipamento[0];
@@ -327,7 +329,7 @@ public class CadastroService {
 		return new Equipamento(nome, quantidade);
 	}
 	
-	private static Horario cadastrarHorarioInicialDisponivel() {
+	private static LocalTime cadastrarHorarioInicialDisponivel() {
 		int hora;
 		int minuto;
 		while (true) {
@@ -350,10 +352,10 @@ public class CadastroService {
 				System.out.println(e.getMessage());
 			}
 		}
-		return new Horario(hora, minuto);
+		return LocalTime.of(hora, minuto);
 	}
 	
-	private static Horario cadastrarHorarioFinalDisponivel() {
+	private static LocalTime cadastrarHorarioFinalDisponivel() {
 		int hora;
 		int minuto;
 		while (true) {
@@ -376,7 +378,7 @@ public class CadastroService {
 				System.out.println(e.getMessage());
 			}
 		}
-		return new Horario(hora, minuto);
+		return LocalTime.of(hora, minuto);
 	}
 	
 	private static String cadastrarTipo() {

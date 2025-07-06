@@ -2,6 +2,7 @@ package entidades;
 
 import servicos.agendamento.Agendamento;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,8 @@ public class EspacoFisico {
 	private int capacidade;
 	private String localizacao,
 				   tipo; //Sala de Aula, Laboratório ou Sala de Estudos
-	private Horario horarioInicialDisponivel,
-				    horarioFinalDisponivel;
+	private LocalTime horarioInicialDisponivel,
+				      horarioFinalDisponivel;
 	private Equipamento[] equipamentos;
 	private List<Agendamento> agendamentos = new ArrayList<>();
 
@@ -22,7 +23,7 @@ public class EspacoFisico {
 		
 	}
 	
-	public EspacoFisico(int capacidade, Horario horarioInicialDisponivel, Horario horarioFinalDisponivel, String localizacao, String tipo, Equipamento[] equipamentos) {
+	public EspacoFisico(int capacidade, LocalTime horarioInicialDisponivel, LocalTime horarioFinalDisponivel, String localizacao, String tipo, Equipamento[] equipamentos) {
 		this.capacidade = capacidade;
 		this.horarioInicialDisponivel = horarioInicialDisponivel;
 		this.horarioFinalDisponivel = horarioFinalDisponivel;
@@ -36,11 +37,11 @@ public class EspacoFisico {
 		return capacidade;
 	}
 	
-	public Horario getHorarioInicialDisponivel() {
+	public LocalTime getHorarioInicialDisponivel() {
 		return horarioInicialDisponivel;
 	}
 	
-	public Horario getHorarioFinalDisponivel() {
+	public LocalTime getHorarioFinalDisponivel() {
 		return horarioFinalDisponivel;
 	}
 	

@@ -2,14 +2,15 @@ package servicos.agendamento;
 
 import entidades.Aluno;
 import entidades.EspacoFisico;
-import entidades.Horario;
 import entidades.Usuario;
 import excecoes.DiasExcedidosException;
 import excecoes.HorarioIndisponivelException;
 import excecoes.HorarioNaoElegivelException;
 import excecoes.PeriodoInvalidoException;
+import util.LocalTimeUtils;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
 public class Agendar {
@@ -39,13 +40,13 @@ public class Agendar {
 	}
 
 	private static void verificarHorarioElegivel(EspacoFisico espaco, LocalDateTime dataInicio, LocalDateTime dataFim) {
-		Horario horaInicialDisponivel = espaco.getHorarioInicialDisponivel();
-		Horario horaFinalDisponivel = espaco.getHorarioFinalDisponivel();
-		Horario horaInicialSelecionada = new Horario(dataInicio.getHour(), dataInicio.getMinute());
-		Horario horaFinalSelecionada = new Horario(dataFim.getHour(), dataFim.getMinute());
+		LocalTime horaInicialDisponivel = espaco.getHorarioInicialDisponivel();
+		LocalTime horaFinalDisponivel = espaco.getHorarioFinalDisponivel();
+		LocalTime horaInicialSelecionada = LocalTime.of(dataInicio.getHour(), dataInicio.getMinute());
+		LocalTime horaFinalSelecionada = LocalTime.of(dataFim.getHour(), dataFim.getMinute());
 
-		if (!horaInicialSelecionada.isBetween(horaInicialDisponivel, horaFinalDisponivel, true)
-				|| !horaFinalSelecionada.isBetween(horaInicialDisponivel, horaFinalDisponivel, true)) {
+		if (!LocalTimeUtils.isBetween(horaInicialSelecionada, horaInicialDisponivel, horaFinalDisponivel, true)
+				|| !LocalTimeUtils.isBetween(horaFinalSelecionada, horaInicialDisponivel, horaFinalDisponivel, true)) {
 			throw new HorarioNaoElegivelException();
 		}
 	}
@@ -79,4 +80,5 @@ public class Agendar {
 		espaco.removerAgendamento(agendamento);
 		usuario.removerAgendamento(agendamento);
 	}
+
 }
