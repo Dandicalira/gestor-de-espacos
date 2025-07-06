@@ -3,12 +3,10 @@ package servicos.agendamento;
 import entidades.Aluno;
 import entidades.EspacoFisico;
 import entidades.Usuario;
-import excecoes.DiasExcedidosException;
-import excecoes.HorarioIndisponivelException;
-import excecoes.HorarioNaoElegivelException;
-import excecoes.PeriodoInvalidoException;
+import excecoes.*;
 import util.LocalTimeUtils;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -16,25 +14,33 @@ import java.time.temporal.ChronoUnit;
 public class Agendar {
 	public static void validarAgendamento(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim, EspacoFisico espaco) {
 		verificarPeriodoValido(dataInicio, dataFim);
+		verificarPeriodoMinimoMinutos(dataInicio, dataFim, 20);
 		verificarHorarioElegivel(espaco, dataInicio, dataFim);
 		verificarDisponibilidade(espaco, dataInicio, dataFim);
-		verificarLimiteDias(usuario, dataInicio, dataFim);
+		verificarLimitesUsuario(usuario, dataInicio, dataFim);
 
 		agendarEspaco(usuario, dataInicio, dataFim, espaco);
+	}
+
+	private static void verificarPeriodoMinimoMinutos(LocalDateTime dataInicio, LocalDateTime dataFim, int periodoMinimo) {
+		Duration duracao = Duration.between(dataInicio, dataFim);
+		if (duracao.toMinutes() < periodoMinimo) {
+			throw new PeriodoMinimoException(periodoMinimo);
+		}
 	}
 
 	private static boolean ehAluno(Usuario usuario) {
 		return (usuario instanceof Aluno);
 	}
-	
-	private static void verificarLimiteDias(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim) {
+
+	private static void verificarLimitesUsuario(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim) {
 		if (ehAluno(usuario)) {
 			validarDuracaoPermitidaDias(dataInicio, dataFim, 1);
 		}
 	}
 
 	private static void verificarPeriodoValido(LocalDateTime dataInicio, LocalDateTime dataFim) {
-		if (!dataInicio.isBefore(dataFim)) {
+		if (dataInicio.isAfter(dataFim)) {
 			throw new PeriodoInvalidoException();
 		}
 	}
