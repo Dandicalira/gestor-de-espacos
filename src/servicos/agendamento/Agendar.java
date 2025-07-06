@@ -1,5 +1,69 @@
 package servicos.agendamento;
 
+import entidades.Aluno;
+import entidades.EspacoFisico;
+import entidades.Usuario;
+import excecoes.DiasExcedidosException;
+import excecoes.HorarioNaoElegivelException;
+import excecoes.PeriodoInvalidoException;
+import entidades.Horario;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
+
 public class Agendar {
+	public static void validarAgendamento(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim, EspacoFisico espaco) {
+		verificarPeriodoValido(dataInicio, dataFim);
+		verificarHorarioElegivel(espaco, dataInicio, dataFim);
+		verificarDisponibilidade();
+		if (ehAluno(usuario)) verificarLimiteDias(dataInicio, dataFim);
+
+		System.out.println("pass");
+		agendarEspaco();
+	}
+
+	private static boolean ehAluno(Usuario usuario) {
+		return (usuario instanceof Aluno);
+	}
+
+	private static void verificarPeriodoValido(LocalDateTime dataInicio, LocalDateTime dataFim) {
+		if (!dataInicio.isBefore(dataFim)) {
+			throw new PeriodoInvalidoException();
+		}
+	}
+
+	private static void verificarHorarioElegivel(EspacoFisico espaco,LocalDateTime dataInicio, LocalDateTime dataFim) {
+		Horario horaInicialDisponivel = espaco.getHorarioInicialDisponivel();
+		Horario horaFinalDisponivel = espaco.getHorarioFinalDisponivel();
+		Horario horaInicialSelecionada = new Horario (dataInicio.getHour(), dataInicio.getMinute());
+		Horario horaFinalSelecionada = new Horario (dataFim.getHour(), dataFim.getMinute());
+
+		if (!horaInicialSelecionada.isBetween(horaInicialDisponivel, horaFinalDisponivel, true)
+			|| !horaFinalSelecionada.isBetween(horaInicialDisponivel, horaFinalDisponivel, true)) {
+			throw new HorarioNaoElegivelException();
+		}
+	}
+
+	private static void verificarLimiteDias(LocalDateTime dataInicio, LocalDateTime dataFim) {
+		final int limiteDias = 1;
+
+		long diasSelecionados = ChronoUnit.DAYS.between(dataInicio.toLocalDate(), dataFim.toLocalDate()) + 1;
+
+		if (diasSelecionados > limiteDias) {
+			throw new DiasExcedidosException(limiteDias, diasSelecionados);
+		}
+	}
+
+	private static void verificarDisponibilidade() {
+		// TODO: Fazer verificação de disponibilidade
+		//throw new HorarioIndisponivelException();
+	}
+
+	private static void agendarEspaco() {
+		// TODO: Fazer o sistema de agendamento
+		// Salvar em EspacoFisico e Usuario
+	}
+
 
 }
