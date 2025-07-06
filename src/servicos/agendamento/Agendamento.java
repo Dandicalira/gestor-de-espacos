@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 
 public class Agendamento {
 
-	LocalDateTime dataInicio,
-			      dataFim;
-	Usuario usuario;
-	int id;
+	private final LocalDateTime dataInicio;
+	private final LocalDateTime dataFim;
+	private final Usuario usuario;
+	private int id;
 
 	public Agendamento(LocalDateTime dataInicio, LocalDateTime dataFim, Usuario usuario) {
 		this.dataInicio = dataInicio;

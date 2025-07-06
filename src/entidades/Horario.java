@@ -3,8 +3,8 @@ package entidades;
 public class Horario {
 
 	//Atributos da Classe
-	int hora;
-	int minuto;
+	private int hora;
+	private int minuto;
 
 	//Métodos Construtores
 	public Horario() {
