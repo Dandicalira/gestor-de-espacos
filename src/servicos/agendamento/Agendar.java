@@ -53,7 +53,8 @@ public class Agendar {
 
 		if (!LocalTimeUtils.isBetween(horarioInicial, min, max, true)
 				|| !LocalTimeUtils.isBetween(horarioFinal, min, max, true)
-				|| horarioFinal.equals(min)) {
+				|| horarioFinal.equals(min)
+				|| horarioInicial.equals(max)) {
 			throw new HorarioNaoElegivelException();
 		}
 	}
