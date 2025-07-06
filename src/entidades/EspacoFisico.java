@@ -92,4 +92,8 @@ public class EspacoFisico {
 		agendamentos.add(agendamento);
 	}
 
+	public void removerAgendamento(Agendamento agendamento) {
+		agendamentos.remove(agendamento);
+	}
+
 }

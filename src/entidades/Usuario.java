@@ -51,4 +51,8 @@ public abstract class Usuario {
 		agendamentos.add(agendamento);
 	}
 
+	public void removerAgendamento(Agendamento agendamento) {
+		agendamentos.remove(agendamento);
+	}
+
 }

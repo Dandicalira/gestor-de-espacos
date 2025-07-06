@@ -68,4 +68,10 @@ public class Agendar {
 		usuario.adicionarAgendamento(agendamento);
 	}
 
+	private static void desagendarEspaco(Agendamento agendamento) {
+		Usuario usuario = agendamento.usuario();
+		EspacoFisico espaco = agendamento.espaco();
+		espaco.removerAgendamento(agendamento);
+		usuario.removerAgendamento(agendamento);
+	}
 }
