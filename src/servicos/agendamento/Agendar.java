@@ -17,13 +17,19 @@ public class Agendar {
 		verificarPeriodoValido(dataInicio, dataFim);
 		verificarHorarioElegivel(espaco, dataInicio, dataFim);
 		verificarDisponibilidade(espaco, dataInicio, dataFim);
-		if (ehAluno(usuario)) verificarLimiteDias(dataInicio, dataFim);
+		verificarLimiteDias(usuario, dataInicio, dataFim);
 
 		agendarEspaco(usuario, dataInicio, dataFim, espaco);
 	}
 
 	private static boolean ehAluno(Usuario usuario) {
 		return (usuario instanceof Aluno);
+	}
+	
+	private static void verificarLimiteDias(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim) {
+		if (ehAluno(usuario)) {
+			validarDuracaoPermitidaDias(dataInicio, dataFim, 1);
+		}
 	}
 
 	private static void verificarPeriodoValido(LocalDateTime dataInicio, LocalDateTime dataFim) {
@@ -44,9 +50,8 @@ public class Agendar {
 		}
 	}
 
-	private static void verificarLimiteDias(LocalDateTime dataInicio, LocalDateTime dataFim) {
-		final int limiteDias = 1;
-
+	private static void validarDuracaoPermitidaDias(LocalDateTime dataInicio, LocalDateTime dataFim, int limiteDias) {
+		if (limiteDias <= 0) return;
 		long diasSelecionados = ChronoUnit.DAYS.between(dataInicio.toLocalDate(), dataFim.toLocalDate()) + 1;
 
 		if (diasSelecionados > limiteDias) {
