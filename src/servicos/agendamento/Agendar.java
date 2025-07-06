@@ -11,7 +11,6 @@ import entidades.Horario;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-
 public class Agendar {
 	public static void validarAgendamento(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim, EspacoFisico espaco) {
 		verificarPeriodoValido(dataInicio, dataFim);
@@ -19,8 +18,7 @@ public class Agendar {
 		verificarDisponibilidade();
 		if (ehAluno(usuario)) verificarLimiteDias(dataInicio, dataFim);
 
-		System.out.println("pass");
-		agendarEspaco();
+		agendarEspaco(usuario, dataInicio, dataFim, espaco);
 	}
 
 	private static boolean ehAluno(Usuario usuario) {
@@ -33,14 +31,14 @@ public class Agendar {
 		}
 	}
 
-	private static void verificarHorarioElegivel(EspacoFisico espaco,LocalDateTime dataInicio, LocalDateTime dataFim) {
+	private static void verificarHorarioElegivel(EspacoFisico espaco, LocalDateTime dataInicio, LocalDateTime dataFim) {
 		Horario horaInicialDisponivel = espaco.getHorarioInicialDisponivel();
 		Horario horaFinalDisponivel = espaco.getHorarioFinalDisponivel();
-		Horario horaInicialSelecionada = new Horario (dataInicio.getHour(), dataInicio.getMinute());
-		Horario horaFinalSelecionada = new Horario (dataFim.getHour(), dataFim.getMinute());
+		Horario horaInicialSelecionada = new Horario(dataInicio.getHour(), dataInicio.getMinute());
+		Horario horaFinalSelecionada = new Horario(dataFim.getHour(), dataFim.getMinute());
 
 		if (!horaInicialSelecionada.isBetween(horaInicialDisponivel, horaFinalDisponivel, true)
-			|| !horaFinalSelecionada.isBetween(horaInicialDisponivel, horaFinalDisponivel, true)) {
+				|| !horaFinalSelecionada.isBetween(horaInicialDisponivel, horaFinalDisponivel, true)) {
 			throw new HorarioNaoElegivelException();
 		}
 	}
@@ -60,10 +58,9 @@ public class Agendar {
 		//throw new HorarioIndisponivelException();
 	}
 
-	private static void agendarEspaco() {
+	private static void agendarEspaco(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim, EspacoFisico espaco) {
 		// TODO: Fazer o sistema de agendamento
 		// Salvar em EspacoFisico e Usuario
 	}
-
 
 }
