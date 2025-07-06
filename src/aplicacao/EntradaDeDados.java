@@ -26,13 +26,12 @@ public class EntradaDeDados {
 			try {
 				a = sc.nextInt();
 				sc.nextLine();
-				break;
+				return a;
 			} catch (InputMismatchException e) {
 				System.out.print("Entrada incorreta! Por favor, digite um número inteiro válido: ");
 				sc.nextLine();
 			}
 		}
-		return a;
 	}
 	
 }

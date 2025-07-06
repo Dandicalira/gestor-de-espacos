@@ -1,21 +1,20 @@
 package entidades;
-import java.time.LocalDateTime;
 public class EspacoFisico {
 
 	//Atributos da Classe
 	private int capacidade;
 	private String localizacao,
 				   tipo; //Sala de Aula, Laboratório ou Sala de Estudos
+	Horario horarioInicialDisponivel,
+			horarioFinalDisponivel;
 	Equipamento[] equipamentos;
-	private LocalDateTime horarioInicialDisponivel,
-					 horarioFinalDisponivel;
 	
 	//Métodos Construtores
 	public EspacoFisico() {
 		
 	}
 	
-	public EspacoFisico(int capacidade, LocalDateTime horarioInicialDisponivel, LocalDateTime horarioFinalDisponivel, String localizacao, String tipo, Equipamento[] equipamentos) {
+	public EspacoFisico(int capacidade, Horario horarioInicialDisponivel, Horario horarioFinalDisponivel, String localizacao, String tipo, Equipamento[] equipamentos) {
 		this.capacidade = capacidade;
 		this.horarioInicialDisponivel = horarioInicialDisponivel;
 		this.horarioFinalDisponivel = horarioFinalDisponivel;
@@ -29,11 +28,11 @@ public class EspacoFisico {
 		return capacidade;
 	}
 	
-	public LocalDateTime getHorarioInicialDisponivel() {
+	public Horario getHorarioInicialDisponivel() {
 		return horarioInicialDisponivel;
 	}
 	
-	public LocalDateTime getHorarioFinalDisponivel() {
+	public Horario getHorarioFinalDisponivel() {
 		return horarioFinalDisponivel;
 	}
 	

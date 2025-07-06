@@ -181,6 +181,81 @@ public class Verificar {
 						                         + "Professor Adjunto, Professor Associado ou Professor Titular");
 			}
 		}
+		//Verificador de Capacidade
+		public static void verificarCapacidade(int capacidade) {
+			if (capacidade <= 0) {
+				throw new ForaDoIntervaloException("Por favor, insira uma capacidade válida!");
+			}
+		}
+		//Verificador de localizacao
+		public static void verificarLocalizacao(String localizacao) {
+			if (localizacao == null || localizacao.isEmpty()) {
+				throw new CampoVazioException();
+			}
+			if (contemCaractereEspecial(localizacao)) {
+				throw new TipoInesperadoException("Por favor, não insira caracteres especiais na localização!");
+			}
+			for (EspacoFisico espaco : Registro.getLaboratorios()) {
+				if (localizacao.equals(espaco.getLocalizacao())) {
+					throw new LocalizacaoDuplicadaException();
+				}
+			}
+			for (EspacoFisico espaco : Registro.getSalasDeAula()) {
+				if (localizacao.equals(espaco.getLocalizacao())) {
+					throw new LocalizacaoDuplicadaException();
+				}
+			}
+			for (EspacoFisico espaco : Registro.getSalasDeEstudos()) {
+				if (localizacao.equals(espaco.getLocalizacao())) {
+					throw new LocalizacaoDuplicadaException();
+				}
+			}
+		}
+		//Verificador de Nomes de Equipamentos
+		public static void verificarNomeEquipamento(String nome, Equipamento[] equipamentos) {
+			if (nome == null || nome.isEmpty()) {
+				throw new CampoVazioException();
+			}
+			if (contemCaractereEspecial(nome)) {
+				throw new TipoInesperadoException("Não insira caracteres especiais em nomes de equipamentos!");
+			}
+			for (Equipamento equipamento : equipamentos) {
+				if (nome.equals(equipamento.getNome())) {
+					throw new EquipamentoDuplicadoException();
+				}
+			}
+		}
+		//Verificador de Quantidades de Equipamento
+		public static void verificarQuantidadeEquipamento(int quantidade) {
+			if (quantidade <= 0) {
+				throw new ForaDoIntervaloException("Por favor, insira uma quantidade válida!");
+			}
+		}
+		//Verificador de Horas
+		public static void verificarHora(int hora) {
+			if (hora < 0 || hora > 23) {
+				throw new ForaDoIntervaloException("Insira apenas horas entre 0h e 23h!");
+			}
+		}
+		//Verificador de Minutos
+		public static void verificarMinuto(int minuto) {
+			if (minuto < 0 || minuto > 59) {
+				throw new ForaDoIntervaloException("Insira apenas minutos entre 00min e 59min!");
+			}
+		}
+		//Verificador de Tipo
+		public static void verificarTipo(String tipo) {
+			if (tipo == null || tipo.isEmpty()) {
+				throw new CampoVazioException();
+			}
+			String aux = tipo.replace(" ", "").toLowerCase();
+			if (aux != "saladeaula" && aux != "laboratorio" && aux != "laboratório" && aux != "saladeestudos") {
+				throw new TipoInesperadoException("Por favor, insira apenas um dos 3 tipos de Espaço Físico:\n"
+						                        + "Sala de Aula\n"
+						                        + "Laboratório\n"
+						                        + "Sala de Estudos");
+			}
+		}
 	//Métodos Estáticos Privados Internos
 	private static boolean contemDigito(String palavra) {
 		for (char caractere : palavra.toCharArray()) {

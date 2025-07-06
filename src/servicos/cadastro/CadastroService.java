@@ -64,7 +64,6 @@ public class CadastroService {
 	}
 	
 	
-	
 	//Métodos Estáticos Privados
 	private static String cadastrarNome() {
 		String nome;
@@ -241,4 +240,111 @@ public class CadastroService {
 		}
 	}
 	
+	private static int cadastrarCapacidade() {
+		int capacidade;
+		while (true) {
+			try {
+				System.out.print("Digite a capacidade do espaço: ");
+				capacidade = EntradaDeDados.lerInteiro();
+				Verificar.verificarCapacidade(capacidade);
+				return capacidade;
+			} catch (ForaDoIntervaloException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+	}
+	
+	private static String cadastrarLocalizacao() {
+		String localizacao;
+		while (true) {
+			try {
+				System.out.print("Digite a localização da sala(S2, I3, LAB NEI 2, ...): ");
+				localizacao = EntradaDeDados.lerStringEspacada().toUpperCase();
+				Verificar.verificarLocalizacao(localizacao);
+				return localizacao;
+			} catch (CampoVazioException | TipoInesperadoException | LocalizacaoDuplicadaException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+	
+	private static Equipamento cadastrarEquipamento(Equipamento[] equipamentos) {
+		String nome;
+		int quantidade;
+		while (true) {
+			try {
+				System.out.print("Digite o nome do equipamento: ");
+				nome = EntradaDeDados.lerString();
+				Verificar.verificarNomeEquipamento(nome, equipamentos);
+				break;
+			} catch (CampoVazioException | TipoInesperadoException | EquipamentoDuplicadoException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		while (true) {
+			try {
+				System.out.print("Digite a quantidade do equipamento: ");
+				quantidade = EntradaDeDados.lerInteiro();
+				Verificar.verificarQuantidadeEquipamento(quantidade);
+				break;
+			} catch (ForaDoIntervaloException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return new Equipamento(nome, quantidade);
+	}
+	
+	private static Horario cadastrarHorarioInicialDisponivel() {
+		int hora;
+		int minuto;
+		while (true) {
+			try {
+				System.out.print("Digite a hora inicial de disponibilidade da sala: ");
+				hora = EntradaDeDados.lerInteiro();
+				Verificar.verificarHora(hora);
+				break;
+			} catch (ForaDoIntervaloException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		while (true) {
+			try {
+				System.out.print("Digite o minuto inicial de disponibilidade da sala: ");
+				minuto = EntradaDeDados.lerInteiro();
+				Verificar.verificarMinuto(minuto);
+				break;
+			} catch (ForaDoIntervaloException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return new Horario(hora, minuto);
+	}
+	
+	private static Horario cadastrarHorarioFinalDisponivel() {
+		int hora;
+		int minuto;
+		while (true) {
+			try {
+				System.out.print("Digite a hora final de disponibilidade da sala: ");
+				hora = EntradaDeDados.lerInteiro();
+				Verificar.verificarHora(hora);
+				break;
+			} catch (ForaDoIntervaloException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		while (true) {
+			try {
+				System.out.print("Digite o minuto final de disponibilidade da sala: ");
+				minuto = EntradaDeDados.lerInteiro();
+				Verificar.verificarMinuto(minuto);
+				break;
+			} catch (ForaDoIntervaloException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return new Horario(hora, minuto);
+	}
 }
+
