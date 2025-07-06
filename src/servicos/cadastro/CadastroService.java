@@ -10,7 +10,6 @@ public class CadastroService {
 		
 	}
 	
-	
 	//Métodos de Cadastro
 	public static void cadastrarAluno() {
 		//Leitura dos Atributos
@@ -63,6 +62,39 @@ public class CadastroService {
 		System.out.println("O cadastro do servidor administrativo foi realizado com sucesso!");
 	}
 	
+	public static void cadastrarEspacoFisico() {
+		//Leitura dos Atributos
+		int capacidade = cadastrarCapacidade();
+		Horario horarioInicialDisponivel = cadastrarHorarioInicialDisponivel();
+		Horario horarioFinalDisponivel = cadastrarHorarioFinalDisponivel();
+		String localizacao = cadastrarLocalizacao();
+		String tipo = cadastrarTipo();
+		Equipamento[] equipamentos = new Equipamento[0];
+		String resp = "";
+		do {
+			equipamentos = EspacoFisico.adicionarEquipamento(cadastrarEquipamento(equipamentos), equipamentos);
+			System.out.print("Deseja cadastrar mais um tipo de equipamento? (S / N)");
+			resp = EntradaDeDados.lerString().toLowerCase();
+		} while (!resp.equals("n") && !resp.equals("não") && !resp.equals("nao"));
+		
+		//Criação e Armazenamento do Objeto
+		EspacoFisico espaco = new EspacoFisico(capacidade,horarioInicialDisponivel,horarioFinalDisponivel, 
+				                               localizacao, tipo, equipamentos);
+		switch (espaco.getTipo()) {
+		case "Sala de Aula":
+			Registro.registrarSalaDeAula(espaco);
+			System.out.println("O cadastro da sala de aula foi realizada com sucesso!");
+			break;
+		case "Laboratório":
+			Registro.registrarLaboratorio(espaco);
+			System.out.println("O cadastro do laboratório foi realizado com sucesso!");
+			break;
+		case "Sala de Estudos":
+			Registro.registrarSalaDeEstudos(espaco);
+			System.out.println("O cadastro da sala de estudos foi realizada com sucesso!");
+			break;
+		}
+	}
 	
 	//Métodos Estáticos Privados
 	private static String cadastrarNome() {
@@ -345,6 +377,35 @@ public class CadastroService {
 			}
 		}
 		return new Horario(hora, minuto);
+	}
+	
+	private static String cadastrarTipo() {
+		int sel;
+		System.out.println("Dentre os 3 tipos a seguir:");
+		while (true) {
+			try {
+				System.out.print("1. Sala de Aula\n"
+		                       + "2. Laboratório\n"
+		                       + "3. Sala de Estudos\n"
+		                       + "Escolha um número para o tipo da sala: ");
+				sel = EntradaDeDados.lerInteiro();
+				Verificar.verificarTipo(sel);
+				break;
+			} catch (ForaDoIntervaloException e) {
+				System.out.println(e.getMessage());
+			}
+			
+		}
+		switch (sel) {
+		case 1:
+			return "Sala de Aula";
+		case 2:
+			return "Laboratório";
+		case 3:
+			return "Sala de Estudos";
+		default:
+			return "";
+		}
 	}
 }
 

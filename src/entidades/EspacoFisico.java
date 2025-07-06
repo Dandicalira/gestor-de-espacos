@@ -48,13 +48,14 @@ public class EspacoFisico {
 		return equipamentos;
 	}
 
-	public void adicionarEquipamento(Equipamento equipamento) {
+	public static Equipamento[] adicionarEquipamento(Equipamento equipamento, Equipamento[] equipamentos) {
 		Equipamento[] temp = new Equipamento[equipamentos.length + 1];
 		for (int i = 0; i < equipamentos.length; i++) {
 			temp[i] = equipamentos[i];
 		}
 		temp[equipamentos.length] = equipamento;
 		equipamentos = temp;
+		return equipamentos;
 	}
 	
 	//Sobrescrita dos Métodos equals e hashCode
