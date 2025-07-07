@@ -4,7 +4,7 @@ import servicos.persistencia.PersistenciaService;
 public class Main {
 	public static void main(String[] args) {
 		PersistenciaService.carregarDados();
-		Teste.criarTeste();
+		//Teste.criarTeste();
 
 		Menu m = new Menu();
 		m.iniciarAplicacao();

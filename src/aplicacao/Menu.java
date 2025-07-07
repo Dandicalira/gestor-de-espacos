@@ -6,6 +6,8 @@ import excecoes.ForaDoIntervaloException;
 import excecoes.PeriodoInvalidoException;
 import excecoes.VoltarException;
 import servicos.agendamento.Agendamento;
+import servicos.agendamento.AgendamentoParcial;
+import servicos.agendamento.ListarAgendamentos;
 import servicos.autenticacao.AutenticacaoService;
 import servicos.cadastro.CadastroService;
 import servicos.cadastro.Registro;
@@ -14,12 +16,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static aplicacao.Console.*;
 import static servicos.agendamento.Agendar.validarAgendamento;
+import static servicos.agendamento.ListarAgendamentos.obterAgendamentosParciaisData;
+
 import servicos.persistencia.PersistenciaService;
 
 public class Menu {
@@ -359,8 +361,15 @@ public class Menu {
 
 	private void listarAgendamentosEspaco(EspacoFisico espaco, LocalDate dataInicio, LocalDate dataFim) {
 		limparTela();
+		System.out.println("[Período disponível para agendamento: " + espaco.getHorarioInicialDisponivel() + " - " + espaco.getHorarioFinalDisponivel() + "]\n");
+
+		if (dataInicio != null && dataFim != dataInicio) {
+			listarAgendamentosParciaisData(espaco, dataInicio);
+			return;
+		}
 
 		List<Agendamento> agendamentos = espaco.getAgendamentos();
+		agendamentos.sort(Comparator.comparing(Agendamento::dataInicio));
 
 		if (agendamentos.isEmpty()) {
 			System.out.println("Nenhum agendamento encontrado.\n");
@@ -370,7 +379,6 @@ public class Menu {
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
 		System.out.println("Agendamentos de " + espaco.getLocalizacao());
-		System.out.println("Tipo: " + espaco.getTipo());
 		System.out.println("------------------------");
 
 		boolean encontrouAgendamento = false;
@@ -393,6 +401,22 @@ public class Menu {
 
 		System.out.println();
 	}
+
+	private void listarAgendamentosParciaisData(EspacoFisico espaco, LocalDate data) {
+		List<AgendamentoParcial> agendamentosDia = ListarAgendamentos.obterAgendamentosParciaisData(espaco, data);
+		if (agendamentosDia.isEmpty()) {
+			System.out.println("Nenhum agendamento encontrado no dia " + data);
+		} else {
+			DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			System.out.println("Agendamentos no dia " + data.format(formatadorData) + ":\n------------------------");
+			for (AgendamentoParcial parcial : agendamentosDia) {
+				System.out.println("Nome: " + parcial.agendamento().usuario().getNome());
+				System.out.println("Horário: " + parcial.inicio() + " até " + parcial.fim());
+				System.out.println("------------------------");
+			}
+		}
+	}
+
 
 	private boolean dataSobrepoe(LocalDate filtroInicio, LocalDate filtroFim, LocalDate agendamentoInicio, LocalDate agendamentoFim) {
 		if (filtroInicio != null && agendamentoFim.isBefore(filtroInicio)) {

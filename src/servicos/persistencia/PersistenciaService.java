@@ -63,7 +63,7 @@ public class PersistenciaService {
 
         // 2. Coletar todos os agendamentos e convertê-los para DTOs
         List<Usuario> todosUsuarios = Stream.concat(Registro.getAlunos().stream(), Registro.getServidores().stream())
-                .collect(Collectors.toList());
+                .toList();
 
         dados.agendamentos = todosUsuarios.stream()
                 .flatMap(u -> u.getAgendamentos().stream())
@@ -78,9 +78,9 @@ public class PersistenciaService {
 
         try (FileWriter writer = new FileWriter(ARQUIVO_JSON)) {
             gson.toJson(dados, writer);
-            System.out.println("Dados salvos com sucesso em " + ARQUIVO_JSON);
+            System.out.println("[Dados salvos com sucesso em " + ARQUIVO_JSON + "]");
         } catch (IOException e) {
-            System.err.println("Erro ao salvar os dados: " + e.getMessage());
+            System.err.println("[Erro ao salvar os dados: " + e.getMessage() + "]");
         }
     }
 
@@ -101,10 +101,10 @@ public class PersistenciaService {
 
             // 2. "Religar" os agendamentos
             List<Usuario> todosUsuarios = Stream.concat(Registro.getAlunos().stream(), Registro.getServidores().stream())
-                                                 .collect(Collectors.toList());
+                                                 .toList();
             List<EspacoFisico> todosEspacos = Stream.of(
                     Registro.getSalasDeAula(), Registro.getLaboratorios(), Registro.getSalasDeEstudos())
-                    .flatMap(List::stream).collect(Collectors.toList());
+                    .flatMap(List::stream).toList();
 
             dados.agendamentos.forEach(dto -> {
                 // Encontra o usuário e o espaço correspondentes nos dados já carregados
