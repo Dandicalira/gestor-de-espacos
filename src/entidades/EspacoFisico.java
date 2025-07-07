@@ -15,7 +15,8 @@ public class EspacoFisico {
 	private LocalTime horarioInicialDisponivel,
 				      horarioFinalDisponivel;
 	private Equipamento[] equipamentos;
-	private List<Agendamento> agendamentos = new ArrayList<>();
+	private transient List<Agendamento> agendamentos = new ArrayList<>();
+;
 
 
 	//Métodos Construtores

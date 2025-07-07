@@ -20,6 +20,7 @@ import java.util.Objects;
 
 import static aplicacao.Console.*;
 import static servicos.agendamento.Agendar.validarAgendamento;
+import servicos.persistencia.PersistenciaService;
 
 public class Menu {
 	Usuario usuarioLogado;
@@ -42,21 +43,41 @@ public class Menu {
 
 	private void selecionarModulo(int sel) {
 		switch (sel) {
-			case 0 -> throw new VoltarException();
-			case 1 -> cadastro();
-			case 2 -> login();
-			default -> throw new ForaDoIntervaloException(0, 2);
+			case 0:
+				PersistenciaService.salvarDados();
+				throw new VoltarException();
+			case 1:
+				cadastro();
+				break;
+			case 2:
+				login();
+				break;
+			default:
+				throw new ForaDoIntervaloException(0, 2);
 		}
 	}
 
 	private void selecionarCadastro(int sel) {
 		switch (sel) {
-			case 0 -> throw new VoltarException();
-			case 1 -> CadastroService.cadastrarAluno();
-			case 2 -> CadastroService.cadastrarProfessor();
-			case 3 -> CadastroService.cadastrarAdministrativo();
-			case 4 -> CadastroService.cadastrarEspacoFisico();
-			default -> throw new ForaDoIntervaloException(0, 4);
+			case 0: throw new VoltarException();
+			case 1: 
+				CadastroService.cadastrarAluno();
+				PersistenciaService.salvarDados();
+				break;
+			case 2: 
+				CadastroService.cadastrarProfessor();
+				PersistenciaService.salvarDados();
+				break;
+			case 3:
+				CadastroService.cadastrarAdministrativo();
+				PersistenciaService.salvarDados();
+				break;
+			case 4: 
+				CadastroService.cadastrarEspacoFisico();
+				PersistenciaService.salvarDados();
+				break;
+			default:
+				throw new ForaDoIntervaloException(0, 4);
 		}
 	}
 
@@ -188,6 +209,7 @@ public class Menu {
 			validarAgendamento(usuarioLogado, dataInicio, dataFim, espacoSelecionado);
 			limparTela();
 			System.out.println("Agendamento realizado com sucesso!\n");
+			PersistenciaService.salvarDados();
 		} catch (Exception e) {
 			limparTela();
 			System.out.println(e.getMessage());

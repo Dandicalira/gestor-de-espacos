@@ -12,7 +12,7 @@ public abstract class Usuario {
 			       email,
 			       senha,
 	               telefone;
-	private List<Agendamento> agendamentos = new ArrayList<>();
+	private transient List<Agendamento> agendamentos = new ArrayList<>();
 
 	//Métodos Construtores
 	public Usuario() {
