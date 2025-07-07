@@ -1,7 +1,26 @@
-## Dependências
+## 🧠 Trabalho Prático de Orientação a Objetos
+### 💼 Gestor de Espaços Físicos
 
-Baixe o arquivo `gson-2.13.1.jar` em:
+Este projeto é parte da disciplina **FGA0158 - Orientação a Objetos** e implementa um sistema de gerenciamento e agendamento de espaços físicos.
 
-https://repo1.maven.org/maven2/com/google/code/gson/gson/2.13.1/gson-2.13.1.jar
+🔗 **Enunciado oficial do trabalho prático:** [clique aqui para acessar](https://github.com/andrelanna/fga0158/blob/b8af45673ddf655f8d9e828564b3e83929c2b3f7/trabalhoPratico/README.md)
 
-Coloque na pasta `libs/`.
+---
+
+## 👥 Integrantes
+
+- **Mateus Rodrigues Barreto** `241011466`
+- **Daniel de Oliveira Lira** `241025505`
+
+---
+
+
+## 📚 Bibliotecas de Terceiros
+
+Este projeto utiliza a biblioteca [Gson](https://github.com/google/gson), licenciada sob a [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob os termos da [MIT License](https://opensource.org/licenses/MIT).
