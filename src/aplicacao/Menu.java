@@ -11,18 +11,19 @@ import servicos.agendamento.ListarAgendamentos;
 import servicos.autenticacao.AutenticacaoService;
 import servicos.cadastro.CadastroService;
 import servicos.cadastro.Registro;
+import servicos.persistencia.PersistenciaService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 import static aplicacao.Console.*;
 import static servicos.agendamento.Agendar.validarAgendamento;
-import static servicos.agendamento.ListarAgendamentos.obterAgendamentosParciaisData;
-
-import servicos.persistencia.PersistenciaService;
 
 public class Menu {
 	Usuario usuarioLogado;
@@ -61,12 +62,13 @@ public class Menu {
 
 	private void selecionarCadastro(int sel) {
 		switch (sel) {
-			case 0: throw new VoltarException();
-			case 1: 
+			case 0:
+				throw new VoltarException();
+			case 1:
 				CadastroService.cadastrarAluno();
 				PersistenciaService.salvarDados();
 				break;
-			case 2: 
+			case 2:
 				CadastroService.cadastrarProfessor();
 				PersistenciaService.salvarDados();
 				break;
@@ -74,7 +76,7 @@ public class Menu {
 				CadastroService.cadastrarAdministrativo();
 				PersistenciaService.salvarDados();
 				break;
-			case 4: 
+			case 4:
 				CadastroService.cadastrarEspacoFisico();
 				PersistenciaService.salvarDados();
 				break;
@@ -171,27 +173,34 @@ public class Menu {
 
 	private List<EspacoFisico> obterTodosEspacos() {
 		List<EspacoFisico> espacos = new ArrayList<>(Registro.getSalasDeAula());
+
 		espacos.addAll(Registro.getLaboratorios());
 		espacos.addAll(Registro.getSalasDeEstudos());
+
 		return espacos;
 	}
 
 	private void agendar() {
 		try {
 			LocalDate diaInicio = EntradaDeDados.lerData("Digite a data inicial: ", false);
+
 			System.out.print("Digite a hora inicial desejada: ");
 			int horaInicio = EntradaDeDados.lerInteiro();
+
 			System.out.print("Digite o minuto inicial desejado: ");
 			int minutoInicio = EntradaDeDados.lerInteiro();
 
 			LocalDate diaFim = EntradaDeDados.lerData("Digite a data final: ", false);
+
 			System.out.print("Digite a hora final desejada: ");
 			int horaFim = EntradaDeDados.lerInteiro();
+
 			System.out.print("Digite o minuto final desejado: ");
 			int minutoFim = EntradaDeDados.lerInteiro();
 
 			assert diaInicio != null;
 			assert diaFim != null;
+
 			LocalDateTime dataInicio = LocalDateTime.of(diaInicio, LocalTime.of(horaInicio, minutoInicio));
 			LocalDateTime dataFim = LocalDateTime.of(diaFim, LocalTime.of(horaFim, minutoFim));
 
@@ -210,8 +219,10 @@ public class Menu {
 
 			validarAgendamento(usuarioLogado, dataInicio, dataFim, espacoSelecionado);
 			limparTela();
+
 			System.out.println("Agendamento realizado com sucesso!\n");
 			PersistenciaService.salvarDados();
+
 		} catch (Exception e) {
 			limparTela();
 			System.out.println(e.getMessage());
@@ -231,12 +242,15 @@ public class Menu {
 
 	private void listarEspacosFisicos() {
 		limparTela();
+
 		while (true) {
 			try {
 				imprimirEspacosFisicos();
 				selecionarEspacoFisico(EntradaDeDados.lerInteiroIntervalo(0, 3));
+
 			} catch (VoltarException e) {
 				break;
+
 			} catch (Exception e) {
 				limparTela();
 				System.out.println(e.getMessage());

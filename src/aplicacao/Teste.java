@@ -1,15 +1,11 @@
 package aplicacao;
 
 import entidades.*;
-import servicos.agendamento.AgendamentoParcial;
 import servicos.agendamento.Agendar;
-import servicos.agendamento.ListarAgendamentos;
 import servicos.cadastro.Registro;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 public class Teste {
 	public static void criarTeste() {
