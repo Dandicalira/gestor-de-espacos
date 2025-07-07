@@ -1,87 +1,74 @@
 {
-  "usuarios": {
-    "alunos": [
-      {
-        "nome": null,
-        "email": null,
-        "senha": null,
-        "telefone": null,
-        "curso": null,
-        "matricula": null,
-        "semestre": null,
-        "agendamentos": [
-          {
-            "localizacao_espaco": null,
-            "tipo_espaco": null,
-            "data_inicial": {
-              "ano": null,
-              "mes": null,
-              "dia": null,
-              "hora": null,
-              "minuto": null
-            },
-            "data_final": {
-              "ano": null,
-              "mes": null,
-              "dia": null,
-              "hora": null,
-              "minuto": null
-            }
-          }
-        ]
-      }
-    ],
-    "servidores": {
-      "professores": [
+  "alunos": [
+    {
+      "curso": "Engenharia de Energia",
+      "matricula": "2",
+      "semestre": 4,
+      "nome": "Pedro Veiga",
+      "email": "pedro.veiga@email.com",
+      "senha": "123",
+      "telefone": "(62) 51224-4516"
+    }
+  ],
+  "professores": [
+    {
+      "curso": "Engenharia de Software",
+      "cargoAcademico": "Professor",
+      "matriculaInstitucional": "1",
+      "nome": "João Silva",
+      "email": "joao.silva@email.com",
+      "senha": "123",
+      "telefone": "(61) 91234-5678"
+    }
+  ],
+  "administrativos": [],
+  "salasDeAula": [
+    {
+      "capacidade": 30,
+      "localizacao": "S10",
+      "tipo": "Sala de Aula",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "18:00",
+      "equipamentos": [
         {
-          "nome": null,
-          "email": null,
-          "senha": null,
-          "telefone": null,
-          "curso": null,
-          "matricula": null,
-          "cargo": null
-        }
-      ],
-      "administrativos": [
+          "nome": "Projetor",
+          "quantidade": 1
+        },
         {
-          "nome": null,
-          "email": null,
-          "senha": null,
-          "telefone": null,
-          "matricula": null,
-          "cargo": null,
-          "departamento": null
+          "nome": "Quadro Branco",
+          "quantidade": 2
         }
       ]
     }
-  },
-  "espacos": [
+  ],
+  "laboratorios": [
     {
-      "capacidade": null,
-      "horario_inicial_disponivel": null,
-      "horario_final_disponivel": null,
-      "tipo": null,
-      "localizacao": null,
-      "equipamentos": [],
-      "agendamentos": [
+      "capacidade": 15,
+      "localizacao": "I9",
+      "tipo": "Laboratório",
+      "horarioInicialDisponivel": "07:00",
+      "horarioFinalDisponivel": "16:00",
+      "equipamentos": [
         {
-          "data_inicial": {
-            "ano": null,
-            "mes": null,
-            "dia": null,
-            "hora": null,
-            "minuto": null
-          },
-          "data_final": {
-            "ano": null,
-            "mes": null,
-            "dia": null,
-            "hora": null,
-            "minuto": null
-          }
+          "nome": "Mesas",
+          "quantidade": 7
         }
       ]
+    }
+  ],
+  "salasDeEstudos": [],
+  "agendamentos": [
+    {
+      "dataInicio": "2025-07-10T07:00",
+      "dataFim": "2025-07-10T10:00",
+      "usuarioId": "2",
+      "espacoId": "I9"
+    },
+    {
+      "dataInicio": "2025-07-10T10:00",
+      "dataFim": "2025-07-11T08:50",
+      "usuarioId": "1",
+      "espacoId": "I9"
     }
   ]
 }
