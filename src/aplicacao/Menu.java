@@ -54,10 +54,47 @@ public class Menu {
 				cadastro();
 				break;
 			case 2:
-				login();
+				agendamento();
 				break;
 			default:
 				throw new ForaDoIntervaloException(0, 2);
+		}
+	}
+	
+	//Início da seção de métodos atrelados ao cadastro
+	private void cadastro() {
+		
+		while (true) {
+			try {
+				limparTela();
+				lerSenhaMestra();
+				limparTela();
+				imprimirOpcoesCadastro();
+				selecionarCadastro(EntradaDeDados.lerInteiroIntervalo(0, 4));
+			} catch (VoltarException e) {
+				break;
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+	
+	private void lerSenhaMestra() {
+		while (true) {
+			try {
+				System.out.print("Digite a senha mestra (0 para voltar): ");
+				String senhaMestra = EntradaDeDados.lerString();
+				if (senhaMestra.equals("0")) {
+					throw new VoltarException();
+				}
+				if (AutenticacaoService.autenticarSuperUsuario(senhaMestra)) {
+					break;
+				}
+				limparTela();
+				System.out.println("Senha incorreta. Tente novamente.");
+			} catch (VoltarException e) {
+				throw e;
+			}
 		}
 	}
 
@@ -85,73 +122,54 @@ public class Menu {
 				throw new ForaDoIntervaloException(0, 4);
 		}
 	}
-
-	private void cadastro() {
-		
-		while (true) {
-			try {
-				limparTela();
-				lerSenhaMestra();
-				limparTela();
-				imprimirOpcoesCadastro();
-				selecionarCadastro(EntradaDeDados.lerInteiroIntervalo(0, 4));
-			} catch (VoltarException e) {
-				break;
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
+	//Fim da seção de métodos atrelados ao cadastro
+	
+	//Início da seção de métodos atrelados ao agendamento
+	private void agendamento() {
+		limparTela();
+		usuarioLogado = login();
+		//Cancelar login
+		if (usuarioLogado == null) {
+			return;
+		}
+		try {
+			selecionarServicosDeAgendamento();
+		} catch (VoltarException e) {
+			usuarioLogado = null;
+			limparTela();
+			System.out.println("Usuário desconectado.\n");
+		} catch (Exception e) {
+			limparTela();
+			System.out.println(e.getMessage());
 		}
 	}
 
-	private void lerSenhaMestra() {
+	private Usuario login() {
 		while (true) {
 			try {
-				System.out.print("Digite a senha mestra (0 para voltar): ");
-				String senhaMestra = EntradaDeDados.lerString();
-				if (senhaMestra.equals("0")) {
+				System.out.println("--- Login ---");
+				System.out.print("Digite a matricula (0 para voltar): ");
+				String identificacao = EntradaDeDados.lerString();
+	
+				if (identificacao.equals("0")) {
+					limparTela();
+					System.out.println("Login cancelado.");
 					throw new VoltarException();
 				}
-				if (AutenticacaoService.autenticarSuperUsuario(senhaMestra)) {
-					break;
-				}
-				limparTela();
-				System.out.println("Senha incorreta. Tente novamente.");
+	
+				System.out.print("Digite a senha: ");
+				String senha = EntradaDeDados.lerString();
+				return AutenticacaoService.autenticar(identificacao, senha);
 			} catch (VoltarException e) {
-				throw e;
-			}
-		}
-	}
-
-	private void login() {
-		limparTela();
-		while (true) {
-			System.out.println("--- Login ---");
-			System.out.print("Digite a matricula [Deixe vazio para voltar]: ");
-			String identificacao = EntradaDeDados.lerString();
-
-			if (identificacao.isEmpty()) {
-				System.out.println("Login cancelado.");
-				return;
-			}
-
-			System.out.print("Digite a senha: ");
-			String senha = EntradaDeDados.lerString();
-
-			try {
-				usuarioLogado = AutenticacaoService.autenticar(identificacao, senha);
-				agendamento();
-			} catch (VoltarException e) {
-				usuarioLogado = null;
-				limparTela();
-				System.out.println("Usuário desconectado.\n");
+				return null;
 			} catch (Exception e) {
 				limparTela();
 				System.out.println(e.getMessage());
 			}
 		}
 	}
-
-	private void agendamento() {
+	
+	private void selecionarServicosDeAgendamento() {
 		limparTela();
 		while (true) {
 			try {

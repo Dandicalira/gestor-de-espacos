@@ -7,7 +7,7 @@ public class Console {
 				Escolha um módulo para acessar:
 				0 - Sair do sistema
 				1 - Cadastro de Usuários e Espaços Físicos (senha de Superusuário necessária)
-				2 - Login como Usuário para serviços como Agendamentos e Emissão de Relatório
+				2 - Login como Usuário para serviços de Agendamentos e Emissão de Relatório
 				""");
 	}
 
