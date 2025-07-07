@@ -1,6 +1,5 @@
 package aplicacao;
 
-import entidades.Aluno;
 import entidades.EspacoFisico;
 import entidades.Usuario;
 import excecoes.ForaDoIntervaloException;
@@ -245,7 +244,7 @@ public class Menu {
 
 			System.out.println(tipo + ": " + localizacao);
 			System.out.println("Início: " + inicio);
-			System.out.println("Fim: " + fim);
+			System.out.println("Fim:    " + fim);
 			System.out.println("------------------------");
 		}
 		System.out.println();
