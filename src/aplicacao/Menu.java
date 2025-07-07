@@ -1,5 +1,6 @@
 package aplicacao;
 
+import entidades.Aluno;
 import entidades.EspacoFisico;
 import entidades.Usuario;
 import excecoes.ForaDoIntervaloException;
@@ -25,6 +26,7 @@ public class Menu {
 	Usuario usuarioLogado;
 
 	public void iniciarAplicacao() {
+
 		while (true) {
 			try {
 				limparTela();
@@ -153,47 +155,46 @@ public class Menu {
 	}
 
 	private void agendar() {
-		while (true) {
-			try {
-				LocalDate diaInicio = EntradaDeDados.lerData("Digite a data inicial: ", false);
-				System.out.print("Digite a hora inicial desejada: ");
-				int horaInicio = EntradaDeDados.lerInteiro();
-				System.out.print("Digite o minuto inicial desejado: ");
-				int minutoInicio = EntradaDeDados.lerInteiro();
+		try {
+			LocalDate diaInicio = EntradaDeDados.lerData("Digite a data inicial: ", false);
+			System.out.print("Digite a hora inicial desejada: ");
+			int horaInicio = EntradaDeDados.lerInteiro();
+			System.out.print("Digite o minuto inicial desejado: ");
+			int minutoInicio = EntradaDeDados.lerInteiro();
 
-				LocalDate diaFim = EntradaDeDados.lerData("Digite a data final: ", false);
-				System.out.print("Digite a hora final desejada: ");
-				int horaFim = EntradaDeDados.lerInteiro();
-				System.out.print("Digite o minuto final desejado: ");
-				int minutoFim = EntradaDeDados.lerInteiro();
+			LocalDate diaFim = EntradaDeDados.lerData("Digite a data final: ", false);
+			System.out.print("Digite a hora final desejada: ");
+			int horaFim = EntradaDeDados.lerInteiro();
+			System.out.print("Digite o minuto final desejado: ");
+			int minutoFim = EntradaDeDados.lerInteiro();
 
-				assert diaInicio != null;
-				assert diaFim != null;
-				LocalDateTime dataInicio = LocalDateTime.of(diaInicio, LocalTime.of(horaInicio, minutoInicio));
-				LocalDateTime dataFim = LocalDateTime.of(diaFim, LocalTime.of(horaFim, minutoFim));
+			assert diaInicio != null;
+			assert diaFim != null;
+			LocalDateTime dataInicio = LocalDateTime.of(diaInicio, LocalTime.of(horaInicio, minutoInicio));
+			LocalDateTime dataFim = LocalDateTime.of(diaFim, LocalTime.of(horaFim, minutoFim));
 
-				System.out.print("Digite a localização do espaço a ser agendado: ");
-				String localizacao = EntradaDeDados.lerString();
+			System.out.print("Digite a localização do espaço a ser agendado: ");
+			String localizacao = EntradaDeDados.lerString();
 
-				List<EspacoFisico> espacos = obterTodosEspacos();
-				EspacoFisico espacoSelecionado = null;
-				for (EspacoFisico espaco : espacos) {
-					if (espaco.getLocalizacao().equalsIgnoreCase(localizacao)) {
-						espacoSelecionado = espaco;
-						break;
-					}
+			List<EspacoFisico> espacos = obterTodosEspacos();
+			EspacoFisico espacoSelecionado = null;
+
+			for (EspacoFisico espaco : espacos) {
+				if (espaco.getLocalizacao().equalsIgnoreCase(localizacao)) {
+					espacoSelecionado = espaco;
+					break;
 				}
-
-				validarAgendamento(usuarioLogado, dataInicio, dataFim, espacoSelecionado);
-				limparTela();
-				System.out.println("Agendamento realizado com sucesso!\n");
-				break;
-			} catch (Exception e) {
-				limparTela();
-				System.out.println(e.getMessage());
 			}
+
+			validarAgendamento(usuarioLogado, dataInicio, dataFim, espacoSelecionado);
+			limparTela();
+			System.out.println("Agendamento realizado com sucesso!\n");
+		} catch (Exception e) {
+			limparTela();
+			System.out.println(e.getMessage());
 		}
 	}
+
 
 	private void selecionarEspacoFisico(int sel) {
 		switch (sel) {
