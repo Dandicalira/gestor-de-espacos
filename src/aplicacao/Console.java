@@ -19,5 +19,27 @@ public class Console {
 				2 - Professor
 				3 - Técnico administrativo
 				4 - Espaço físico
-				""");	}
+				""");
+	}
+
+	protected  static void imprimirOpcoesAgendamento() {
+		System.out.println("""
+				Escolha uma opção:
+				0 - Voltar
+				1 - Listar histórico de agendamentos
+				2 - Listar espaços físicos
+				3 - Listar agendamentos de um espaço
+				4 - Agendar espaço
+				""");
+	}
+
+	protected  static void imprimirEspacosFisicos() {
+		System.out.println("""
+				Escolha uma opção para listar:
+				0 - Voltar
+				1 - Salas de aula
+				2 - Laboratórios
+				3 - Sala de estudos
+				""");
+	}
 }

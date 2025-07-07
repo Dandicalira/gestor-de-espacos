@@ -12,25 +12,25 @@ public class AutenticacaoService {
 	}
 	
 	
-	public static Usuario autenticar(String email, String senha) {
+	public static Usuario autenticar(String identificacao, String senha) {
 		
-		Usuario usuario = autenticarEmail(email);
+		Usuario usuario = autenticarIdentificacao(identificacao);
 		autenticarSenha(usuario, senha);
 		return usuario;
-	
+
 	}
 	
 	//Métodos Privados Internos
-	private static Usuario autenticarEmail(String email) {
+	private static Usuario autenticarIdentificacao(String identificacao) {
 		
 		for (Aluno aluno : Registro.getAlunos()) {
-			if (email.equalsIgnoreCase(aluno.getEmail())) {
+			if (identificacao.equalsIgnoreCase(aluno.getIdentificacao())) {
 				return aluno;
 			}
 		}
 	
 		for (Servidor servidor : Registro.getServidores()) {
-			if (email.equalsIgnoreCase(servidor.getEmail())) {
+			if (identificacao.equalsIgnoreCase(servidor.getIdentificacao())) {
 				return servidor;
 			}
 		}

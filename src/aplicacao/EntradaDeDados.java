@@ -1,27 +1,34 @@
 package aplicacao;
+
 import excecoes.ForaDoIntervaloException;
 
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class EntradaDeDados {
 
 	//Scanner
 	static Scanner sc = new Scanner(System.in);
-	
+
 	//Método Construtor Privado
 	private EntradaDeDados() {
-		
+
 	}
-	
+
 	//Métodos Estáticos de Leitura de Dados
 	public static String lerStringEspacada() {
 		return sc.nextLine().trim().replaceAll("\\s+", " ");
-		
+
 	}
+
 	public static String lerString() {
 		return sc.nextLine().trim().replace(" ", "");
 	}
+
 	public static int lerInteiro() {
 		int a;
 		while (true) {
@@ -43,5 +50,21 @@ public class EntradaDeDados {
 		}
 		throw new ForaDoIntervaloException(min, max);
 	}
-	
+
+	public static LocalDate lerData(String mensagem, boolean nullPermitido) {
+		final DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		while (true) {
+			System.out.print(mensagem);
+			String entrada = lerString();
+			if (entrada.isEmpty() && nullPermitido) {
+				return null;
+			}
+			try {
+				return LocalDate.parse(entrada, formatador);
+			} catch (DateTimeParseException e) {
+				Menu.limparTela();
+				System.out.println("Formato inválido! Use o formato dd/MM/yyyy.\n");
+			}
+		}
+	}
 }

@@ -13,6 +13,7 @@ import java.time.temporal.ChronoUnit;
 
 public class Agendar {
 	public static void validarAgendamento(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim, EspacoFisico espaco) {
+		verificarExistenciaEspacoFisico(espaco);
 		verificarPeriodoValido(dataInicio, dataFim);
 		verificarPeriodoMinimoMinutos(dataInicio, dataFim, 20);
 		verificarHorarioElegivel(espaco, dataInicio, dataFim);
@@ -20,6 +21,12 @@ public class Agendar {
 		verificarLimitesUsuario(usuario, dataInicio, dataFim);
 
 		agendarEspaco(usuario, dataInicio, dataFim, espaco);
+	}
+
+	private static void verificarExistenciaEspacoFisico(EspacoFisico espaco) {
+		if (espaco == null) {
+			throw new EspacoFisicoNaoExiste();
+		}
 	}
 
 	private static void verificarPeriodoMinimoMinutos(LocalDateTime dataInicio, LocalDateTime dataFim, int periodoMinimo) {
@@ -38,6 +45,8 @@ public class Agendar {
 			validarDuracaoPermitidaDias(dataInicio, dataFim, 1);
 		}
 	}
+
+	private static void verificarPendencias() {}
 
 	private static void verificarPeriodoValido(LocalDateTime dataInicio, LocalDateTime dataFim) {
 		if (dataInicio.isAfter(dataFim)) {

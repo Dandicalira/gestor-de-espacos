@@ -75,7 +75,7 @@ public class CadastroService {
 		String resp = "";
 		do {
 			equipamentos = EspacoFisico.adicionarEquipamento(cadastrarEquipamento(equipamentos), equipamentos);
-			System.out.print("Deseja cadastrar mais um tipo de equipamento? (S / N)");
+			System.out.print("Deseja cadastrar mais um tipo de equipamento? (S / N): ");
 			resp = EntradaDeDados.lerString().toLowerCase();
 		} while (!resp.equals("n") && !resp.equals("não") && !resp.equals("nao"));
 		
@@ -258,12 +258,14 @@ public class CadastroService {
 		String senha;
 		while (true) {
 			try {
-				System.out.println("A senha deve conter:\n"
-						         + "no mínimo, 8 caracteres e, no máximo, 20 caracteres,\n"
-						         + "no mínimo, 1 caractere especial (@, #, ...)\n"
-						         + "no mínimo, 1 dígito numérico\n"
-						         + "no mínimo, 1 letra maiúscula e 1 letra minúscula\n"
-						         + "não deve conter espaços em branco\n");
+				System.out.println("""
+						A senha deve conter:
+						no mínimo, 8 caracteres e, no máximo, 20 caracteres,
+						no mínimo, 1 caractere especial (@, #, ...)
+						no mínimo, 1 dígito numérico
+						no mínimo, 1 letra maiúscula e 1 letra minúscula
+						não deve conter espaços em branco
+						""");
 				System.out.print("Digite a sua senha: ");
 				senha = EntradaDeDados.lerString();
 				Verificar.verificarSenha(senha);
@@ -383,13 +385,14 @@ public class CadastroService {
 	
 	private static String cadastrarTipo() {
 		int sel;
-		System.out.println("Dentre os 3 tipos a seguir:");
+		System.out.println("Dentre os 3 tipos a seguir: ");
 		while (true) {
 			try {
-				System.out.print("1. Sala de Aula\n"
-		                       + "2. Laboratório\n"
-		                       + "3. Sala de Estudos\n"
-		                       + "Escolha um número para o tipo da sala: ");
+				System.out.print("""
+						1. Sala de Aula
+						2. Laboratório
+						3. Sala de Estudos
+						Escolha um número para o tipo da sala:\s""");
 				sel = EntradaDeDados.lerInteiro();
 				Verificar.verificarTipo(sel);
 				break;
@@ -398,16 +401,12 @@ public class CadastroService {
 			}
 			
 		}
-		switch (sel) {
-		case 1:
-			return "Sala de Aula";
-		case 2:
-			return "Laboratório";
-		case 3:
-			return "Sala de Estudos";
-		default:
-			return "";
-		}
+		return switch (sel) {
+			case 1 -> "Sala de Aula";
+			case 2 -> "Laboratório";
+			case 3 -> "Sala de Estudos";
+			default -> "";
+		};
 	}
 }
 
