@@ -20,6 +20,22 @@ A documentação completa do sistema está disponível [aqui](https://github.com
 
 ---
 
+## 🚀 Como executar
+
+Para iniciar o sistema, execute o método main da seguinte classe:
+
+`src/aplicacao/Main.java`
+
+---
+
+
+## ⚙️ Requisitos
+
+ - **JDK 21** ou superior  
+  Caso ainda não tenha o JDK instalado, você pode baixar em [https://jdk.java.net/21](https://jdk.java.net/21).
+
+---
+
 ## 📚 Bibliotecas de Terceiros
 
 Este projeto utiliza a biblioteca [Gson](https://github.com/google/gson), licenciada sob a [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
