@@ -10,11 +10,13 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class Agendar {
 	public static void validarAgendamento(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim, EspacoFisico espaco) {
 		verificarExistenciaEspacoFisico(espaco);
 		verificarPeriodoValido(dataInicio, dataFim);
+		verificarDataFutura(dataInicio);
 		verificarPeriodoMinimoMinutos(dataInicio, dataFim, 20);
 		verificarHorarioElegivel(espaco, dataInicio, dataFim);
 		verificarDisponibilidade(espaco, dataInicio, dataFim);
@@ -43,10 +45,52 @@ public class Agendar {
 	private static void verificarLimitesUsuario(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim) {
 		if (ehAluno(usuario)) {
 			validarDuracaoPermitidaDias(dataInicio, dataFim, 1);
+			verificarPermissaoData(usuario, dataFim);
 		}
 	}
 
-	private static void verificarPendencias() {}
+	private static void verificarDataFutura(LocalDateTime dataInicio) {
+		LocalDateTime agora = LocalDateTime.now();
+		if (dataInicio.isBefore(agora)) {
+			throw new DataFuturaException();
+		}
+	}
+
+	private static void verificarPermissaoData(Usuario usuario, LocalDateTime dataFim) {
+		LocalDateTime agora = LocalDateTime.now();
+		List<Agendamento> agendamentos = usuario.getAgendamentos();
+		Agendamento agendamentoMaisRecente = obterAgendamentoMaisRecente(agendamentos);
+
+		if (agendamentoMaisRecente == null) {
+			return;
+		}
+
+		if (!agora.isBefore(agendamentoMaisRecente.dataFim())) {
+			return;
+		}
+
+		if (dataFim.toLocalDate().equals(agendamentoMaisRecente.dataFim().toLocalDate())) {
+			return;
+		}
+
+		throw new DataIlegalException(agendamentoMaisRecente.dataInicio().toLocalDate());
+	}
+
+	public static Agendamento obterAgendamentoMaisRecente(List<Agendamento> agendamentos) {
+		if (agendamentos == null || agendamentos.isEmpty()) {
+			return null;
+		}
+
+		Agendamento agendamentoMaisRecente = agendamentos.getFirst();
+
+		for (Agendamento agendamento : agendamentos) {
+			if (agendamento.dataInicio().isAfter(agendamentoMaisRecente.dataInicio())) {
+				agendamentoMaisRecente = agendamento;
+			}
+		}
+		return agendamentoMaisRecente;
+	}
+
 
 	private static void verificarPeriodoValido(LocalDateTime dataInicio, LocalDateTime dataFim) {
 		if (dataInicio.isAfter(dataFim)) {
