@@ -25,5 +25,18 @@ public class Professor extends Servidor{
 	public String getCargoAcademico() {
 		return cargoAcademico;
 	}
+	
+	@Override
+	public String toString() {
+		String professor = "------------------------------------------------------------\n"
+				         + "                      Ficha do Professor\n"
+				         + "------------------------------------------------------------\n";
+		professor += "Nome                    : " + getNome() + "\n";
+		professor += "Matrícula Institucional : " + getIdentificacao() + "\n";
+		professor += "Email                   : " + getEmail() + "\n";
+		professor += "Cargo Acadêmico         : " + getCargoAcademico() + "\n";
+		professor += "------------------------------------------------------------\n\n";
+		return professor;
+	}
 }
 

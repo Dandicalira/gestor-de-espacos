@@ -5,6 +5,7 @@ import servicos.agendamento.Agendamento;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 public class EspacoFisico {
 
@@ -92,6 +93,19 @@ public class EspacoFisico {
 
 	public void removerAgendamento(Agendamento agendamento) {
 		agendamentos.remove(agendamento);
+	}
+	
+	@Override
+	public String toString() {
+		String espaco = "------------------------------------------------------------\n"
+				      + "                   Ficha do Espaço Físico\n"
+				      + "------------------------------------------------------------\n";
+		espaco += "Tipo         : " + getTipo() + "\n";
+		espaco += "Localização  : " + getLocalizacao() + "\n";
+		espaco += "Capacidade   : " + getCapacidade() + "\n";
+		espaco += "Equipamentos : " + Arrays.toString(equipamentos) + "\n";
+		espaco += "------------------------------------------------------------\n\n";
+		return espaco;
 	}
 
 }

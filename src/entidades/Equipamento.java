@@ -24,4 +24,9 @@ public class Equipamento {
 	public int getQuantidade() {
 		return quantidade;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s (%d unidades)", getNome(), getQuantidade());
+	}
 }

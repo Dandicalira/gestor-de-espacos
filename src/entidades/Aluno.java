@@ -53,4 +53,17 @@ public class Aluno extends Usuario{
 	public String getIdentificacao() {
 		return getMatricula();
 	}
+	
+	@Override
+	public String toString() {
+		String aluno = "------------------------------------------------------------\n"
+				     + "                      Ficha do Aluno\n"
+				     + "------------------------------------------------------------\n";
+		aluno += "Nome      : " + getNome() + "\n";
+		aluno += "Matrícula : " + getIdentificacao() + "\n";
+		aluno += "Email     : " + getEmail() + "\n";
+		aluno += "Curso     : " + getCurso() + "\n";
+		aluno += "------------------------------------------------------------\n\n";
+		return aluno;
+	}
 }

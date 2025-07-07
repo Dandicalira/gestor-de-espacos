@@ -25,4 +25,18 @@ public class Administrativo extends Servidor{
 	public String getDepartamento() {
 		return departamento;
 	}
+	
+	@Override
+	public String toString() {
+		String administrativo = "------------------------------------------------------------\n"
+				              + "               Ficha do Técnico-Administrativo\n"
+				              + "------------------------------------------------------------\n";
+		administrativo += "Nome                    : " + getNome() + "\n";
+		administrativo += "Matrícula Institucional : " + getIdentificacao() + "\n";
+		administrativo += "Email                   : " + getEmail() + "\n";
+		administrativo += "Cargo                   : " + getCargo() + "\n";
+		administrativo += "Departamento            : " + getDepartamento() + "\n";
+		administrativo += "------------------------------------------------------------\n\n";
+		return administrativo;
+	}
 }
