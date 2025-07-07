@@ -14,6 +14,12 @@ Este projeto é parte da disciplina **FGA0158 - Orientação a Objetos** e imple
 
 ---
 
+## 📖 Documentação
+
+A documentação completa do sistema está disponível em:  
+[https://github.com/Dandicalira/gestor-de-espacos/blob/main/Documentacao](https://github.com/Dandicalira/gestor-de-espacos/blob/main/Documentacao)
+
+---
 
 ## 📚 Bibliotecas de Terceiros
 
