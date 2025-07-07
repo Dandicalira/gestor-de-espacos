@@ -20,6 +20,11 @@ public class AutenticacaoService {
 
 	}
 	
+	public static boolean autenticarSuperUsuario(String senha) {
+		
+		return senha.equals("314");
+	}
+	
 	//Métodos Privados Internos
 	private static Usuario autenticarIdentificacao(String identificacao) {
 		

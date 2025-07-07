@@ -3,8 +3,6 @@ import aplicacao.EntradaDeDados;
 import entidades.*;
 import excecoes.VoltarException;
 import excecoes.EntidadeInexistenteException;
-import servicos.cadastro.Registro;
-import aplicacao.Console;
 public class RemoverService {
 
 	//Método Construtor Privado

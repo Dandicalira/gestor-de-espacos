@@ -12,6 +12,7 @@ import servicos.autenticacao.AutenticacaoService;
 import servicos.cadastro.CadastroService;
 import servicos.cadastro.Registro;
 import servicos.persistencia.PersistenciaService;
+import servicos.autenticacao.AutenticacaoService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -86,15 +87,11 @@ public class Menu {
 	}
 
 	private void cadastro() {
-		limparTela();
-		System.out.print("Digite a senha mestra: ");
-		while (!validarSenhaMestra(EntradaDeDados.lerString())) {
-			limparTela();
-			System.out.println("Senha incorreta. Tente novamente.");
-			System.out.print("Digite a senha mestra: ");
-		}
+		
 		while (true) {
 			try {
+				limparTela();
+				lerSenhaMestra();
 				limparTela();
 				imprimirOpcoesCadastro();
 				selecionarCadastro(EntradaDeDados.lerInteiroIntervalo(0, 4));
@@ -106,8 +103,23 @@ public class Menu {
 		}
 	}
 
-	private boolean validarSenhaMestra(String senha) {
-		return Objects.equals(senha, "314");
+	private void lerSenhaMestra() {
+		while (true) {
+			try {
+				System.out.print("Digite a senha mestra (0 para voltar): ");
+				String senhaMestra = EntradaDeDados.lerString();
+				if (senhaMestra.equals("0")) {
+					throw new VoltarException();
+				}
+				if (AutenticacaoService.autenticarSuperUsuario(senhaMestra)) {
+					break;
+				}
+				limparTela();
+				System.out.println("Senha incorreta. Tente novamente.");
+			} catch (VoltarException e) {
+				throw e;
+			}
+		}
 	}
 
 	private void login() {
