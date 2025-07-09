@@ -4,15 +4,13 @@ public class Menu {
 	public static void inicio() {
 		Formulario f = new Formulario("Formulário");
 
-		f.adicionarTexto("Testo bem legal");
-		f.adicionarTexto("Daniel é legal!!!");
 		f.adicionarInput("Nome");
+		f.adicionarTexto("Text1aaaaaaa");
 		f.adicionarInput("Endereço");
 		f.adicionarDropdown("Curso", new String[]{"Engenharia", "Medicina", "Roblox"});
 		f.adicionarBotao("Ir", () -> {
 			System.out.println("Nome: " + f.resposta("Nome"));
-			f.ocultar();
-			dialogo2(f);
+			f.atualizarErro("Mensagem erro");
 		});
 		f.adicionarBotao("Fechar", () -> System.exit(0));
 

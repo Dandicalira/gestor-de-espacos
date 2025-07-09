@@ -1,5 +1,6 @@
 package aplicacao;
 
+import excecoes.ComponenteDuplicadoException;
 import excecoes.ComponenteNaoExisteException;
 
 import javax.swing.*;
@@ -10,24 +11,62 @@ import java.util.Map;
 public class Formulario {
 	private final Map<String, JTextField> mapaInputs = new HashMap<>();
 	private final Map<String, JComboBox<String>> mapaDropdowns = new HashMap<>();
-	private final JDialog dialog;
-	private final JPanel painelPrincipal;
-	private final JPanel painelBotoes;
-	private final JPanel painelTexto;
+	private final JLabel mensagemErro = new JLabel();
+	private JDialog dialog;
+	private JPanel painelPrincipal;
+	private JPanel painelInferior;
+	private JPanel painelCompleto;
+	private JPanel painelErro;
+	private JPanel painelBotoes;
+	private JPanel painelTexto;
 
 	protected Formulario(String titulo) {
-		painelPrincipal = new JPanel(new GridLayout(0, 2));
-		painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		painelTexto = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		gerarPaineis();
+		configurarMensagemErro();
+		montarPainelInferior();
+		montarPainelCompleto();
 
-		JPanel painelCompleto = new JPanel(new BorderLayout());
-		painelCompleto.add(painelTexto, BorderLayout.NORTH);
-		painelCompleto.add(painelPrincipal, BorderLayout.CENTER);
-		painelCompleto.add(painelBotoes, BorderLayout.SOUTH);
+		criarDialogo(titulo);
+	}
 
+	private void criarDialogo(String titulo) {
 		JOptionPane optionPane = new JOptionPane(painelCompleto, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
 		dialog = optionPane.createDialog(titulo);
 		dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+	}
+
+	private void montarPainelCompleto() {
+		painelCompleto.add(painelTexto, BorderLayout.NORTH);
+		painelCompleto.add(painelPrincipal, BorderLayout.CENTER);
+		painelCompleto.add(painelInferior, BorderLayout.SOUTH);
+	}
+
+	private void montarPainelInferior() {
+		painelInferior.add(painelErro, BorderLayout.CENTER);
+		painelInferior.add(painelBotoes, BorderLayout.SOUTH);
+	}
+
+	private void configurarMensagemErro() {
+		mensagemErro.setForeground(Color.RED);
+		painelErro.add(mensagemErro);
+		painelErro.setPreferredSize(new Dimension(0, 20));
+		painelErro.setVisible(true);
+	}
+
+	private void gerarPaineis() {
+		painelCompleto = new JPanel(new BorderLayout());
+		painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		painelInferior = new JPanel(new BorderLayout());
+
+		painelPrincipal = new JPanel(new GridLayout(0, 2));
+		painelPrincipal.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+
+		painelErro = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		painelErro.setPreferredSize(new Dimension(0, 30));
+
+		painelTexto = new JPanel();
+		painelTexto.setLayout(new BoxLayout(painelTexto, BoxLayout.Y_AXIS));
+		painelTexto.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 	}
 
 	protected void mostrar() {
@@ -89,7 +128,21 @@ public class Formulario {
 	}
 
 	protected void adicionarTexto(String texto) {
-		painelTexto.add(new JLabel(texto));
+		// Divide o texto em vários componentes
+		for (String linha : texto.split("\n")) {
+			JLabel componente = new JLabel(linha);
+
+			painelTexto.add(componente);
+
+		}
+	}
+
+	protected void atualizarErro(String texto) {
+		if (texto == null || texto.isBlank()) {
+			mensagemErro.setText(" ");
+		} else {
+			mensagemErro.setText(texto);
+		}
 		atualizar();
 	}
 
@@ -101,16 +154,15 @@ public class Formulario {
 		atualizar();
 	}
 
-
 	private void verificarInputValido(String texto) {
 		if (mapaInputs.containsKey(texto)) {
-			throw new IllegalArgumentException("Input \"" + texto +"\" duplicado");
+			throw new ComponenteDuplicadoException(texto);
 		}
 	}
 
 	private void verificarDropdownValido(String texto) {
 		if (mapaInputs.containsKey(texto)) {
-			throw new IllegalArgumentException("Input \"" + texto +"\" duplicado");
+			throw new ComponenteDuplicadoException(texto);
 		}
 	}
 
