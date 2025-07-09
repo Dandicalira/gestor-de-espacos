@@ -2,6 +2,7 @@ package aplicacao;
 
 import excecoes.ComponenteDuplicadoException;
 import excecoes.ComponenteNaoExisteException;
+import servicos.persistencia.PersistenciaService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,19 +21,36 @@ public class Formulario {
 	private JPanel painelBotoes;
 	private JPanel painelTexto;
 
+	protected Formulario() {
+		montarFormulario();
+		criarDialogo("Gestor de espaços");
+	}
+
 	protected Formulario(String titulo) {
+		montarFormulario();
+		criarDialogo(titulo);
+	}
+
+	private void montarFormulario() {
 		gerarPaineis();
 		configurarMensagemErro();
 		montarPainelInferior();
 		montarPainelCompleto();
-
-		criarDialogo(titulo);
 	}
 
 	private void criarDialogo(String titulo) {
 		JOptionPane optionPane = new JOptionPane(painelCompleto, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
 		dialog = optionPane.createDialog(titulo);
-		dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+		// Encerrar a aplicação ao fechar a janela
+		dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosed(java.awt.event.WindowEvent e) {
+				PersistenciaService.salvarDados();
+				System.exit(0);
+			}
+		});
 	}
 
 	private void montarPainelCompleto() {
