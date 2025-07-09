@@ -27,6 +27,8 @@ import static aplicacao.Console.*;
 import static servicos.agendamento.Agendar.validarAgendamento;
 
 public class Menu {
+	
+	private boolean admin;
 	Usuario usuarioLogado;
 
 	public void iniciarAplicacao() {
@@ -66,16 +68,23 @@ public class Menu {
 		
 		while (true) {
 			try {
-				limparTela();
-				lerSenhaMestra();
-				limparTela();
+				if (!admin) {
+					lerSenhaMestra();
+					limparTela();
+					System.out.println("Superusuário autenticado com sucesso!");
+				}
 				imprimirOpcoesCadastro();
 				selecionarCadastro(EntradaDeDados.lerInteiroIntervalo(0, 4));
+				limparTela();
+				PersistenciaService.salvarDados();
+				System.out.println("O cadastro foi realizado com sucesso!");
 			} catch (VoltarException e) {
+				admin = false;
 				break;
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
+			
 		}
 	}
 	
@@ -88,9 +97,9 @@ public class Menu {
 					throw new VoltarException();
 				}
 				if (AutenticacaoService.autenticarSuperUsuario(senhaMestra)) {
+					admin = true;
 					break;
 				}
-				limparTela();
 				System.out.println("Senha incorreta. Tente novamente.");
 			} catch (VoltarException e) {
 				throw e;
@@ -104,19 +113,15 @@ public class Menu {
 				throw new VoltarException();
 			case 1:
 				CadastroService.cadastrarAluno();
-				PersistenciaService.salvarDados();
 				break;
 			case 2:
 				CadastroService.cadastrarProfessor();
-				PersistenciaService.salvarDados();
 				break;
 			case 3:
 				CadastroService.cadastrarAdministrativo();
-				PersistenciaService.salvarDados();
 				break;
 			case 4:
 				CadastroService.cadastrarEspacoFisico();
-				PersistenciaService.salvarDados();
 				break;
 			default:
 				throw new ForaDoIntervaloException(0, 4);
