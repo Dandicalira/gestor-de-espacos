@@ -59,7 +59,7 @@ public class Formulario {
 		painelInferior = new JPanel(new BorderLayout());
 
 		painelPrincipal = new JPanel(new GridLayout(0, 2));
-		painelPrincipal.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+		painelPrincipal.setBorder(BorderFactory.createEmptyBorder(2, 0, 8, 0));
 
 		painelErro = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		painelErro.setPreferredSize(new Dimension(0, 30));
