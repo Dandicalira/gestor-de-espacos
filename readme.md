@@ -31,8 +31,12 @@ Para iniciar o sistema, execute o método main da seguinte classe:
 
 ## ⚙️ Requisitos
 
- - **JDK 21** ou superior  
-  Caso ainda não tenha o JDK instalado, você pode baixar em [https://jdk.java.net/21](https://jdk.java.net/21).
+### ⚠️ Mínimo: **JDK 17**
+O projeto requer, no mínimo, o **Java Development Kit (JDK) 17** para funcionar corretamente.
+
+### ✅ Recomendado: **JDK 21** ou superior
+Recomendamos utilizar o **JDK 21** ou uma versão mais recente, pois essas versões oferecem recursos de segurança essenciais.
+- Download disponível em: [https://jdk.java.net/21](https://jdk.java.net/21)
 
 ---
 

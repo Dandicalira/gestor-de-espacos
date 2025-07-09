@@ -1,5 +1,21 @@
 package aplicacao;
 
+import entidades.Aluno;
+import entidades.EspacoFisico;
+import servicos.cadastro.Registro;
+
+import javax.swing.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+import static aplicacao.Formulario.mostrarErro;
+import static aplicacao.Formulario.mostrarMensagem;
+import static aplicacao.Teste.gerarAluno;
+import static aplicacao.Teste.gerarSalaDeAula;
+import static servicos.agendamento.AgendamentoService.*;
+import static servicos.agendamento.Agendar.validarAgendamento;
+
 public class Menu {
 	public void menuInicial() {
 		Formulario f = new Formulario();
@@ -142,17 +158,17 @@ public class Menu {
 
 
 	private void menuListarEspacosFisicos() {
-
+		//todo
 	}
 
 	private void menuAgendarEspacoFisico(Formulario anterior) {
 		Formulario f = new Formulario();
 
-		f.adicionarInput("Data inicial (YYYY/MM/DD)", true);
-		f.adicionarInput("Horário inicial (HH:mm)", true);
+		f.adicionarInput("Data inicial", true);
+		f.adicionarInput("Horário inicial", true);
 
-		f.adicionarInput("Data final (YYYY/MM/DD)", true);
-		f.adicionarInput("Horário final (HH:mm)", true);
+		f.adicionarInput("Data final", true);
+		f.adicionarInput("Horário final", true);
 
 		f.adicionarInput("Localização", true);
 
@@ -161,8 +177,25 @@ public class Menu {
 			anterior.mostrar();
 		});
 		f.adicionarAcao("Agendar", () -> {
-			if (!f.valido()) return;
-			//todo
+			try {
+				if (!f.valido()) return;
+				LocalDate dataInicio = parseLocalDate(f.resposta("Data inicial"));
+				LocalDate dataFim = parseLocalDate(f.resposta("Data final"));
+				LocalTime horarioInicio = parseLocalTime(f.resposta("Horário inicial"));
+				LocalTime horarioFim = parseLocalTime(f.resposta("Horário final"));
+				String localizacao = f.resposta("Localização");
+
+				LocalDateTime dataHoraInicio = combinarDataEHora(dataInicio, horarioInicio);
+				LocalDateTime dataHoraFim = combinarDataEHora(dataFim, horarioFim);
+
+				// TODO
+				//validarAgendamento(aluno, dataHoraInicio, dataHoraFim, es);
+				mostrarMensagem("Agendamento realizado com sucesso!");
+				f.ocultar();
+				anterior.mostrar();
+			} catch (Exception e) {
+				f.atualizarErro(e.getMessage());
+			}
 		});
 
 		f.mostrar();

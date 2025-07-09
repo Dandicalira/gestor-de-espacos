@@ -33,6 +33,23 @@ public class Formulario {
 		criarDialogo(titulo);
 	}
 
+	protected static void mostrarMensagem(String mensagem, String titulo) {
+		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	protected static void mostrarMensagem(String mensagem) {
+		JOptionPane.showMessageDialog(null, mensagem, "Gestor de espaços", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	protected static void mostrarErro(String mensagem, String titulo) {
+		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.ERROR_MESSAGE);
+	}
+
+	protected static void mostrarErro(String mensagem) {
+		JOptionPane.showMessageDialog(null, mensagem, "Gestor de espaços", JOptionPane.ERROR_MESSAGE);
+	}
+
+
 	private void montarFormulario() {
 		gerarPaineis();
 		configurarMensagemErro();
@@ -210,6 +227,11 @@ public class Formulario {
 		atualizar();
 	}
 
+	protected void atualizarErro() {
+		mensagemErro.setText(" ");
+		atualizar();
+	}
+
 	protected void adicionarBotao(String texto, String textoBotao, Runnable acao) {
 		if (texto == null) {
 			texto = "";
@@ -260,7 +282,7 @@ public class Formulario {
 	}
 
 	private void verificarDropdownValido(String texto) {
-		if (mapaInputs.containsKey(texto)) {
+		if (mapaDropdowns.containsKey(texto)) {
 			throw new ComponenteDuplicadoException(texto);
 		}
 	}

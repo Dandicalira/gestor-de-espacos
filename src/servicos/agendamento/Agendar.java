@@ -81,7 +81,7 @@ public class Agendar {
 			return null;
 		}
 
-		Agendamento agendamentoMaisRecente = agendamentos.getFirst();
+		Agendamento agendamentoMaisRecente = agendamentos.get(0);
 
 		for (Agendamento agendamento : agendamentos) {
 			if (agendamento.dataInicio().isAfter(agendamentoMaisRecente.dataInicio())) {
