@@ -27,7 +27,6 @@ public class CadastroService {
 		Aluno aluno = new Aluno(nome, email, senha, telefone, curso, matricula, semestre);
 		Registro.registrarAluno(aluno);
 		
-		System.out.println("O cadastro do aluno foi realizado com sucesso!");
 	}
 	
 	public static void cadastrarProfessor() {
@@ -44,7 +43,6 @@ public class CadastroService {
 		Professor professor = new Professor(nome, email, senha, telefone, matriculaInstitucional, curso, cargoAcademico);
 		Registro.registrarServidor(professor);
 		
-		System.out.println("O cadastro do professor foi realizado com sucesso!");
 	}
 	
 	public static void cadastrarAdministrativo() {
@@ -61,7 +59,6 @@ public class CadastroService {
 		Administrativo administrativo = new Administrativo(nome, email, senha, telefone, matriculaInstitucional, cargo, departamento);
 		Registro.registrarServidor(administrativo);
 		
-		System.out.println("O cadastro do servidor administrativo foi realizado com sucesso!");
 	}
 	
 	public static void cadastrarEspacoFisico() {
@@ -85,15 +82,12 @@ public class CadastroService {
 		switch (espaco.getTipo()) {
 		case "Sala de Aula":
 			Registro.registrarSalaDeAula(espaco);
-			System.out.println("O cadastro da sala de aula foi realizada com sucesso!");
 			break;
 		case "Laboratório":
 			Registro.registrarLaboratorio(espaco);
-			System.out.println("O cadastro do laboratório foi realizado com sucesso!");
 			break;
 		case "Sala de Estudos":
 			Registro.registrarSalaDeEstudos(espaco);
-			System.out.println("O cadastro da sala de estudos foi realizada com sucesso!");
 			break;
 		}
 	}
