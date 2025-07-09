@@ -124,7 +124,7 @@ public class Formulario {
 
 		painelPrincipal.add(new JLabel(texto));
 
-		JTextField input = new JTextField();
+		JTextField input = new JTextField(20);
 		painelPrincipal.add(input);
 
 		mapaInputs.put(texto, input); // adiciona o input ao mapa
