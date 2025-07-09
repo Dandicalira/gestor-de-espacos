@@ -3,10 +3,10 @@ import servicos.persistencia.PersistenciaService;
 
 public class Main {
 	public static void main(String[] args) {
-		PersistenciaService.carregarDados();
+		//PersistenciaService.carregarDados();
 		//Teste.criarTeste();
+		Menu.inicio();
 
-		Menu m = new Menu();
-		m.iniciarAplicacao();
+
 	}
 }

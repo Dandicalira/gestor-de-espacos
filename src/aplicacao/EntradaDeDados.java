@@ -61,7 +61,6 @@ public class EntradaDeDados {
 			try {
 				return LocalDate.parse(entrada, formatador);
 			} catch (DateTimeParseException e) {
-				Menu.limparTela();
 				System.out.println("Formato inválido! Use o formato dd/MM/yyyy.\n");
 			}
 		}
