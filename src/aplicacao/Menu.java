@@ -12,16 +12,13 @@ import servicos.autenticacao.AutenticacaoService;
 import servicos.cadastro.CadastroService;
 import servicos.cadastro.Registro;
 import servicos.persistencia.PersistenciaService;
-import servicos.autenticacao.AutenticacaoService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 import static aplicacao.Console.*;
 import static servicos.agendamento.Agendar.validarAgendamento;
@@ -202,17 +199,8 @@ public class Menu {
 	}
 
 	private void ConsultarAgendamentosEspaco() {
-		List<EspacoFisico> espacos = obterTodosEspacos();
+		List<EspacoFisico> espacos = Registro.getTodosOsEspacos();
 		agendamentoEspaco(espacos);
-	}
-
-	private List<EspacoFisico> obterTodosEspacos() {
-		List<EspacoFisico> espacos = new ArrayList<>(Registro.getSalasDeAula());
-
-		espacos.addAll(Registro.getLaboratorios());
-		espacos.addAll(Registro.getSalasDeEstudos());
-
-		return espacos;
 	}
 
 	private void agendar() {
@@ -242,7 +230,7 @@ public class Menu {
 			System.out.print("Digite a localização do espaço a ser agendado: ");
 			String localizacao = EntradaDeDados.lerString();
 
-			List<EspacoFisico> espacos = obterTodosEspacos();
+			List<EspacoFisico> espacos = Registro.getTodosOsEspacos();
 			EspacoFisico espacoSelecionado = null;
 
 			for (EspacoFisico espaco : espacos) {

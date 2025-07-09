@@ -37,6 +37,14 @@ public class Registro {
 		return salasDeEstudos;
 	}
 	
+	public static ArrayList<EspacoFisico> getTodosOsEspacos() {
+		ArrayList<EspacoFisico> todos = new ArrayList<>();
+		todos.addAll(salasDeAula);
+		todos.addAll(laboratorios);
+		todos.addAll(salasDeEstudos);
+		return todos;
+	}
+	
 	//Registro de Entidades
 	public static void registrarAluno(Aluno aluno) {
 		alunos.add(aluno);
