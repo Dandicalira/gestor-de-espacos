@@ -1,28 +1,37 @@
-# 📋 Documentação — Classe `Formulario`
+# 📋 Classe `Formulario`
 
-A classe `Formulario` fornece uma maneira simples e modular de criar formulários gráficos utilizando Swing (`JDialog`, `JPanel`, etc.).
+A classe `Formulario` fornece uma estrutura gráfica modular usando Swing (`JDialog`, `JPanel`, etc.) para criação de formulários.
 
 ---
 
-## ✅ Como criar um formulário
+## ✅ Criar um novo formulário
 
 ```java
 Formulario f = new Formulario("Título do Formulário");
 ```
 
-Cria um novo formulário com o título especificado. Todos os componentes (inputs, textos, botões, dropdowns) são adicionados por métodos.
+---
+
+## 📝 `adicionarTexto(String texto)`
+
+Adiciona um ou mais textos na parte superior. Use `\n` para quebrar linhas.
+
+```java
+f.adicionarTexto("Bem-vindo!");
+```
 
 ---
 
-## ✏️ `adicionarInput(String texto)`
+## ✏️ `adicionarInput(String texto)` / `adicionarInput(String texto, boolean obrigatorio)`
 
-Adiciona um campo de texto com o rótulo informado.
+Adiciona um campo de texto. Pode marcar como obrigatório.
 
 ```java
 f.adicionarInput("Nome");
+f.adicionarInput("Email", true);
 ```
 
-### Recuperar valor do input:
+### ➕ Ler valor do input:
 
 ```java
 String nome = f.resposta("Nome");
@@ -32,68 +41,81 @@ String nome = f.resposta("Nome");
 
 ## 🔽 `adicionarDropdown(String texto, String[] opcoes)`
 
-Adiciona uma lista suspensa (combo box).
+Adiciona um campo de seleção com várias opções.
 
 ```java
-f.adicionarDropdown("Curso", new String[]{"Engenharia", "Medicina", "Arquitetura"});
+f.adicionarDropdown("Curso", new String[]{"Engenharia", "Design", "Direito"});
 ```
 
-### Recuperar opção selecionada:
+### 🔍 Obter valor selecionado:
 
 ```java
-String cursoSelecionado = f.opcao("Curso");
-```
-
----
-
-## 📝 `adicionarTexto(String texto)`
-
-Adiciona um ou mais textos no topo. Pode quebrar linhas usando `\n`.
-
-```java
-f.adicionarTexto("Preencha os campos abaixo\ncom atenção:");
+String curso = f.opcao("Curso");
 ```
 
 ---
 
-## ❌ `atualizarErro(String mensagem)`
+## 🔘 `adicionarRadio(String texto, String[] opcoes)`
 
-Mostra uma mensagem de erro em vermelho na parte inferior. Se for nula ou vazia, remove a mensagem mas mantém o espaço.
+Adiciona um grupo de botões de seleção única (radio buttons).
 
 ```java
-f.atualizarErro("Nome não pode estar vazio");
+f.adicionarRadio("Turno", new String[]{"Manhã", "Tarde", "Noite"});
+```
+
+### 🔍 Obter valor selecionado:
+
+```java
+String turno = f.selecao("Turno");
 ```
 
 ---
 
-## 🧩 `adicionarBotao(String texto, Runnable acao)`
+## 🧩 `adicionarBotao(String label, String textoBotao, Runnable acao)`
 
-Adiciona um botão com a ação associada ao clique.
+Adiciona um botão ao corpo do formulário. Se a `label` já existir, novos botões são agrupados na mesma linha.
 
 ```java
-f.adicionarBotao("Enviar", () -> {
-    String nome = f.resposta("Nome");
-    System.out.println("Nome digitado: " + nome);
-});
+f.adicionarBotao("Ações", "Salvar", () -> salvarDados());
+f.adicionarBotao("Ações", "Cancelar", () -> f.ocultar());
 ```
 
 ---
 
-## 👁️ `mostrar()`
+## 🖱️ `adicionarAcao(String texto, Runnable acao)`
 
-Exibe o formulário na tela.
+Adiciona um botão na parte inferior (painel de ações).
+
+```java
+f.adicionarAcao("Voltar", () -> voltarTelaAnterior());
+```
+
+---
+
+## ❌ `atualizarErro(String texto)`
+
+Exibe uma mensagem de erro (em vermelho). Se nula ou vazia, remove a mensagem.
+
+```java
+f.atualizarErro("O campo Nome é obrigatório");
+```
+
+---
+
+## ✅ `valido()`
+
+Verifica se todos os campos obrigatórios foram preenchidos.
+
+```java
+if (!f.valido()) return;
+```
+
+---
+
+## 👁️ Mostrar / 🔒 Ocultar formulário
 
 ```java
 f.mostrar();
-```
-
----
-
-## 🔒 `ocultar()`
-
-Oculta a janela do formulário.
-
-```java
 f.ocultar();
 ```
 
@@ -101,8 +123,8 @@ f.ocultar();
 
 ## ⚠️ Exceções
 
-- `ComponenteNaoExisteException`: Lançada quando um campo buscado por `resposta()` ou `opcao()` não existe.
-- `ComponenteDuplicadoException`: Lançada ao tentar adicionar um componente duplicado (ex.: dois inputs com mesmo nome).
+- `ComponenteNaoExisteException`: campo não foi adicionado.
+- `ComponenteDuplicadoException`: tentativa de adicionar duplicado.
 
 ---
 
@@ -111,27 +133,24 @@ f.ocultar();
 ```java
 Formulario f = new Formulario("Cadastro");
 
-f.adicionarTexto("Bem-vindo!\nPreencha os dados:");
-f.adicionarInput("Nome");
-f.adicionarInput("Email");
+f.adicionarTexto("Preencha seus dados:");
+f.adicionarInput("Nome", true);
+f.adicionarInput("Email", true);
 f.adicionarDropdown("Curso", new String[]{"Engenharia", "Design", "Direito"});
 
-f.adicionarBotao("Enviar", () -> {
+f.adicionarBotao("Ações", "Salvar", () -> {
+    if (!f.valido()) return;
+
     String nome = f.resposta("Nome");
     String email = f.resposta("Email");
     String curso = f.opcao("Curso");
 
-    if (nome.isBlank() || email.isBlank()) {
-        f.atualizarErro("Todos os campos devem ser preenchidos.");
-    } else {
-        System.out.println("Nome: " + nome);
-        System.out.println("Email: " + email);
-        System.out.println("Curso: " + curso);
-        f.ocultar();
-    }
+    System.out.println(nome + " - " + email + " - " + curso);
+    f.ocultar();
 });
 
-f.adicionarBotao("Cancelar", () -> System.exit(0));
+f.adicionarBotao("Ações", "Cancelar", f::ocultar);
+f.adicionarAcao("Ajuda", () -> f.atualizarErro("Todos os campos são obrigatórios"));
 
 f.mostrar();
 ```

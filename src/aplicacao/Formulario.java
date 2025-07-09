@@ -6,19 +6,21 @@ import servicos.persistencia.PersistenciaService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Formulario {
 	private final Map<String, JTextField> mapaInputs = new HashMap<>();
 	private final Map<String, JComboBox<String>> mapaDropdowns = new HashMap<>();
+	private final Map<String, JPanel> mapaBotoes = new HashMap<>();
+	private final Map<String, ButtonGroup> mapaRadios = new HashMap<>();
+	private final Set<String> camposObrigatorios = new HashSet<>();
 	private final JLabel mensagemErro = new JLabel();
 	private JDialog dialog;
 	private JPanel painelPrincipal;
 	private JPanel painelInferior;
 	private JPanel painelCompleto;
 	private JPanel painelErro;
-	private JPanel painelBotoes;
+	private JPanel painelAcoes;
 	private JPanel painelTexto;
 
 	protected Formulario() {
@@ -61,7 +63,7 @@ public class Formulario {
 
 	private void montarPainelInferior() {
 		painelInferior.add(painelErro, BorderLayout.CENTER);
-		painelInferior.add(painelBotoes, BorderLayout.SOUTH);
+		painelInferior.add(painelAcoes, BorderLayout.SOUTH);
 	}
 
 	private void configurarMensagemErro() {
@@ -73,11 +75,11 @@ public class Formulario {
 
 	private void gerarPaineis() {
 		painelCompleto = new JPanel(new BorderLayout());
-		painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		painelAcoes = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		painelInferior = new JPanel(new BorderLayout());
 
 		painelPrincipal = new JPanel(new GridLayout(0, 2));
-		painelPrincipal.setBorder(BorderFactory.createEmptyBorder(2, 0, 8, 0));
+		painelPrincipal.setBorder(BorderFactory.createEmptyBorder(2, 2, 8, 2));
 
 		painelErro = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		painelErro.setPreferredSize(new Dimension(0, 30));
@@ -107,7 +109,7 @@ public class Formulario {
 	}
 
 	protected String opcao(String dropdown) {
-		JComboBox<?> opcoes = mapaDropdowns.get(dropdown);
+		JComboBox<String> opcoes = mapaDropdowns.get(dropdown);
 
 		if (opcoes == null) {
 			throw new ComponenteNaoExisteException(dropdown);
@@ -119,15 +121,40 @@ public class Formulario {
 		return selecionado.toString();
 	}
 
+	protected String selecao(String radio) {
+		ButtonGroup opcoes = mapaRadios.get(radio);
+
+		if (opcoes == null) {
+			throw new ComponenteNaoExisteException(radio);
+		}
+
+		for (AbstractButton botao : Collections.list(opcoes.getElements())) {
+			if (botao.isSelected()) {
+				return botao.getText();
+			}
+		}
+
+		return null;
+	}
+
 	protected void adicionarInput(String texto) {
+		adicionarInput(texto, false);
+	}
+
+	protected void adicionarInput(String texto, boolean obrigatorio) {
 		verificarInputValido(texto);
 
-		painelPrincipal.add(new JLabel(texto));
+		String labelTexto = texto + (obrigatorio ? "*" : "");
+		painelPrincipal.add(new JLabel(labelTexto));
 
 		JTextField input = new JTextField(20);
 		painelPrincipal.add(input);
 
-		mapaInputs.put(texto, input); // adiciona o input ao mapa
+		mapaInputs.put(texto, input);
+
+		if (obrigatorio) {
+			camposObrigatorios.add(texto);
+		}
 
 		atualizar();
 	}
@@ -140,18 +167,37 @@ public class Formulario {
 		JComboBox<String> dropdown = new JComboBox<>(opcoes);
 		painelPrincipal.add(dropdown);
 
-		mapaDropdowns.put(texto, dropdown); // adiciona o dropdown ao mapa
+		mapaDropdowns.put(texto, dropdown);
+
+		atualizar();
+	}
+
+	protected void adicionarRadio(String texto, String[] opcoes) {
+		if (mapaRadios.containsKey(texto)) {
+			throw new ComponenteDuplicadoException(texto);
+		}
+
+		painelPrincipal.add(new JLabel(texto));
+
+		JPanel painelRadio = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		ButtonGroup radio = new ButtonGroup();
+
+		for (String opcao : opcoes) {
+			JRadioButton botaoRadio = new JRadioButton(opcao);
+			radio.add(botaoRadio);
+			painelRadio.add(botaoRadio);
+		}
+
+		painelPrincipal.add(painelRadio);
+		mapaRadios.put(texto, radio);
 
 		atualizar();
 	}
 
 	protected void adicionarTexto(String texto) {
-		// Divide o texto em vários componentes
 		for (String linha : texto.split("\n")) {
 			JLabel componente = new JLabel(linha);
-
 			painelTexto.add(componente);
-
 		}
 	}
 
@@ -164,12 +210,47 @@ public class Formulario {
 		atualizar();
 	}
 
-	protected void adicionarBotao(String texto, Runnable acao) {
-		JButton botao = new JButton(texto);
+	protected void adicionarBotao(String texto, String textoBotao, Runnable acao) {
+		if (texto == null) {
+			texto = "";
+		}
+
+		JPanel painelBotoesLinha = mapaBotoes.get(texto);
+
+		if (painelBotoesLinha == null) {
+			painelPrincipal.add(new JLabel(texto));
+
+			painelBotoesLinha = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+			painelPrincipal.add(painelBotoesLinha);
+			mapaBotoes.put(texto, painelBotoesLinha);
+		}
+
+		JButton botao = new JButton(textoBotao);
 		botao.addActionListener(e -> acao.run());
-		painelBotoes.add(botao);
+		painelBotoesLinha.add(botao);
 
 		atualizar();
+	}
+
+
+	protected void adicionarAcao(String texto, Runnable acao) {
+		JButton botao = new JButton(texto);
+		botao.addActionListener(e -> acao.run());
+		painelAcoes.add(botao);
+
+		atualizar();
+	}
+
+	protected boolean valido() {
+		for (String campo : camposObrigatorios) {
+			String valor = resposta(campo);
+			if (valor == null || valor.isBlank()) {
+				atualizarErro("O campo \"" + campo + "\" é obrigatório.");
+				return false;
+			}
+		}
+		atualizarErro(null);
+		return true;
 	}
 
 	private void verificarInputValido(String texto) {
@@ -185,7 +266,9 @@ public class Formulario {
 	}
 
 	private void atualizar() {
-		painelBotoes.revalidate();
-		painelBotoes.repaint();
+		painelAcoes.revalidate();
+		painelAcoes.repaint();
+		painelPrincipal.revalidate();
+		painelPrincipal.repaint();
 	}
 }
