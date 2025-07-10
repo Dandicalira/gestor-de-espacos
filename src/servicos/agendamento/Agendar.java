@@ -12,8 +12,12 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import static servicos.cadastro.Registro.getEspacosFisicos;
+import static servicos.cadastro.Registro.getUsuarios;
+
 public class Agendar {
 	public static void validarAgendamento(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim, EspacoFisico espaco) {
+		verificarExistenciaUsuario(usuario);
 		verificarExistenciaEspacoFisico(espaco);
 		verificarPeriodoValido(dataInicio, dataFim);
 		verificarDataFutura(dataInicio);
@@ -26,8 +30,18 @@ public class Agendar {
 	}
 
 	private static void verificarExistenciaEspacoFisico(EspacoFisico espaco) {
-		if (espaco == null) {
-			throw new EspacoFisicoNaoExiste();
+		List<EspacoFisico> espacos = getEspacosFisicos();
+
+		if (espaco == null || !espacos.contains(espaco)) {
+			throw new EspacoFisicoNaoExisteException();
+		}
+	}
+
+	private static void verificarExistenciaUsuario(Usuario usuario) {
+		List<Usuario> usuarios = getUsuarios();
+
+		if (usuario == null || !usuarios.contains(usuario)) {
+			throw new UsuarioNaoExisteException();
 		}
 	}
 
@@ -73,7 +87,7 @@ public class Agendar {
 			return;
 		}
 
-		throw new DataIlegalException(agendamentoMaisRecente.dataInicio().toLocalDate());
+		throw new DataIlegalException();
 	}
 
 	public static Agendamento obterAgendamentoMaisRecente(List<Agendamento> agendamentos) {
@@ -117,7 +131,7 @@ public class Agendar {
 		long diasSelecionados = ChronoUnit.DAYS.between(dataInicio.toLocalDate(), dataFim.toLocalDate()) + 1;
 
 		if (diasSelecionados > limiteDias) {
-			throw new DiasExcedidosException(limiteDias, diasSelecionados);
+			throw new DiasExcedidosException(limiteDias);
 		}
 	}
 

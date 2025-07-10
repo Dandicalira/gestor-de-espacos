@@ -1,25 +1,30 @@
 package aplicacao;
 
-import entidades.Aluno;
 import entidades.EspacoFisico;
-import servicos.cadastro.Registro;
+import entidades.Usuario;
 
-import javax.swing.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-import static aplicacao.Formulario.mostrarErro;
 import static aplicacao.Formulario.mostrarMensagem;
-import static aplicacao.Teste.gerarAluno;
-import static aplicacao.Teste.gerarSalaDeAula;
 import static servicos.agendamento.AgendamentoService.*;
 import static servicos.agendamento.Agendar.validarAgendamento;
+import static servicos.cadastro.Registro.*;
 
 public class Menu {
+	Usuario usuarioLogado = null;
+
+	public Menu() {}
+
+	public Menu(Usuario usuario) {
+		usuarioLogado = usuario;
+	}
+
 	public void menuInicial() {
 		Formulario f = new Formulario();
-
 		f.adicionarTexto("MENU INICIAL");
 		f.adicionarTexto("Escolha uma opção:");
 		f.adicionarAcao("Painel de administração", () -> {
@@ -82,7 +87,7 @@ public class Menu {
 			case "Aluno" -> menuCadastrarAluno();
 			case "Professor" -> menuCadastrarProfessor();
 			case "Técnico Administrativo" -> menuCadastrarAdministrativo();
-			default -> menuCadastrarEspacoFisico();
+			case "Espaço Físico" -> menuCadastrarEspacoFisico();
 		}
 	}
 
@@ -116,16 +121,19 @@ public class Menu {
 			if (!f.valido()) return;
 			//todo
 			f.ocultar();
-			menuUsuario(f);
+			menuUsuario();
 		});
 
 		f.mostrar();
 	}
 
-	private void menuUsuario(Formulario anterior) {
+	private void menuUsuario() {
 		Formulario f = new Formulario();
+		f.adicionarTexto("Usuário: " + usuarioLogado.getNome());
+		f.adicionarTexto("Matrícula: " + usuarioLogado.getIdentificacao());
+		f.adicionarTexto("Email: " + usuarioLogado.getEmail());
+		f.adicionarTexto("Telefone: " + usuarioLogado.getTelefone());
 
-		f.adicionarTexto("Escolha uma opção:");
 		f.adicionarBotao("Histório de agendamentos", "Conferir", () -> {
 			listarAgendamentosUsuario(f); // popup
 		});
@@ -134,12 +142,10 @@ public class Menu {
 			menuInicial();
 		});
 		f.adicionarAcao("Listar espaços", () -> {
-			//todo
 			f.ocultar();
-			menuListarEspacosFisicos();
+			menuListarEspacosFisicos(f);
 		});
 		f.adicionarAcao("Agendar espaço", () -> {
-			//todo
 			f.ocultar();
 			menuAgendarEspacoFisico(f);
 		});
@@ -148,21 +154,104 @@ public class Menu {
 	}
 
 	private void listarAgendamentosUsuario(Formulario anterior) {
-		Formulario f = new Formulario();
+		Formulario f = new Formulario("Agendamentos de " + usuarioLogado.getNome());
 
-		//todo
+		String resposta = formatarAgendamentosUsuario(usuarioLogado);
+
 		f.adicionarAcao("Voltar", f::ocultar);
+		f.adicionarAcao("💾", ()->{
+			f.salvarArquivo(resposta, "Agendamentos de " + usuarioLogado.getNome() + ".txt");
+		});
+
+		f.adicionarTexto(resposta);
 
 		f.mostrar();
 	}
 
 
-	private void menuListarEspacosFisicos() {
-		//todo
+	private void menuListarEspacosFisicos(Formulario anterior) {
+		Formulario f = new Formulario();
+
+		f.adicionarDropdown("Tipo", new String[]{"Salas de aula", "Laboratórios", "Salas de estudos"});
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			anterior.mostrar();
+		});
+		f.adicionarAcao("Listar", () -> {
+			f.ocultar();
+			listarEspacoFisico(f);
+		});
+
+		f.mostrar();
+	}
+
+	private void listarEspacoFisico(Formulario anterior) {
+		List<EspacoFisico> espacos = switch (anterior.opcao("Tipo")) {
+			case "Salas de aula" -> getSalasDeAula();
+			case "Laboratórios" -> getLaboratorios();
+			default -> getSalasDeEstudos();
+		};
+
+		Formulario f = new Formulario(anterior.opcao("Tipo"));
+
+		if (espacos.isEmpty()) {
+			f.adicionarTexto("Nenhum espaço encontrado");
+		} else {
+			for (EspacoFisico espaco : espacos) {
+				f.adicionarBotao(espaco.getLocalizacao(), "Agendamentos", () -> {
+					try {
+						imprimirAgendamentosEspaco(espaco, f);
+					} catch (Exception e) {
+						f.atualizarErro(e.getMessage());
+					}
+				});
+				f.adicionarBotao(espaco.getLocalizacao(), "📋", () -> {
+					f.copiarTexto(espaco.getLocalizacao());
+				});
+			}
+
+			DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+			String Datahoje = LocalDate.now().format(formatador);
+
+			f.adicionarInput("Data inicial", Datahoje);
+			f.adicionarInput("Data final");
+		}
+
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			menuUsuario();
+		});
+		f.mostrar();
+	}
+
+	private void imprimirAgendamentosEspaco(EspacoFisico espaco, Formulario anterior) {
+		anterior.atualizarErro();
+
+		String stringDataInicio = anterior.resposta("Data inicial");
+		String stringDataFim = anterior.resposta("Data final");
+
+		LocalDate dataInicio = stringDataInicio.isEmpty() ? null : parseLocalDate(stringDataInicio);
+		LocalDate dataFim = stringDataFim.isEmpty() ? null : parseLocalDate(stringDataFim);
+
+		String resposta = formatarAgendamentosEspaco(espaco, dataInicio, dataFim);
+
+		Formulario f = new Formulario("Agendamentos de " + espaco.getLocalizacao());
+
+		f.adicionarAcao("Voltar", f::ocultar);
+		f.adicionarAcao("💾", ()->{
+			f.salvarArquivo(resposta, "Agendamentos de " + espaco.getLocalizacao() + ".txt");
+		});
+
+		f.adicionarTexto(resposta);
+
+		f.mostrar();
 	}
 
 	private void menuAgendarEspacoFisico(Formulario anterior) {
-		Formulario f = new Formulario();
+		Formulario f = new Formulario("Agendamento");
+
+		f.adicionarTexto("Agendar espaço físico");
 
 		f.adicionarInput("Data inicial", true);
 		f.adicionarInput("Horário inicial", true);
@@ -183,16 +272,19 @@ public class Menu {
 				LocalDate dataFim = parseLocalDate(f.resposta("Data final"));
 				LocalTime horarioInicio = parseLocalTime(f.resposta("Horário inicial"));
 				LocalTime horarioFim = parseLocalTime(f.resposta("Horário final"));
+
 				String localizacao = f.resposta("Localização");
+				EspacoFisico espaco = obterEspacoFisicoLocalizacao(localizacao);
 
 				LocalDateTime dataHoraInicio = combinarDataEHora(dataInicio, horarioInicio);
 				LocalDateTime dataHoraFim = combinarDataEHora(dataFim, horarioFim);
 
-				// TODO
-				//validarAgendamento(aluno, dataHoraInicio, dataHoraFim, es);
+				validarAgendamento(usuarioLogado, dataHoraInicio, dataHoraFim, espaco);
 				mostrarMensagem("Agendamento realizado com sucesso!");
+
 				f.ocultar();
 				anterior.mostrar();
+
 			} catch (Exception e) {
 				f.atualizarErro(e.getMessage());
 			}

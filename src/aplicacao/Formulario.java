@@ -6,6 +6,12 @@ import servicos.persistencia.PersistenciaService;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Formulario {
@@ -34,21 +40,12 @@ public class Formulario {
 	}
 
 	protected static void mostrarMensagem(String mensagem, String titulo) {
-		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.PLAIN_MESSAGE);
 	}
 
 	protected static void mostrarMensagem(String mensagem) {
-		JOptionPane.showMessageDialog(null, mensagem, "Gestor de espaços", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, mensagem, "Gestor de espaços", JOptionPane.PLAIN_MESSAGE);
 	}
-
-	protected static void mostrarErro(String mensagem, String titulo) {
-		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.ERROR_MESSAGE);
-	}
-
-	protected static void mostrarErro(String mensagem) {
-		JOptionPane.showMessageDialog(null, mensagem, "Gestor de espaços", JOptionPane.ERROR_MESSAGE);
-	}
-
 
 	private void montarFormulario() {
 		gerarPaineis();
@@ -154,17 +151,13 @@ public class Formulario {
 		return null;
 	}
 
-	protected void adicionarInput(String texto) {
-		adicionarInput(texto, false);
-	}
-
-	protected void adicionarInput(String texto, boolean obrigatorio) {
+	protected void adicionarInput(String texto, boolean obrigatorio, String textoPadrao) {
 		verificarInputValido(texto);
 
 		String labelTexto = texto + (obrigatorio ? "*" : "");
 		painelPrincipal.add(new JLabel(labelTexto));
 
-		JTextField input = new JTextField(20);
+		JTextField input = new JTextField(textoPadrao, 20);
 		painelPrincipal.add(input);
 
 		mapaInputs.put(texto, input);
@@ -174,6 +167,18 @@ public class Formulario {
 		}
 
 		atualizar();
+	}
+
+	protected void adicionarInput(String texto) {
+		adicionarInput(texto, false, null);
+	}
+
+	protected void adicionarInput(String texto, boolean obrigatorio) {
+		adicionarInput(texto, obrigatorio, null);
+	}
+
+	protected void adicionarInput(String texto, String textoPadrao) {
+		adicionarInput(texto, false, textoPadrao);
 	}
 
 	protected void adicionarDropdown(String texto, String[] opcoes) {
@@ -219,12 +224,44 @@ public class Formulario {
 	}
 
 	protected void atualizarErro(String texto) {
+		mensagemErro.setForeground(Color.RED);
+
 		if (texto == null || texto.isBlank()) {
 			mensagemErro.setText(" ");
 		} else {
 			mensagemErro.setText(texto);
 		}
 		atualizar();
+	}
+
+	protected void atualizarErro(String texto, Boolean azul) {
+		atualizarErro(texto);
+
+		if (azul) mensagemErro.setForeground(Color.BLUE);
+		atualizar();
+	}
+
+	protected void copiarTexto(String texto) {
+		StringSelection selecao = new StringSelection(texto);
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selecao, null);
+		atualizarErro("'" + texto + "' copiado para a área de transferência!", true);
+	}
+
+	protected void salvarArquivo(String texto, String nomeArquivo) {
+		try {
+			Path pastaOutput = Paths.get("saida");
+			if (!Files.exists(pastaOutput)) {
+				Files.createDirectories(pastaOutput);
+			}
+
+			Path caminhoCompleto = pastaOutput.resolve(nomeArquivo);
+			Files.writeString(caminhoCompleto, texto);
+
+			atualizarErro("Arquivo salvo com sucesso!", true);
+		} catch (IOException e) {
+			atualizarErro("Erro ao salvar arquivo.");
+			System.out.println(e.getMessage());
+		}
 	}
 
 	protected void atualizarErro() {

@@ -1,5 +1,9 @@
 package servicos.cadastro;
 import entidades.*;
+import excecoes.EntidadeInexistenteException;
+import excecoes.EspacoFisicoNaoExisteException;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Registro {
@@ -37,12 +41,30 @@ public class Registro {
 		return salasDeEstudos;
 	}
 	
-	public static ArrayList<EspacoFisico> getTodosOsEspacos() {
+	public static ArrayList<EspacoFisico> getEspacosFisicos() {
 		ArrayList<EspacoFisico> todos = new ArrayList<>();
 		todos.addAll(salasDeAula);
 		todos.addAll(laboratorios);
 		todos.addAll(salasDeEstudos);
 		return todos;
+	}
+
+	public static ArrayList<Usuario> getUsuarios() {
+		ArrayList<Usuario> todos = new ArrayList<>();
+		todos.addAll(alunos);
+		todos.addAll(servidores);
+		return todos;
+	}
+
+	public static EspacoFisico obterEspacoFisicoLocalizacao(String localizacao) {
+		ArrayList<EspacoFisico> espacos = getEspacosFisicos();
+		for (EspacoFisico espaco : espacos) {
+			if (espaco.getLocalizacao().equals(localizacao)) {
+				return espaco;
+			}
+		}
+
+		throw new EspacoFisicoNaoExisteException();
 	}
 	
 	//Registro de Entidades
