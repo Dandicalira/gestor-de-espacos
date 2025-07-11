@@ -4,7 +4,6 @@ import entidades.Aluno;
 import entidades.EspacoFisico;
 import entidades.Usuario;
 import excecoes.*;
-import util.LocalTimeUtils;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -14,6 +13,7 @@ import java.util.List;
 
 import static servicos.cadastro.Registro.getEspacosFisicos;
 import static servicos.cadastro.Registro.getUsuarios;
+import static util.LocalDateTimeUtils.isBetween;
 
 public class Agendar {
 	public static void validarAgendamento(Usuario usuario, LocalDateTime dataInicio, LocalDateTime dataFim, EspacoFisico espaco) {
@@ -118,8 +118,8 @@ public class Agendar {
 		LocalTime horarioInicial = dataInicio.toLocalTime();
 		LocalTime horarioFinal = dataFim.toLocalTime();
 
-		if (!LocalTimeUtils.isBetween(horarioInicial, min, max, true)
-				|| !LocalTimeUtils.isBetween(horarioFinal, min, max, true)
+		if (!isBetween(horarioInicial, min, max, true)
+				|| !isBetween(horarioFinal, min, max, true)
 				|| horarioFinal.equals(min)
 				|| horarioInicial.equals(max)) {
 			throw new HorarioNaoElegivelException();
