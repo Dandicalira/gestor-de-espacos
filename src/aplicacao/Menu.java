@@ -1,6 +1,13 @@
 package aplicacao;
 
 import entidades.*;
+import excecoes.CampoVazioException;
+import excecoes.EntidadeDuplicadaException;
+import excecoes.ForaDoIntervaloException;
+import servicos.autenticacao.AutenticacaoService;
+import servicos.cadastro.CadastroService;
+import servicos.cadastro.Registro;
+import servicos.persistencia.PersistenciaService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,18 +19,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static aplicacao.Formulario.mostrarMensagem;
 import static entidades.EspacoFisico.obterTipoDeEspaco;
-import static servicos.agendamento.AgendamentoService.*;
+import static servicos.agendamento.AgendamentoService.formatarAgendamentosEspaco;
+import static servicos.agendamento.AgendamentoService.formatarAgendamentosUsuario;
 import static servicos.agendamento.Agendar.validarAgendamento;
 import static servicos.cadastro.CadastroService.cadastrarEspacoFisico;
 import static servicos.cadastro.RemoverService.removerEspacoFisico;
 import static util.LocalDateTimeUtils.*;
-
-import excecoes.CampoVazioException;
-import excecoes.EntidadeDuplicadaException;
-import excecoes.ForaDoIntervaloException;
-import servicos.autenticacao.*;
-import servicos.cadastro.*;
-import servicos.persistencia.*;
 
 @SuppressWarnings("ExtractMethodRecommender")
 public class Menu {
@@ -393,8 +394,8 @@ public class Menu {
 				String email = f.resposta("Email (@unb.br)");
 				String telefone = f.resposta("Telefone (com DDD)");
 				String cargo = f.resposta("Cargo");
-				
-				
+
+
 				String departamento = f.resposta("Departamento");
 
 				CadastroService.cadastrarAdministrativo(nome, senha, matriculaInstitucional, email, telefone, departamento, cargo);
@@ -427,7 +428,7 @@ public class Menu {
 		f.adicionarInput("Matrícula Institucional (7-9 dígitos)", true);
 		f.adicionarInput("Curso", true);
 		f.adicionarDropdown("Cargo Acadêmico", new String[]{"Professor Titular", "Professor Associado", "Professor Adjunto", "Professor Assistente", "Professor Auxiliar"});
-		
+
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
 			anterior.mostrar();
@@ -477,7 +478,7 @@ public class Menu {
 		String[] semestres = new String[15];
 
 
-		f.adicionarRadio("Semestre",new String[]{"1º","2º","3º","4º","5º","6º","7º","8º","9º","10º","11º","12º","13º","14º","15º"});
+		f.adicionarRadio("Semestre", new String[]{"1º", "2º", "3º", "4º", "5º", "6º", "7º", "8º", "9º", "10º", "11º", "12º", "13º", "14º", "15º"});
 		f.adicionarInput("Curso", true);
 
 		f.adicionarAcao("Voltar", () -> {
@@ -493,7 +494,7 @@ public class Menu {
 				String senha = f.resposta("Senha");
 				String matricula = f.resposta("Matrícula (9 dígitos)");
 				String email = f.resposta("Email (@aluno.unb.br)");
-				String telefone = f.resposta("Telefone (Com DDD)");
+				String telefone = f.resposta("Telefone (com DDD)");
 				String curso = f.resposta("Curso");
 
 				String strSemestre = f.selecao("Semestre").replace("º", "");
