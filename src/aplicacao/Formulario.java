@@ -1,8 +1,8 @@
 package aplicacao;
 
 import excecoes.CampoVazioException;
-import excecoes.ComponenteDuplicadoException;
-import excecoes.ComponenteNaoExisteException;
+import excecoes.EntidadeDuplicadaException;
+import excecoes.EntidadeInexistenteException;
 import servicos.persistencia.PersistenciaService;
 import util.FiltroRegex;
 
@@ -120,7 +120,7 @@ public class Formulario {
 		JTextField campo = mapaInputs.get(input);
 
 		if (campo == null) {
-			throw new ComponenteNaoExisteException(input);
+			throw new EntidadeInexistenteException("O componente \"" + input + "\" não existe");
 		}
 
 		return campo.getText();
@@ -130,7 +130,7 @@ public class Formulario {
 		JComboBox<String> opcoes = mapaDropdowns.get(dropdown);
 
 		if (opcoes == null) {
-			throw new ComponenteNaoExisteException(dropdown);
+			throw new EntidadeInexistenteException("O componente \"" + dropdown + "\" não existe");
 		}
 
 		Object selecionado = opcoes.getSelectedItem();
@@ -143,7 +143,7 @@ public class Formulario {
 		ButtonGroup opcoes = mapaRadios.get(radio);
 
 		if (opcoes == null) {
-			throw new ComponenteNaoExisteException(radio);
+			throw new EntidadeInexistenteException("O componente \"" + radio + "\" não existe");
 		}
 
 		for (AbstractButton botao : Collections.list(opcoes.getElements())) {
@@ -213,7 +213,7 @@ public class Formulario {
 			campo.setText(texto);
 
 		} else {
-			throw new ComponenteNaoExisteException(input);
+			throw new EntidadeInexistenteException("O componente \"" + input + "\" não existe");
 		}
 	}
 
@@ -245,10 +245,10 @@ public class Formulario {
 
 	protected void adicionarRadio(String texto, String[] opcoes) {
 		if (mapaRadios.containsKey(texto)) {
-			throw new ComponenteDuplicadoException(texto);
+			throw new EntidadeDuplicadaException("Componente \"" + texto + "\" duplicado");
 		}
 
-		painelPrincipal.add(new JLabel(texto));
+		painelPrincipal.add(new JLabel(texto + "*"));
 
 		JPanel painelRadio = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		ButtonGroup radio = new ButtonGroup();
@@ -370,13 +370,13 @@ public class Formulario {
 
 	private void verificarInputValido(String texto) {
 		if (mapaInputs.containsKey(texto)) {
-			throw new ComponenteDuplicadoException(texto);
+			throw new EntidadeDuplicadaException("Componente \"" + texto + "\" duplicado.");
 		}
 	}
 
 	private void verificarDropdownValido(String texto) {
 		if (mapaDropdowns.containsKey(texto)) {
-			throw new ComponenteDuplicadoException(texto);
+			throw new EntidadeDuplicadaException("Componente \"" + texto + "\" duplicado.");
 		}
 	}
 

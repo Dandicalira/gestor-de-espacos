@@ -7,7 +7,7 @@ public class Main {
 		
 		PersistenciaService.carregarDados();
 
-		Menu m = new Menu(Teste.criarTeste());
+		Menu m = new Menu();
 		m.menuInicial();
 
 
