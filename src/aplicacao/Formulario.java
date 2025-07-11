@@ -248,7 +248,7 @@ public class Formulario {
 			throw new ComponenteDuplicadoException(texto);
 		}
 
-		painelPrincipal.add(new JLabel(texto));
+		painelPrincipal.add(new JLabel(texto + "*"));
 
 		JPanel painelRadio = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		ButtonGroup radio = new ButtonGroup();
