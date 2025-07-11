@@ -13,15 +13,15 @@ public class CadastroService {
 	}
 	
 	//Métodos de Cadastro
-	public static void cadastrarAluno() {
+	public static void cadastrarAluno(String nome, String senha, String matricula, String email, String telefone, String curso, int semestre) {
 		//Leitura dos Atributos
-		String nome = cadastrarNome();
-		String senha = cadastrarSenha();
-		String matricula = cadastrarMatricula();
-		String email = cadastrarEmailAluno(matricula);
-		String telefone = cadastrarTelefone();
-		String curso = cadastrarCurso();
-		int semestre = cadastrarSemestre();
+		nome = cadastrarNome();
+		senha = cadastrarSenha();
+		matricula = cadastrarMatricula();
+		email = cadastrarEmailAluno(matricula);
+		telefone = cadastrarTelefone();
+		curso = cadastrarCurso();
+		semestre = cadastrarSemestre();
 		
 		//Criação e Armazenamento do Objeto
 		Aluno aluno = new Aluno(nome, email, senha, telefone, curso, matricula, semestre);

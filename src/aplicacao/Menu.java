@@ -12,6 +12,8 @@ import java.util.List;
 import static aplicacao.Formulario.mostrarMensagem;
 import static servicos.agendamento.AgendamentoService.*;
 import static servicos.agendamento.Agendar.validarAgendamento;
+import static servicos.autenticacao.AutenticacaoService.autenticarSuperUsuario;
+import static servicos.cadastro.CadastroService.cadastrarAluno;
 import static servicos.cadastro.Registro.*;
 
 public class Menu {
@@ -25,6 +27,7 @@ public class Menu {
 
 	public void menuInicial() {
 		Formulario f = new Formulario();
+
 		f.adicionarTexto("MENU INICIAL");
 		f.adicionarTexto("Escolha uma opção:");
 		f.adicionarAcao("Painel de administração", () -> {
@@ -50,9 +53,13 @@ public class Menu {
 		});
 		f.adicionarAcao("Entrar", () -> {
 			if (!f.valido()) return;
-			//todo
-			f.ocultar();
-			menuAdmin(f);
+			try {
+				autenticarSuperUsuario(f.resposta("Digite a senha"));
+				f.ocultar();
+				menuAdmin(f);
+			} catch (Exception e) {
+				f.atualizarErro(e.getMessage());
+			}
 		});
 
 		f.mostrar();
@@ -75,7 +82,6 @@ public class Menu {
 			//todo
 		});
 		f.adicionarAcao("Listar", () -> {
-			f.ocultar();
 			//todo
 		});
 
@@ -92,19 +98,156 @@ public class Menu {
 	}
 
 	private void menuCadastrarEspacoFisico() {
-		//todo
+		Formulario f = new Formulario("Cadastro de Espaço Físico");
+
+		f.adicionarInput("Nome do espaço", true);
+		f.adicionarInput("Localização(S2, I3, LAB NEI 2, ...)", true);
+		f.adicionarInput("Capacidade", true);
+
+		f.adicionarDropdown("Tipo", new String[]{"Sala de aula", "Laboratório", "Auditório", "Outro"});
+
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			menuAdmin(f);
+		});
+
+		f.adicionarAcao("Cadastrar", () -> {
+			if (!f.valido()) return;
+
+			String nome = f.resposta("Nome do espaço");
+			String localizacao = f.resposta("Localização");
+			String capacidadeStr = f.resposta("Capacidade");
+			String tipo = f.opcao("Tipo");
+
+			// TODO: Validar capacidade como número, cadastrar espaço físico
+
+			f.ocultar();
+			menuAdmin(f);
+		});
+
+		f.mostrar();
 	}
 
 	private void menuCadastrarAdministrativo() {
-		//todo
-	}
+		//noinspection ExtractMethodRecommender
+		Formulario f = new Formulario("Cadastro de Técnico Administrativo");
+		f.adicionarTexto("""
+				A senha deve conter:
+				no mínimo, 8 caracteres e, no máximo, 20 caracteres,
+				no mínimo, 1 caractere especial (@, #, ...)
+				no mínimo, 1 dígito numérico
+				no mínimo, 1 letra maiúscula e 1 letra minúscula
+				não deve conter espaços em branco
+				""");
+		f.adicionarInput("Nome", true);
+		f.adicionarInput("Identificação", true);
+		f.adicionarInput("Senha", true);
+		f.adicionarInput("Setor", true);
 
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			menuAdmin(f);
+		});
+
+		f.adicionarAcao("Cadastrar", () -> {
+			if (!f.valido()) return;
+
+			String nome = f.resposta("Nome");
+			String id = f.resposta("Identificação");
+			String senha = f.resposta("Senha");
+			String setor = f.resposta("Setor");
+
+			// TODO: Cadastrar técnico usando Registro.adicionarServidor(...)
+
+			f.ocultar();
+			menuAdmin(f);
+		});
+
+		f.mostrar();
+	}
 	private void menuCadastrarProfessor() {
-		//todo
+		Formulario f = new Formulario("Cadastro de Professor");
+		f.adicionarTexto("""
+				A senha deve conter:
+				no mínimo, 8 caracteres e, no máximo, 20 caracteres,
+				no mínimo, 1 caractere especial (@, #, ...)
+				no mínimo, 1 dígito numérico
+				no mínimo, 1 letra maiúscula e 1 letra minúscula
+				não deve conter espaços em branco
+				""");
+		f.adicionarInput("Nome", true);
+		f.adicionarInput("Identificação", true);
+		f.adicionarInput("Senha", true);
+		f.adicionarInput("Departamento", true);
+
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			menuAdmin(f);
+		});
+
+		f.adicionarAcao("Cadastrar", () -> {
+			if (!f.valido()) return;
+
+			String nome = f.resposta("Nome");
+			String id = f.resposta("Identificação");
+			String senha = f.resposta("Senha");
+			String departamento = f.resposta("Departamento");
+
+			// TODO: Cadastrar professor usando Registro.adicionarServidor(...)
+			f.ocultar();
+			menuAdmin(f);
+		});
+
+		f.mostrar();
 	}
 
 	private void menuCadastrarAluno() {
-		//todo
+		//noinspection ExtractMethodRecommender
+		Formulario f = new Formulario("Cadastro de Aluno");
+
+		f.adicionarTexto("""
+				A senha deve conter:
+				no mínimo, 8 caracteres e, no máximo, 20 caracteres,
+				no mínimo, 1 caractere especial (@, #, ...)
+				no mínimo, 1 dígito numérico
+				no mínimo, 1 letra maiúscula e 1 letra minúscula
+				não deve conter espaços em branco
+				""");
+		f.adicionarInput("Nome", true);
+		f.adicionarInput("Senha", true);
+		f.adicionarInput("Matrícula", true);
+		f.adicionarInput("Email", true);
+		f.adicionarInput("Telefone", true);
+		f.adicionarInput("Semestre", true);
+		f.adicionarInput("Curso", true);
+
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			menuAdmin(f);
+		});
+
+		f.adicionarAcao("Cadastrar", () -> {
+			if (!f.valido()) return;
+
+			try {
+				String nome = f.resposta("Nome");
+				String senha = f.resposta("Senha");
+				String matricula = f.resposta("Matrícula");
+				String email = f.resposta("Email");
+				String telefone = f.resposta("Telefone");
+				String curso = f.resposta("Curso");
+				int semestre = Integer.parseInt(f.resposta("Semestre"));
+
+				cadastrarAluno(nome, senha, matricula, email, telefone, curso, semestre);
+
+				f.ocultar();
+				menuAdmin(f);
+			} catch (Exception e) {
+				f.atualizarErro(e.getMessage());
+			}
+		});
+
+		f.mostrar();
 	}
 
 	private void menuLoginUsuario(Formulario anterior) {
@@ -121,19 +264,16 @@ public class Menu {
 			if (!f.valido()) return;
 			//todo
 			f.ocultar();
-			menuUsuario();
+			menuUsuario(f);
 		});
 
 		f.mostrar();
 	}
 
-	private void menuUsuario() {
+	private void menuUsuario(Formulario anterior) {
 		Formulario f = new Formulario();
-		f.adicionarTexto("Usuário: " + usuarioLogado.getNome());
-		f.adicionarTexto("Matrícula: " + usuarioLogado.getIdentificacao());
-		f.adicionarTexto("Email: " + usuarioLogado.getEmail());
-		f.adicionarTexto("Telefone: " + usuarioLogado.getTelefone());
 
+		f.adicionarTexto("Escolha uma opção:");
 		f.adicionarBotao("Histório de agendamentos", "Conferir", () -> {
 			listarAgendamentosUsuario(f); // popup
 		});
@@ -142,10 +282,12 @@ public class Menu {
 			menuInicial();
 		});
 		f.adicionarAcao("Listar espaços", () -> {
+			//todo
 			f.ocultar();
 			menuListarEspacosFisicos(f);
 		});
 		f.adicionarAcao("Agendar espaço", () -> {
+			//todo
 			f.ocultar();
 			menuAgendarEspacoFisico(f);
 		});
@@ -167,7 +309,6 @@ public class Menu {
 
 		f.mostrar();
 	}
-
 
 	private void menuListarEspacosFisicos(Formulario anterior) {
 		Formulario f = new Formulario();
@@ -220,7 +361,7 @@ public class Menu {
 
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
-			menuUsuario();
+			menuUsuario(f);
 		});
 		f.mostrar();
 	}

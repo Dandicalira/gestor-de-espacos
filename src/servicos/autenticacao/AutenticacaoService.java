@@ -20,9 +20,10 @@ public class AutenticacaoService {
 
 	}
 	
-	public static boolean autenticarSuperUsuario(String senha) {
-		
-		return senha.equals("314");
+	public static void autenticarSuperUsuario(String senha) {
+		if (!senha.equals("314")) {
+			throw new LoginInvalidoException();
+		}
 	}
 	
 	//Métodos Privados Internos
