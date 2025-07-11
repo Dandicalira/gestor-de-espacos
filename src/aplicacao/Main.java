@@ -8,5 +8,7 @@ public class Main {
 
 		Menu m = new Menu();
 		m.menuInicial();
+
+		PersistenciaService.salvarDados();
 	}
 }
