@@ -6,6 +6,7 @@ import servicos.cadastro.Registro;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 public class Teste {
 	static int ano = 2025;
@@ -110,7 +111,7 @@ public class Teste {
 	static EspacoFisico gerarSalaDeAula1() {
 		Equipamento projetor = new Equipamento("Projetor", 1);
 		Equipamento quadroBranco = new Equipamento("Quadro Branco", 2);
-		Equipamento[] equipamentos = {projetor, quadroBranco};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{projetor, quadroBranco});
 
 		return new EspacoFisico(
 				30,
@@ -124,7 +125,7 @@ public class Teste {
 
 	static EspacoFisico gerarSalaDeAula2() {
 		Equipamento quadroDigital = new Equipamento("Quadro Digital", 1);
-		Equipamento[] equipamentos = {quadroDigital};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{quadroDigital});
 
 		return new EspacoFisico(
 				25,
@@ -139,7 +140,7 @@ public class Teste {
 	static EspacoFisico gerarSalaDeAula3() {
 		Equipamento projetor = new Equipamento("Projetor", 1);
 		Equipamento arCondicionado = new Equipamento("Ar Condicionado", 1);
-		Equipamento[] equipamentos = {projetor, arCondicionado};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{projetor, arCondicionado});
 
 		return new EspacoFisico(
 				40,
@@ -153,7 +154,7 @@ public class Teste {
 
 	static EspacoFisico gerarSalaDeAula4() {
 		Equipamento quadroBranco = new Equipamento("Quadro Branco", 1);
-		Equipamento[] equipamentos = {quadroBranco};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{quadroBranco});
 
 		return new EspacoFisico(
 				20,
@@ -168,7 +169,7 @@ public class Teste {
 	static EspacoFisico gerarSalaDeAula5() {
 		Equipamento projetor = new Equipamento("Projetor", 1);
 		Equipamento sistemaSom = new Equipamento("Sistema de Som", 1);
-		Equipamento[] equipamentos = {projetor, sistemaSom};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{projetor, sistemaSom});
 
 		return new EspacoFisico(
 				35,
@@ -183,7 +184,7 @@ public class Teste {
 	static EspacoFisico gerarSalaDeAula6() {
 		Equipamento quadroBranco = new Equipamento("Quadro Branco", 1);
 		Equipamento arCondicionado = new Equipamento("Ar Condicionado", 1);
-		Equipamento[] equipamentos = {quadroBranco, arCondicionado};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{quadroBranco, arCondicionado});
 
 		return new EspacoFisico(
 				28,
@@ -198,7 +199,7 @@ public class Teste {
 	static EspacoFisico gerarSalaDeAula7() {
 		Equipamento projetor = new Equipamento("Projetor", 1);
 		Equipamento quadroDigital = new Equipamento("Quadro Digital", 1);
-		Equipamento[] equipamentos = {projetor, quadroDigital};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{projetor, quadroDigital});
 
 		return new EspacoFisico(
 				45,
@@ -213,7 +214,7 @@ public class Teste {
 	static EspacoFisico gerarSalaDeAula8() {
 		Equipamento quadroBranco = new Equipamento("Quadro Branco", 2);
 		Equipamento sistemaSom = new Equipamento("Sistema de Som", 1);
-		Equipamento[] equipamentos = {quadroBranco, sistemaSom};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{quadroBranco, sistemaSom});
 
 		return new EspacoFisico(
 				33,
@@ -229,7 +230,7 @@ public class Teste {
 		Equipamento projetor = new Equipamento("Projetor", 1);
 		Equipamento quadroBranco = new Equipamento("Quadro Branco", 1);
 		Equipamento arCondicionado = new Equipamento("Ar Condicionado", 1);
-		Equipamento[] equipamentos = {projetor, quadroBranco, arCondicionado};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{projetor, quadroBranco, arCondicionado});
 
 		return new EspacoFisico(
 				38,
@@ -245,7 +246,7 @@ public class Teste {
 		Equipamento quadroDigital = new Equipamento("Quadro Digital", 1);
 		Equipamento sistemaSom = new Equipamento("Sistema de Som", 1);
 		Equipamento arCondicionado = new Equipamento("Ar Condicionado", 1);
-		Equipamento[] equipamentos = {quadroDigital, sistemaSom, arCondicionado};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{quadroDigital, sistemaSom, arCondicionado});
 
 		return new EspacoFisico(
 				50,
@@ -259,7 +260,7 @@ public class Teste {
 
 	static EspacoFisico gerarLaboratorio() {
 		Equipamento mesas = new Equipamento("Mesas", 7);
-		Equipamento[] equipamentos = {mesas};
+		List<Equipamento> equipamentos = List.of(new Equipamento[]{mesas});
 
 		LocalTime inicio = LocalTime.of(7, 0);
 		LocalTime fim = LocalTime.of(16, 0);

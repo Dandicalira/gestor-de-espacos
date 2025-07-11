@@ -2,6 +2,7 @@ package servicos.cadastro;
 import entidades.*;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import static servicos.cadastro.Verificar.verificarCapacidade;
 import static servicos.cadastro.Verificar.verificarHorarioFuncionamento;
@@ -61,7 +62,7 @@ public class CadastroService {
 		}
 	
 		public static void cadastrarEspacoFisico(int capacidade, LocalTime horarioInicialDisponivel, LocalTime horarioFinalDisponivel,
-		                                         String localizacao, EspacoFisico.TipoDeEspaco tipo, Equipamento[] equipamentos) {
+		                                         String localizacao, EspacoFisico.TipoDeEspaco tipo, List<Equipamento> equipamentos) {
 			verificarCapacidade(capacidade);
 			verificarHorarioFuncionamento(horarioFinalDisponivel, horarioFinalDisponivel);
 			Verificar.verificarLocalizacao(localizacao);

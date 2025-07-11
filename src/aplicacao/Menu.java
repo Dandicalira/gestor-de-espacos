@@ -6,7 +6,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static aplicacao.Formulario.mostrarMensagem;
 import static entidades.EspacoFisico.obterTipoDeEspaco;
@@ -16,6 +18,9 @@ import static servicos.cadastro.CadastroService.cadastrarEspacoFisico;
 import static servicos.cadastro.RemoverService.removerEspacoFisico;
 import static util.LocalDateTimeUtils.*;
 
+import excecoes.CampoVazioException;
+import excecoes.EntidadeDuplicadaException;
+import excecoes.ForaDoIntervaloException;
 import servicos.autenticacao.*;
 import servicos.cadastro.*;
 import servicos.persistencia.*;
@@ -231,15 +236,22 @@ public class Menu {
 	private void menuCadastrarEspacoFisico(Formulario anterior) {
 		Formulario f = new Formulario("Cadastro de Espaço Físico");
 
+		f.adicionarDropdown("Tipo", new String[]{"Sala de Aula", "Laboratório", "Sala de Estudos"});
+
 		f.adicionarInput("Localização", true);
 		f.adicionarInput("Capacidade", true, "ALGARISMOS");
-
-		f.adicionarDropdown("Tipo", new String[]{"Sala de Aula", "Laboratório", "Sala de Estudos"});
 
 		f.adicionarInput("Horário inicial de funcionamento", true, "HORARIO");
 		f.adicionarInput("Horário final de funcionamento", true, "HORARIO");
 
-		f.adicionarBotao("Equipamentos", "Listar", () -> {});
+		// Mágica para guardar os equipamentos
+		AtomicReference<List<Equipamento>> equipamentosRef = new AtomicReference<>(new ArrayList<>());
+
+		f.adicionarBotao("Equipamentos", "Cadastrar", () -> {
+			f.ocultar();
+			List<Equipamento> equipamentos = menuCadastrarEquipamento(f);
+			equipamentosRef.set(equipamentos); // Armazena os equipamentos
+		});
 
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
@@ -257,8 +269,7 @@ public class Menu {
 
 				int capacidade = Integer.parseInt(f.resposta("Capacidade"));
 
-				// TODO: Cadastrar equipamentos
-				Equipamento[] equipamentos = new Equipamento[] {new Equipamento("Mesa", 3)};
+				List<Equipamento> equipamentos = equipamentosRef.get(); // Recupera os equipamentos
 
 				cadastrarEspacoFisico(capacidade, horarioInicial, horarioFinal, localizacao, tipo, equipamentos);
 
@@ -267,6 +278,85 @@ public class Menu {
 				f.atualizarErro(e.getMessage());
 			}
 		});
+
+		f.mostrar();
+	}
+
+	private List<Equipamento> menuCadastrarEquipamento(Formulario anterior) {
+		Formulario f = new Formulario("Cadastro de equipamento");
+		List<Equipamento> equipamentos = new ArrayList<>();
+
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			anterior.mostrar();
+		});
+		f.adicionarAcao("Adicionar equipamento", () -> {
+			if (!f.valido()) return;
+			try {
+				String nome = f.resposta("Nome");
+				int quantidade = Integer.parseInt(f.resposta("Quantidade"));
+
+				Equipamento equipamento = new Equipamento(nome, quantidade);
+				validarEquipamento(equipamento, equipamentos);
+
+				equipamentos.add(equipamento);
+				f.atualizarErro("Equipamento adicionado com sucesso!", true);
+			} catch (Exception e) {
+				f.atualizarErro(e.getMessage());
+			}
+		});
+
+		f.adicionarBotao("Equipamentos", "Ver lista", () -> {
+			listarEquipamentosEmProcessamento(f, equipamentos);
+		});
+
+		f.adicionarInput("Nome", true);
+		f.adicionarInput("Quantidade", true, "ALGARISMOS");
+
+		f.mostrar();
+
+		return equipamentos;
+	}
+
+	private void validarEquipamento(Equipamento equipamento, List<Equipamento> equipamentos) {
+		if (equipamento.getNome().isEmpty()) {
+			throw new CampoVazioException();
+		}
+
+		if (equipamento.getQuantidade() == 0) {
+			throw new ForaDoIntervaloException("A quantidade deve ser maior que 0");
+		}
+
+		for (Equipamento equipamentoListado : equipamentos) {
+			if (equipamentoListado.getNome().equals(equipamento.getNome())) {
+				throw new EntidadeDuplicadaException("Equipamento \"" + equipamento.getNome() + "\" ja foi cadastrado!");
+			}
+		}
+	}
+
+	private void listarEquipamentosEmProcessamento(Formulario anterior, List<Equipamento> equipamentos) {
+		Formulario f = new Formulario("Lista de equipamentos");
+
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			anterior.mostrar();
+		});
+
+		if (equipamentos.isEmpty()) {
+			f.adicionarTexto("Nenhum equipamento cadastrado.");
+			f.mostrar();
+			return;
+		}
+
+		for (Equipamento equipamento : equipamentos) {
+			String nomeQuantidade = equipamento.getNome() + " (" + equipamento.getQuantidade() + ")";
+			f.adicionarBotao(nomeQuantidade, "Remover", () -> {
+				equipamentos.remove(equipamento);
+
+				f.ocultar();
+				listarEquipamentosEmProcessamento(anterior, equipamentos);
+			});
+		}
 
 		f.mostrar();
 	}
@@ -283,9 +373,9 @@ public class Menu {
 				""");
 		f.adicionarInput("Nome", true);
 		f.adicionarSenha("Senha");
-		f.adicionarInput("Email", true);
-		f.adicionarInput("Telefone", true, "ALGARISMOS");
-		f.adicionarInput("Matrícula Institucional", true);
+		f.adicionarInput("Email (@unb.br)", true);
+		f.adicionarInput("Telefone (com DDD)", true, "ALGARISMOS");
+		f.adicionarInput("Matrícula Institucional (7-9 dígitos)", true);
 		f.adicionarInput("Cargo", true);
 		f.adicionarInput("Departamento", true);
 		f.adicionarAcao("Voltar", () -> {
@@ -299,9 +389,9 @@ public class Menu {
 			try {
 				String nome = f.resposta("Nome");
 				String senha = f.resposta("Senha");
-				String matriculaInstitucional = f.resposta("Matrícula Institucional");
-				String email = f.resposta("Email");
-				String telefone = f.resposta("Telefone");
+				String matriculaInstitucional = f.resposta("Matrícula Institucional (7-9 dígitos)");
+				String email = f.resposta("Email (@unb.br)");
+				String telefone = f.resposta("Telefone (com DDD)");
 				String cargo = f.resposta("Cargo");
 				
 				
@@ -332,9 +422,9 @@ public class Menu {
 				""");
 		f.adicionarInput("Nome", true);
 		f.adicionarSenha("Senha");
-		f.adicionarInput("Email", true);
-		f.adicionarInput("Telefone", true, "ALGARISMOS");
-		f.adicionarInput("Matrícula Institucional", true);
+		f.adicionarInput("Email (@unb.br)", true);
+		f.adicionarInput("Telefone (com DDD)", true, "ALGARISMOS");
+		f.adicionarInput("Matrícula Institucional (7-9 dígitos)", true);
 		f.adicionarInput("Curso", true);
 		f.adicionarDropdown("Cargo Acadêmico", new String[]{"Professor Titular", "Professor Associado", "Professor Adjunto", "Professor Assistente", "Professor Auxiliar"});
 		
@@ -349,9 +439,9 @@ public class Menu {
 			try {
 				String nome = f.resposta("Nome");
 				String senha = f.resposta("Senha");
-				String matriculaInstitucional = f.resposta("Matrícula Institucional");
-				String email = f.resposta("Email");
-				String telefone = f.resposta("Telefone");
+				String matriculaInstitucional = f.resposta("Matrícula Institucional (7-9 dígitos)");
+				String email = f.resposta("Email (@unb.br)");
+				String telefone = f.resposta("Telefone (com DDD)");
 				String curso = f.resposta("Curso");
 				Professor.CargoAcademico cargoAcademico = Professor.obterCargo(f.opcao("Cargo Acadêmico"));
 				CadastroService.cadastrarProfessor(nome, senha, matriculaInstitucional, email, telefone, curso, cargoAcademico);
@@ -380,9 +470,9 @@ public class Menu {
 				""");
 		f.adicionarInput("Nome", true);
 		f.adicionarSenha("Senha");
-		f.adicionarInput("Email", true);
-		f.adicionarInput("Telefone", true, "ALGARISMOS");
-		f.adicionarInput("Matrícula", true);
+		f.adicionarInput("Email (@aluno.unb.br)", true);
+		f.adicionarInput("Telefone (com DDD)", true, "ALGARISMOS");
+		f.adicionarInput("Matrícula (9 dígitos)", true);
 
 		String[] semestres = new String[15];
 
@@ -401,9 +491,9 @@ public class Menu {
 			try {
 				String nome = f.resposta("Nome");
 				String senha = f.resposta("Senha");
-				String matricula = f.resposta("Matrícula");
-				String email = f.resposta("Email");
-				String telefone = f.resposta("Telefone");
+				String matricula = f.resposta("Matrícula (9 dígitos)");
+				String email = f.resposta("Email (@aluno.unb.br)");
+				String telefone = f.resposta("Telefone (Com DDD)");
 				String curso = f.resposta("Curso");
 
 				String strSemestre = f.selecao("Semestre").replace("º", "");

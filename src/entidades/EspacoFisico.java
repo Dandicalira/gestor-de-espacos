@@ -17,14 +17,14 @@ public class EspacoFisico {
 	private String localizacao; //Sala de Aula, Laboratório ou Sala de Estudos
 	private LocalTime horarioInicialDisponivel,
 				      horarioFinalDisponivel;
-	private Equipamento[] equipamentos;
+	private List<Equipamento> equipamentos;
 	private transient List<Agendamento> agendamentos = new ArrayList<>();
 	private TipoDeEspaco tipo;
 
 	//Métodos Construtores
 	public EspacoFisico() {}
 
-	public EspacoFisico(int capacidade, LocalTime horarioInicialDisponivel, LocalTime horarioFinalDisponivel, String localizacao, TipoDeEspaco tipo, Equipamento[] equipamentos) {
+	public EspacoFisico(int capacidade, LocalTime horarioInicialDisponivel, LocalTime horarioFinalDisponivel, String localizacao, TipoDeEspaco tipo, List<Equipamento> equipamentos) {
 		this.capacidade = capacidade;
 		this.horarioInicialDisponivel = horarioInicialDisponivel;
 		this.horarioFinalDisponivel = horarioFinalDisponivel;
@@ -54,20 +54,10 @@ public class EspacoFisico {
 		return tipo;
 	}
 	
-	public Equipamento[] getEquipamentos() {
+	public List<Equipamento> getEquipamentos() {
 		return equipamentos;
 	}
 
-	public static Equipamento[] adicionarEquipamento(Equipamento equipamento, Equipamento[] equipamentos) {
-		Equipamento[] temp = new Equipamento[equipamentos.length + 1];
-		for (int i = 0; i < equipamentos.length; i++) {
-			temp[i] = equipamentos[i];
-		}
-		temp[equipamentos.length] = equipamento;
-		equipamentos = temp;
-		return equipamentos;
-	}
-	
 	//Sobrescrita dos Métodos equals e hashCode
 	@Override
 	public boolean equals(Object objeto) {
@@ -108,7 +98,7 @@ public class EspacoFisico {
 		espaco += "Tipo: " + obterTipoDeEspaco(tipo) + "\n \n";
 		espaco += "Localização: " + getLocalizacao() + "\n \n";
 		espaco += "Capacidade: " + getCapacidade() + "\n \n";
-		espaco += "Equipamentos: " + Arrays.toString(equipamentos) + "\n";
+		espaco += "Equipamentos: " + listarEquipamentos() + "\n";
 		espaco += "------------------------------------------------------------\n";
 		return espaco;
 	}
@@ -118,13 +108,27 @@ public class EspacoFisico {
 		LABORATORIO,
 		SALADEESTUDOS;
 	}
-	
-public static TipoDeEspaco obterTipoDeEspaco(String tipoDeEspaco) {
-	return switch (tipoDeEspaco) {
-		case "Laboratório" -> TipoDeEspaco.LABORATORIO;
-		case "Sala de Estudos" -> TipoDeEspaco.SALADEESTUDOS;
-		default -> TipoDeEspaco.SALADEAULA;
-	};
+
+	public String listarEquipamentos() {
+		if (equipamentos == null || equipamentos.isEmpty()) {
+			return "Nenhum equipamento cadastrado.\n";
+		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n");
+		for (int i = 0; i < equipamentos.size(); i++) {
+			Equipamento eq = equipamentos.get(i);
+			sb.append("  ").append(i + 1).append(". ").append(eq).append("\n");
+		}
+		return sb.toString();
+	}
+
+	public static TipoDeEspaco obterTipoDeEspaco(String tipoDeEspaco) {
+		return switch (tipoDeEspaco) {
+			case "Laboratório" -> TipoDeEspaco.LABORATORIO;
+			case "Sala de Estudos" -> TipoDeEspaco.SALADEESTUDOS;
+			default -> TipoDeEspaco.SALADEAULA;
+		};
 	}
 
 	public static String obterTipoDeEspaco(TipoDeEspaco tipoDeEspaco) {
