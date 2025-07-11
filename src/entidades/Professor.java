@@ -33,9 +33,9 @@ public class Professor extends Servidor{
 				                      Ficha do Professor
 				------------------------------------------------------------
 				""";
-		professor += "Nome: " + getNome() + "\n \n";
-		professor += "Matrícula Institucional: " + getIdentificacao() + "\n \n";
-		professor += "Email: " + getEmail() + "\n \n";
+		professor += "Nome: " + getNome() + "\n\n";
+		professor += "Matrícula Institucional: " + getIdentificacao() + "\n\n";
+		professor += "Email: " + getEmail() + "\n\n";
 		professor += "Cargo Acadêmico: " + obterCargo(cargoAcademico) + "\n";
 		professor += "------------------------------------------------------------\n";
 		return professor;

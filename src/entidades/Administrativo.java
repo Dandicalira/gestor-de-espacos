@@ -33,10 +33,10 @@ public class Administrativo extends Servidor{
 				               Ficha do Técnico-Administrativo
 				------------------------------------------------------------
 				""";
-		administrativo += "Nome: " + getNome() + "\n \n";
-		administrativo += "Matrícula Institucional : " + getIdentificacao() + "\n \n";
-		administrativo += "Email: " + getEmail() + "\n \n";
-		administrativo += "Cargo: " + getCargo() + "\n \n";
+		administrativo += "Nome: " + getNome() + "\n\n";
+		administrativo += "Matrícula Institucional : " + getIdentificacao() + "\n\n";
+		administrativo += "Email: " + getEmail() + "\n\n";
+		administrativo += "Cargo: " + getCargo() + "\n\n";
 		administrativo += "Departamento: " + getDepartamento() + "\n";
 		administrativo += "------------------------------------------------------------\n";
 		return administrativo;

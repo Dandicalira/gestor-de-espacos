@@ -95,9 +95,9 @@ public class EspacoFisico {
 				                   Ficha do Espaço Físico
 				------------------------------------------------------------
 				""";
-		espaco += "Tipo: " + obterTipoDeEspaco(tipo) + "\n \n";
-		espaco += "Localização: " + getLocalizacao() + "\n \n";
-		espaco += "Capacidade: " + getCapacidade() + "\n \n";
+		espaco += "Tipo: " + obterTipoDeEspaco(tipo) + "\n\n";
+		espaco += "Localização: " + getLocalizacao() + "\n\n";
+		espaco += "Capacidade: " + getCapacidade() + "\n\n";
 		espaco += "Equipamentos: " + listarEquipamentos() + "\n";
 		espaco += "------------------------------------------------------------\n";
 		return espaco;

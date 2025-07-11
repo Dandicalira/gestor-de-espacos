@@ -273,8 +273,8 @@ public class Formulario {
 
 
 	protected void adicionarTexto(String texto) {
-		for (String linha : texto.split("\n")) {
-			JLabel componente = new JLabel(linha);
+		for (String linha : texto.split("\n", -1)) {
+			JLabel componente = new JLabel(linha.isBlank() ? " " : linha);
 			painelTexto.add(componente);
 		}
 	}

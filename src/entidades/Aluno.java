@@ -61,9 +61,9 @@ public class Aluno extends Usuario{
 				                      Ficha do Aluno
 				------------------------------------------------------------
 				""";
-		aluno += "Nome: " + getNome() + "\n \n";
-		aluno += "Matrícula : " + getIdentificacao() + "\n \n";
-		aluno += "Email: " + getEmail() + "\n \n";
+		aluno += "Nome: " + getNome() + "\n\n";
+		aluno += "Matrícula : " + getIdentificacao() + "\n\n";
+		aluno += "Email: " + getEmail() + "\n\n";
 		aluno += "Curso: " + getCurso() + "\n";
 		aluno += "------------------------------------------------------------\n";
 		return aluno;
