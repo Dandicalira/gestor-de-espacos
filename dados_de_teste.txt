@@ -137,4 +137,210 @@
       "nome": "Pedro Rocha",
       "email": "pedro.rocha@unb.br",
       "senha": "Admin!2029",
-      "telefone": "
+      "telefone": "61977770005"
+    }
+  ],
+  "salasDeAula": [
+    {
+      "capacidade": 40,
+      "localizacao": "ICC-N-A1-101",
+      "horarioInicialDisponivel": "07:30",
+      "horarioFinalDisponivel": "22:00",
+      "equipamentos": [
+        { "nome": "Projetor", "quantidade": 1 },
+        { "nome": "Quadro Branco", "quantidade": 2 }
+      ],
+      "tipo": "SALADEAULA"
+    },
+    {
+      "capacidade": 60,
+      "localizacao": "PJC-AU-05",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "21:00",
+      "equipamentos": [
+        { "nome": "Projetor", "quantidade": 2 },
+        { "nome": "Sistema de Som", "quantidade": 1 }
+      ],
+      "tipo": "SALADEAULA"
+    },
+    {
+      "capacidade": 50,
+      "localizacao": "FT-A1-01",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "20:00",
+      "equipamentos": [
+        { "nome": "Projetor", "quantidade": 1 },
+        { "nome": "Quadro Negro", "quantidade": 1 }
+      ],
+      "tipo": "SALADEAULA"
+    },
+    {
+      "capacidade": 30,
+      "localizacao": "FAU-S1-12",
+      "horarioInicialDisponivel": "07:00",
+      "horarioFinalDisponivel": "22:00",
+      "equipamentos": [
+        { "nome": "Mesa de Desenho", "quantidade": 30 },
+        { "nome": "Quadro Branco", "quantidade": 1 }
+      ],
+      "tipo": "SALADEAULA"
+    },
+    {
+      "capacidade": 70,
+      "localizacao": "ICC-S-AT-24",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "18:00",
+      "equipamentos": [
+        { "nome": "Projetor", "quantidade": 1 },
+        { "nome": "Ar Condicionado", "quantidade": 2 },
+        { "nome": "Sistema de Som", "quantidade": 1 }
+      ],
+      "tipo": "SALADEAULA"
+    }
+  ],
+  "laboratorios": [
+    {
+      "capacidade": 25,
+      "localizacao": "CIC-LCC-01",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "18:00",
+      "equipamentos": [
+        { "nome": "Computador i5", "quantidade": 25 },
+        { "nome": "Bancada", "quantidade": 10 }
+      ],
+      "tipo": "LABORATORIO"
+    },
+    {
+      "capacidade": 20,
+      "localizacao": "IQ-LQ-03",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "17:00",
+      "equipamentos": [
+        { "nome": "Vidraria Completa", "quantidade": 20 },
+        { "nome": "Capela de Exaustao", "quantidade": 5 }
+      ],
+      "tipo": "LABORATORIO"
+    },
+    {
+      "capacidade": 15,
+      "localizacao": "ENM-L03",
+      "horarioInicialDisponivel": "09:00",
+      "horarioFinalDisponivel": "17:00",
+      "equipamentos": [
+        { "nome": "Bancada de Testes Mecanicos", "quantidade": 3 },
+        { "nome": "Ferramentas Diversas", "quantidade": 50 }
+      ],
+      "tipo": "LABORATORIO"
+    },
+    {
+      "capacidade": 20,
+      "localizacao": "IB-LBF-02",
+      "horarioInicialDisponivel": "08:30",
+      "horarioFinalDisponivel": "17:30",
+      "equipamentos": [
+        { "nome": "Microscopio", "quantidade": 20 },
+        { "nome": "Autoclave", "quantidade": 1 }
+      ],
+      "tipo": "LABORATORIO"
+    },
+    {
+      "capacidade": 25,
+      "localizacao": "ENE-LE-05",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "19:00",
+      "equipamentos": [
+        { "nome": "Osciloscopio", "quantidade": 12 },
+        { "nome": "Fonte de Tensao", "quantidade": 12 }
+      ],
+      "tipo": "LABORATORIO"
+    }
+  ],
+  "salasDeEstudos": [
+    {
+      "capacidade": 50,
+      "localizacao": "BCE-S-E-01",
+      "horarioInicialDisponivel": "07:00",
+      "horarioFinalDisponivel": "22:50",
+      "equipamentos": [
+        { "nome": "Mesa Individual", "quantidade": 50 },
+        { "nome": "Ponto de Energia", "quantidade": 50 }
+      ],
+      "tipo": "SALADEESTUDOS"
+    },
+    {
+      "capacidade": 8,
+      "localizacao": "BCE-S-G-02",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "22:00",
+      "equipamentos": [
+        { "nome": "Mesa de Reuniao", "quantidade": 1 },
+        { "nome": "Quadro Branco", "quantidade": 1 }
+      ],
+      "tipo": "SALADEESTUDOS"
+    },
+    {
+      "capacidade": 20,
+      "localizacao": "ICC-N-S-03",
+      "horarioInicialDisponivel": "07:00",
+      "horarioFinalDisponivel": "23:00",
+      "equipamentos": [
+        { "nome": "Baia de Estudo Individual", "quantidade": 20 }
+      ],
+      "tipo": "SALADEESTUDOS"
+    },
+    {
+      "capacidade": 10,
+      "localizacao": "FT-S-E-01",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "21:00",
+      "equipamentos": [
+        { "nome": "Mesa de Grupo", "quantidade": 2 },
+        { "nome": "Puff", "quantidade": 5 }
+      ],
+      "tipo": "SALADEESTUDOS"
+    },
+    {
+      "capacidade": 12,
+      "localizacao": "FD-S-E-01",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "22:00",
+      "equipamentos": [
+        { "nome": "Cabine Acustica", "quantidade": 12 },
+        { "nome": "Ponto de Energia", "quantidade": 12 }
+      ],
+      "tipo": "SALADEESTUDOS"
+    }
+  ],
+  "agendamentos": [
+    {
+      "dataInicio": "2025-08-04T10:00",
+      "dataFim": "2025-08-04T12:00",
+      "usuarioId": "1100001",
+      "espacoId": "ICC-N-A1-101"
+    },
+    {
+      "dataInicio": "2025-07-14T14:00",
+      "dataFim": "2025-07-14T16:00",
+      "usuarioId": "231000001",
+      "espacoId": "BCE-S-E-01"
+    },
+    {
+      "dataInicio": "2025-09-01T09:00",
+      "dataFim": "2025-09-03T18:00",
+      "usuarioId": "1100003",
+      "espacoId": "PJC-AU-05"
+    },
+    {
+      "dataInicio": "2025-07-21T08:30",
+      "dataFim": "2025-07-21T12:30",
+      "usuarioId": "2200003",
+      "espacoId": "IQ-LQ-03"
+    },
+    {
+      "dataInicio": "2025-07-15T13:00",
+      "dataFim": "2025-07-15T17:50",
+      "usuarioId": "221000002",
+      "espacoId": "CIC-LCC-01"
+    }
+  ]
+}
