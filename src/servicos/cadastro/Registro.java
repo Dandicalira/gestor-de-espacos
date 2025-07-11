@@ -26,6 +26,28 @@ public class Registro {
 	public static ArrayList<Servidor> getServidores() {
 		return servidores;
 	}
+
+	public static ArrayList<Professor> getProfessores() {
+		ArrayList<Professor> professores = new ArrayList<>();
+
+		for (Servidor servidor : servidores) {
+			if (servidor instanceof Professor professor) {
+				professores.add(professor);
+			}
+		}
+		return professores;
+	}
+
+	public static ArrayList<Administrativo> getAdministrativos() {
+		ArrayList<Administrativo> administrativos = new ArrayList<>();
+
+		for (Servidor servidor : servidores) {
+			if (servidor instanceof Administrativo administrativo) {
+				administrativos.add(administrativo);
+			}
+		}
+		return administrativos;
+	}
 	
 	public static ArrayList<EspacoFisico> getSalasDeAula() {
 		return salasDeAula;

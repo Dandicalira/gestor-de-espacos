@@ -8,33 +8,7 @@ public class RemoverService {
 	private RemoverService() {
 		
 	}
-	
-	public static void removerAluno() {
-		
-		imprimirAlunos();
-		String matricula = "";
-		while (true) {
-			try {
-				System.out.print("Digite a matrícula do aluno a ser removido (0 para voltar): ");
-				//matricula = EntradaDeDados.lerString();
-				if (matricula.equals("0")) {
-					throw new VoltarException();
-				}
-				Aluno aluno = buscarAluno(matricula);
-				if (aluno == null) {
-					throw new EntidadeInexistenteException("A matrícula informada não corresponde a nenhum aluno. Por favor, tente novamente\n");
-				}
-				else {
-					Registro.excluirAluno(aluno);
-					System.out.println("O aluno foi removido com êxito!");
-					break;
-				}
-			} catch(Exception e) {
-				throw e;
-			}
-		}
-	}
-	
+
 	public static void removerServidor() {
 		
 		imprimirServidores();
@@ -61,38 +35,17 @@ public class RemoverService {
 		}
 	}
 	
-	public static void removerEspacoFisico() {
-		
-		imprimirEspacosFisicos();
-		String localizacao = "";
-		while (true) {
-			try {
-				System.out.print("Digite a localização exata do espaço a ser removido (0 para voltar): ");
-				//localizacao = EntradaDeDados.lerString();
-				if (localizacao.equals("0")) {
-					throw new VoltarException();
-				}
-				EspacoFisico espaco = buscarEspacoFisico(localizacao);
-				if (espaco == null) {
-					throw new EntidadeInexistenteException("A localização não corresponde a nenhum espaço físico cadastrado no sistema. Por favor, tente novamente\n");
-				}
-				else {
-					switch (espaco.getTipo()) {
-					case SALADEAULA:
-						Registro.excluirSalaDeAula(espaco);
-						break;
-					case LABORATORIO:
-						Registro.excluirLaboratorio(espaco);
-						break;
-					case SALADEESTUDOS:
-						Registro.excluirSalaDeEstudos(espaco);
-						break;
-				}
-					break;
-				}
-			} catch(Exception e) {
-				throw e;
-			}
+	public static void removerEspacoFisico(EspacoFisico espaco) {
+		switch (espaco.getTipo()) {
+		case SALADEAULA:
+			Registro.excluirSalaDeAula(espaco);
+			break;
+		case LABORATORIO:
+			Registro.excluirLaboratorio(espaco);
+			break;
+		case SALADEESTUDOS:
+			Registro.excluirSalaDeEstudos(espaco);
+			break;
 		}
 	}
 	

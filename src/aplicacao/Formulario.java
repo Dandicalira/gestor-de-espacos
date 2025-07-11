@@ -120,7 +120,7 @@ public class Formulario {
 		JTextField campo = mapaInputs.get(input);
 
 		if (campo == null) {
-			throw new EntidadeInexistenteException("O componente \"" + input + "\" não existe");
+			throw new EntidadeInexistenteException("O input \"" + input + "\" não existe");
 		}
 
 		return campo.getText();
@@ -130,7 +130,7 @@ public class Formulario {
 		JComboBox<String> opcoes = mapaDropdowns.get(dropdown);
 
 		if (opcoes == null) {
-			throw new EntidadeInexistenteException("O componente \"" + dropdown + "\" não existe");
+			throw new EntidadeInexistenteException("O dropdown \"" + dropdown + "\" não existe");
 		}
 
 		Object selecionado = opcoes.getSelectedItem();
@@ -143,7 +143,7 @@ public class Formulario {
 		ButtonGroup opcoes = mapaRadios.get(radio);
 
 		if (opcoes == null) {
-			throw new EntidadeInexistenteException("O componente \"" + radio + "\" não existe");
+			throw new EntidadeInexistenteException("O radio \"" + radio + "\" não existe");
 		}
 
 		for (AbstractButton botao : Collections.list(opcoes.getElements())) {

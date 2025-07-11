@@ -3,6 +3,9 @@ import entidades.*;
 
 import java.time.LocalTime;
 
+import static servicos.cadastro.Verificar.verificarCapacidade;
+import static servicos.cadastro.Verificar.verificarHorarioFuncionamento;
+
 public class CadastroService {
 
 	//Método Construtor Privado
@@ -57,22 +60,12 @@ public class CadastroService {
 		Registro.registrarServidor(administrativo);
 		}
 	
-		public static void cadastrarEspacoFisico(int capacidade, LocalTime horarioInicialDisponivel, LocalTime horarioFinalDisponivel, String localizacao, EspacoFisico.TipoDeEspaco tipo) {
-			//Leitura dos Atributos
-			capacidade = cadastrarCapacidade(capacidade);
-			horarioInicialDisponivel = cadastrarHorarioInicialDisponivel(horarioInicialDisponivel.getHour(), horarioInicialDisponivel.getMinute());
-			horarioFinalDisponivel = cadastrarHorarioFinalDisponivel(horarioFinalDisponivel.getHour(), horarioFinalDisponivel.getMinute());
-			localizacao = cadastrarLocalizacao(localizacao);
-			Equipamento[] equipamentos = new Equipamento[0];
-			/*String resp = "";
-			/*
-			 * do { equipamentos =
-			 * EspacoFisico.adicionarEquipamento(cadastrarEquipamento(equipamentos),
-			 * equipamentos);
-			 * System.out.print("Deseja cadastrar mais um tipo de equipamento? (S / N): ");
-			 * resp = EntradaDeDados.lerString().toLowerCase(); } while (!resp.equals("n")
-			 * && !resp.equals("não") && !resp.equals("nao"));
-			 */
+		public static void cadastrarEspacoFisico(int capacidade, LocalTime horarioInicialDisponivel, LocalTime horarioFinalDisponivel,
+		                                         String localizacao, EspacoFisico.TipoDeEspaco tipo, Equipamento[] equipamentos) {
+			verificarCapacidade(capacidade);
+			verificarHorarioFuncionamento(horarioFinalDisponivel, horarioFinalDisponivel);
+			Verificar.verificarLocalizacao(localizacao);
+
 			//Criação e Armazenamento do Objeto
 			EspacoFisico espaco = new EspacoFisico(capacidade, horarioInicialDisponivel, horarioFinalDisponivel, 
 					                               localizacao, tipo, equipamentos);
@@ -84,9 +77,10 @@ public class CadastroService {
 				Registro.registrarLaboratorio(espaco);
 				break;
 			case SALADEESTUDOS:
+				Registro.registrarSalaDeEstudos(espaco);
 			}
 		}
-	
+
 	//Métodos Estáticos Privados
 		private static String cadastrarNome(String nome) {
 			nome = Formatar.formatarNome(nome);
@@ -161,18 +155,8 @@ public class CadastroService {
 				Verificar.verificarSenha(senha);
 				return senha;
 	}
-	
-	private static int cadastrarCapacidade(int capacidade) {
 
-				Verificar.verificarCapacidade(capacidade);
-				return capacidade;
-	}
-	
-	private static String cadastrarLocalizacao(String localizacao) {
-				Verificar.verificarLocalizacao(localizacao);
-				return localizacao;
-	}
-	
+
 	/*
 	 * private static Equipamento cadastrarEquipamento(Equipamento[] equipamentos) {
 	 * String nome; int quantidade; while (true) { try {

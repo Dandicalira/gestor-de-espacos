@@ -100,14 +100,16 @@ public class EspacoFisico {
 	
 	@Override
 	public String toString() {
-		String espaco = "------------------------------------------------------------\n"
-				      + "                   Ficha do Espaço Físico\n"
-				      + "------------------------------------------------------------\n";
-		espaco += "Tipo         : " + getTipo() + "\n";
-		espaco += "Localização  : " + getLocalizacao() + "\n";
-		espaco += "Capacidade   : " + getCapacidade() + "\n";
-		espaco += "Equipamentos : " + Arrays.toString(equipamentos) + "\n";
-		espaco += "------------------------------------------------------------\n\n";
+		String espaco = """
+				------------------------------------------------------------
+				                   Ficha do Espaço Físico
+				------------------------------------------------------------
+				""";
+		espaco += "Tipo: " + obterTipoDeEspaco(tipo) + "\n \n";
+		espaco += "Localização: " + getLocalizacao() + "\n \n";
+		espaco += "Capacidade: " + getCapacidade() + "\n \n";
+		espaco += "Equipamentos: " + Arrays.toString(equipamentos) + "\n";
+		espaco += "------------------------------------------------------------\n";
 		return espaco;
 	}
 	
@@ -115,26 +117,22 @@ public class EspacoFisico {
 		SALADEAULA,
 		LABORATORIO,
 		SALADEESTUDOS;
-		
-		
 	}
 	
 public static TipoDeEspaco obterTipoDeEspaco(String tipoDeEspaco) {
-		
-		switch (tipoDeEspaco) {
-		
-		case "Sala de Aula":
-			return TipoDeEspaco.SALADEAULA;
-			
-		case "Laboratório":
-			return TipoDeEspaco.LABORATORIO;
-			
-		case "Sala de Estudos":
-			return TipoDeEspaco.SALADEESTUDOS;
-			
-		default:
-			return TipoDeEspaco.SALADEAULA;
-		}
+	return switch (tipoDeEspaco) {
+		case "Laboratório" -> TipoDeEspaco.LABORATORIO;
+		case "Sala de Estudos" -> TipoDeEspaco.SALADEESTUDOS;
+		default -> TipoDeEspaco.SALADEAULA;
+	};
+	}
+
+	public static String obterTipoDeEspaco(TipoDeEspaco tipoDeEspaco) {
+		return switch (tipoDeEspaco) {
+			case LABORATORIO -> "Laboratório";
+			case SALADEESTUDOS -> "Sala de Estudos";
+			default -> "Sala de Aula";
+		};
 	}
 
 }

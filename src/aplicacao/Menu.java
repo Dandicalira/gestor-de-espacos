@@ -1,8 +1,6 @@
 package aplicacao;
 
-import entidades.EspacoFisico;
-import entidades.Professor;
-import entidades.Usuario;
+import entidades.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,8 +9,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static aplicacao.Formulario.mostrarMensagem;
+import static entidades.EspacoFisico.obterTipoDeEspaco;
 import static servicos.agendamento.AgendamentoService.*;
 import static servicos.agendamento.Agendar.validarAgendamento;
+import static servicos.cadastro.CadastroService.cadastrarEspacoFisico;
+import static servicos.cadastro.RemoverService.removerEspacoFisico;
 import static util.LocalDateTimeUtils.*;
 
 import servicos.autenticacao.*;
@@ -21,12 +22,16 @@ import servicos.persistencia.*;
 
 @SuppressWarnings("ExtractMethodRecommender")
 public class Menu {
-	Usuario usuarioLogado = null;
+	Usuario usuarioLogado;
+	boolean admin;
 
 	public Menu() {
 	}
 
 	public void menuInicial() {
+		usuarioLogado = null;
+		admin = false;
+
 		Formulario f = new Formulario();
 
 		f.adicionarTexto("MENU INICIAL");
@@ -67,9 +72,10 @@ public class Menu {
 	}
 
 	private void menuAdmin(Formulario anterior) {
+		admin = true;
 		Formulario f = new Formulario();
 
-		f.adicionarDropdown("Escolha uma opção", new String[]{"Aluno", "Professor", "Técnico Administrativo", "Espaço Físico"});
+		f.adicionarDropdown("Escolha uma opção", new String[]{"Aluno", "Professor", "Técnico-Administrativo", "Espaço Físico"});
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
 			menuInicial();
@@ -78,22 +84,146 @@ public class Menu {
 			f.ocultar();
 			selecionarCadastro(f);
 		});
-		f.adicionarAcao("Descadastrar", () -> {
-			f.ocultar();
-			//todo
-		});
 		f.adicionarAcao("Listar", () -> {
-			//todo
+			menuListar(f);
 		});
 
 		f.mostrar();
 	}
 
+	private void menuListar(Formulario f) {
+		String opcao = f.opcao("Escolha uma opção");
+		switch (opcao) {
+			case "Aluno" -> listarAlunos(f);
+			case "Professor" -> listarProfessores(f);
+			case "Técnico-Administrativo" -> listarAdministrativos(f);
+			case "Espaço Físico" -> menuListarEspacosFisicos(f);
+		}
+	}
+
+	@SuppressWarnings("DuplicatedCode")
+	private void listarAdministrativos(Formulario anterior) {
+		Formulario f = new Formulario("Técnicos-administrativos cadastrados");
+		List<Administrativo> administrativos = Registro.getAdministrativos();
+
+		if (administrativos.isEmpty()) {
+			f.adicionarTexto("Nenhum técnico-administrativo encontrado");
+		} else {
+			for (Administrativo administrativo : administrativos) {
+				String nomeMatricula = administrativo.getNome() + " (" + administrativo.getMatriculaInstitucional() + ")";
+
+				f.adicionarBotao(nomeMatricula, "Agendamentos", () -> {
+					try {
+						listarAgendamentosUsuario(administrativo);
+					} catch (Exception e) {
+						f.atualizarErro(e.getMessage());
+					}
+				});
+
+				f.adicionarBotao(nomeMatricula, "Informações", () -> {
+					mostrarMensagem(administrativo.toString());
+				});
+
+				f.adicionarBotao(nomeMatricula, "Remover", () -> {
+					Registro.excluirServidor(administrativo);
+					mostrarMensagem("Técnico-administrativo " + nomeMatricula + " removido com sucesso!");
+					f.ocultar();
+					listarAdministrativos(anterior);
+				});
+			}
+		}
+
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			anterior.mostrar();
+		});
+		f.mostrar();
+	}
+
+	@SuppressWarnings("DuplicatedCode")
+	private void listarProfessores(Formulario anterior) {
+		Formulario f = new Formulario("Professores cadastrados");
+		List<Professor> professores = Registro.getProfessores();
+
+		if (professores.isEmpty()) {
+			f.adicionarTexto("Nenhum professor encontrado");
+		} else {
+			for (Professor professor : professores) {
+				String nomeMatricula = professor.getNome() + " (" + professor.getMatriculaInstitucional() + ")";
+
+				f.adicionarBotao(nomeMatricula, "Agendamentos", () -> {
+					try {
+						listarAgendamentosUsuario(professor);
+					} catch (Exception e) {
+						f.atualizarErro(e.getMessage());
+					}
+				});
+
+				f.adicionarBotao(nomeMatricula, "Informações", () -> {
+					mostrarMensagem(professor.toString());
+				});
+
+				f.adicionarBotao(nomeMatricula, "Remover", () -> {
+					Registro.excluirServidor(professor);
+					mostrarMensagem("Professor " + nomeMatricula + " removido com sucesso!");
+					f.ocultar();
+					listarProfessores(anterior);
+				});
+			}
+		}
+
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			anterior.mostrar();
+		});
+		f.mostrar();
+	}
+
+
+	private void listarAlunos(Formulario anterior) {
+		Formulario f = new Formulario("Alunos cadastrados");
+		List<Aluno> alunos = Registro.getAlunos();
+
+		if (alunos.isEmpty()) {
+			f.adicionarTexto("Nenhum aluno encontrado");
+		} else {
+			for (Aluno aluno : alunos) {
+				String nomeMatricula = aluno.getNome() + " (" + aluno.getMatricula() + ")";
+
+				f.adicionarBotao(nomeMatricula, "Agendamentos", () -> {
+					try {
+						listarAgendamentosUsuario(aluno);
+					} catch (Exception e) {
+						f.atualizarErro(e.getMessage());
+					}
+				});
+
+				f.adicionarBotao(nomeMatricula, "Informações", () -> {
+					mostrarMensagem(aluno.toString());
+				});
+
+				f.adicionarBotao(nomeMatricula, "Remover", () -> {
+					Registro.excluirAluno(aluno);
+					mostrarMensagem("Aluno " + nomeMatricula + " removido com sucesso!");
+					f.ocultar();
+					listarAlunos(anterior);
+				});
+			}
+		}
+
+		f.adicionarAcao("Voltar", () -> {
+			f.ocultar();
+			anterior.mostrar();
+		});
+		f.mostrar();
+	}
+
+
 	private void selecionarCadastro(Formulario f) {
 		switch (f.opcao("Escolha uma opção")) {
 			case "Aluno" -> menuCadastrarAluno(f);
 			case "Professor" -> menuCadastrarProfessor(f);
-			case "Técnico Administrativo" -> menuCadastrarAdministrativo(f);
+			case "Técnico-Administrativo" -> menuCadastrarAdministrativo(f);
 			case "Espaço Físico" -> menuCadastrarEspacoFisico(f);
 		}
 	}
@@ -104,7 +234,12 @@ public class Menu {
 		f.adicionarInput("Localização", true);
 		f.adicionarInput("Capacidade", true, "ALGARISMOS");
 
-		f.adicionarDropdown("Tipo", new String[]{"Sala de aula", "Laboratório", "Sala de estudos"});
+		f.adicionarDropdown("Tipo", new String[]{"Sala de Aula", "Laboratório", "Sala de Estudos"});
+
+		f.adicionarInput("Horário inicial de funcionamento", true, "HORARIO");
+		f.adicionarInput("Horário final de funcionamento", true, "HORARIO");
+
+		f.adicionarBotao("Equipamentos", "Listar", () -> {});
 
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
@@ -113,22 +248,31 @@ public class Menu {
 
 		f.adicionarAcao("Cadastrar", () -> {
 			if (!f.valido()) return;
+			try {
+				String localizacao = f.resposta("Localização");
+				EspacoFisico.TipoDeEspaco tipo = obterTipoDeEspaco(f.opcao("Tipo"));
 
-			String nome = f.resposta("Nome do espaço");
-			String localizacao = f.resposta("Localização");
-			String capacidadeStr = f.resposta("Capacidade");
-			String tipo = f.opcao("Tipo");
+				LocalTime horarioInicial = parseLocalTime(f.resposta("Horário inicial de funcionamento"));
+				LocalTime horarioFinal = parseLocalTime(f.resposta("Horário final de funcionamento"));
 
-			// TODO: Validar capacidade como número, cadastrar espaço físico
+				int capacidade = Integer.parseInt(f.resposta("Capacidade"));
 
-            mostrarMensagem("Cadastro realizado com sucesso!");
+				// TODO: Cadastrar equipamentos
+				Equipamento[] equipamentos = new Equipamento[] {new Equipamento("Mesa", 3)};
+
+				cadastrarEspacoFisico(capacidade, horarioInicial, horarioFinal, localizacao, tipo, equipamentos);
+
+				mostrarMensagem("Cadastro realizado com sucesso!");
+			} catch (Exception e) {
+				f.atualizarErro(e.getMessage());
+			}
 		});
 
 		f.mostrar();
 	}
 
 	private void menuCadastrarAdministrativo(Formulario anterior) {
-		Formulario f = new Formulario("Cadastro de Técnico Administrativo");
+		Formulario f = new Formulario("Cadastro de Técnico-Administrativo");
 		f.adicionarTexto("""
 				A senha deve conter:
 				no mínimo, 8 caracteres e, no máximo, 20 caracteres,
@@ -309,19 +453,17 @@ public class Menu {
 		f.adicionarTexto(usuarioLogado.toString());
 
 		f.adicionarBotao("Histório de agendamentos", "Conferir", () -> {
-			listarAgendamentosUsuario(f); // popup
+			listarAgendamentosUsuario(usuarioLogado);
 		});
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
 			menuInicial();
 		});
 		f.adicionarAcao("Listar espaços", () -> {
-			//todo
 			f.ocultar();
 			menuListarEspacosFisicos(f);
 		});
 		f.adicionarAcao("Agendar espaço", () -> {
-			//todo
 			f.ocultar();
 			menuAgendarEspacoFisico(f, null);
 		});
@@ -329,14 +471,14 @@ public class Menu {
 		f.mostrar();
 	}
 
-	private void listarAgendamentosUsuario(Formulario anterior) {
-		Formulario f = new Formulario("Agendamentos de " + usuarioLogado.getNome());
+	private void listarAgendamentosUsuario(Usuario usuario) {
+		Formulario f = new Formulario("Agendamentos de " + usuario.getNome());
 
-		String resposta = formatarAgendamentosUsuario(usuarioLogado);
+		String resposta = formatarAgendamentosUsuario(usuario);
 
 		f.adicionarAcao("Voltar", f::ocultar);
 		f.adicionarAcao("💾", () -> {
-			f.salvarArquivo(resposta, "Agendamentos de " + usuarioLogado.getNome() + ".txt");
+			f.salvarArquivo(resposta, "Agendamentos de " + usuario.getNome() + ".txt");
 		});
 
 		f.adicionarTexto(resposta);
@@ -380,25 +522,40 @@ public class Menu {
 						f.atualizarErro(e.getMessage());
 					}
 				});
-				f.adicionarBotao(espaco.getLocalizacao(), "Agendar", () -> {
-					f.ocultar();
-					menuAgendarEspacoFisico(f,espaco.getLocalizacao());
-				});
+
+				if (!admin) {
+					f.adicionarBotao(espaco.getLocalizacao(), "Agendar", () -> {
+						f.ocultar();
+						menuAgendarEspacoFisico(f, espaco.getLocalizacao());
+					});
+				} else {
+					f.adicionarBotao(espaco.getLocalizacao(), "Informações", () -> {
+						mostrarMensagem(espaco.toString());
+					});
+					f.adicionarBotao(espaco.getLocalizacao(), "Remover", () -> {
+						removerEspacoFisico(espaco);
+						mostrarMensagem("Espaço " + espaco.getLocalizacao() + " removido com sucesso!");
+						f.ocultar();
+						listarEspacoFisico(anterior);
+					});
+				}
 			}
 
-			DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			if (!admin) {
+				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-			String Datahoje = LocalDate.now().format(formatador);
+				String Datahoje = LocalDate.now().format(formatador);
 
-			f.adicionarInput("Data inicial", "DATA");
-			f.preencherInput(Datahoje);
+				f.adicionarInput("Data inicial", "DATA");
+				f.preencherInput(Datahoje);
 
-			f.adicionarInput("Data final", "DATA");
+				f.adicionarInput("Data final", "DATA");
+			}
 		}
 
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
-			menuUsuario(f);
+			anterior.mostrar();
 		});
 		f.mostrar();
 	}
@@ -406,8 +563,13 @@ public class Menu {
 	private void imprimirAgendamentosEspaco(EspacoFisico espaco, Formulario anterior) {
 		anterior.atualizarErro();
 
-		String stringDataInicio = anterior.resposta("Data inicial");
-		String stringDataFim = anterior.resposta("Data final");
+		String stringDataInicio = "";
+		String stringDataFim = "";
+
+		if (!admin) {
+			stringDataInicio = anterior.resposta("Data inicial");
+			stringDataFim = anterior.resposta("Data final");
+		}
 
 		LocalDate dataInicio = stringDataInicio.isEmpty() ? null : parseLocalDate(stringDataInicio);
 		LocalDate dataFim = stringDataFim.isEmpty() ? null : parseLocalDate(stringDataFim);
