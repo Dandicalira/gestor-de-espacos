@@ -16,10 +16,12 @@ import static servicos.autenticacao.AutenticacaoService.autenticarSuperUsuario;
 import static servicos.cadastro.CadastroService.cadastrarAluno;
 import static servicos.cadastro.Registro.*;
 
+@SuppressWarnings("ExtractMethodRecommender")
 public class Menu {
 	Usuario usuarioLogado = null;
 
-	public Menu() {}
+	public Menu() {
+	}
 
 	public Menu(Usuario usuario) {
 		usuarioLogado = usuario;
@@ -46,7 +48,7 @@ public class Menu {
 		Formulario f = new Formulario();
 
 		f.adicionarTexto("Entre como Superusuário");
-		f.adicionarInput("Digite a senha", true);
+		f.adicionarSenha("Senha");
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
 			menuInicial();
@@ -54,7 +56,7 @@ public class Menu {
 		f.adicionarAcao("Entrar", () -> {
 			if (!f.valido()) return;
 			try {
-				autenticarSuperUsuario(f.resposta("Digite a senha"));
+				autenticarSuperUsuario(f.resposta("Senha"));
 				f.ocultar();
 				menuAdmin(f);
 			} catch (Exception e) {
@@ -88,27 +90,26 @@ public class Menu {
 		f.mostrar();
 	}
 
-	private void selecionarCadastro(Formulario anterior) {
-		switch (anterior.opcao("Escolha uma opção")) {
-			case "Aluno" -> menuCadastrarAluno();
-			case "Professor" -> menuCadastrarProfessor();
-			case "Técnico Administrativo" -> menuCadastrarAdministrativo();
-			case "Espaço Físico" -> menuCadastrarEspacoFisico();
+	private void selecionarCadastro(Formulario f) {
+		switch (f.opcao("Escolha uma opção")) {
+			case "Aluno" -> menuCadastrarAluno(f);
+			case "Professor" -> menuCadastrarProfessor(f);
+			case "Técnico Administrativo" -> menuCadastrarAdministrativo(f);
+			case "Espaço Físico" -> menuCadastrarEspacoFisico(f);
 		}
 	}
 
-	private void menuCadastrarEspacoFisico() {
+	private void menuCadastrarEspacoFisico(Formulario anterior) {
 		Formulario f = new Formulario("Cadastro de Espaço Físico");
 
-		f.adicionarInput("Nome do espaço", true);
-		f.adicionarInput("Localização(S2, I3, LAB NEI 2, ...)", true);
-		f.adicionarInput("Capacidade", true);
+		f.adicionarInput("Localização", true);
+		f.adicionarInput("Capacidade", true, "ALGARISMOS");
 
-		f.adicionarDropdown("Tipo", new String[]{"Sala de aula", "Laboratório", "Auditório", "Outro"});
+		f.adicionarDropdown("Tipo", new String[]{"Sala de aula", "Laboratório", "Sala de estudos"});
 
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
-			menuAdmin(f);
+			anterior.mostrar();
 		});
 
 		f.adicionarAcao("Cadastrar", () -> {
@@ -121,15 +122,13 @@ public class Menu {
 
 			// TODO: Validar capacidade como número, cadastrar espaço físico
 
-			f.ocultar();
-			menuAdmin(f);
+            mostrarMensagem("Cadastro realizado com sucesso!");
 		});
 
 		f.mostrar();
 	}
 
-	private void menuCadastrarAdministrativo() {
-		//noinspection ExtractMethodRecommender
+	private void menuCadastrarAdministrativo(Formulario anterior) {
 		Formulario f = new Formulario("Cadastro de Técnico Administrativo");
 		f.adicionarTexto("""
 				A senha deve conter:
@@ -140,32 +139,32 @@ public class Menu {
 				não deve conter espaços em branco
 				""");
 		f.adicionarInput("Nome", true);
-		f.adicionarInput("Identificação", true);
-		f.adicionarInput("Senha", true);
+		f.adicionarInput("Matrícula Institucional", true);
+		f.adicionarSenha("Senha");
 		f.adicionarInput("Setor", true);
 
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
-			menuAdmin(f);
+			anterior.mostrar();
 		});
 
 		f.adicionarAcao("Cadastrar", () -> {
 			if (!f.valido()) return;
 
 			String nome = f.resposta("Nome");
-			String id = f.resposta("Identificação");
+			String matricula = f.resposta("Matrícula Institucional");
 			String senha = f.resposta("Senha");
 			String setor = f.resposta("Setor");
 
 			// TODO: Cadastrar técnico usando Registro.adicionarServidor(...)
 
-			f.ocultar();
-			menuAdmin(f);
+			mostrarMensagem("Cadastro realizado com sucesso!");
 		});
 
 		f.mostrar();
 	}
-	private void menuCadastrarProfessor() {
+
+	private void menuCadastrarProfessor(Formulario anterior) {
 		Formulario f = new Formulario("Cadastro de Professor");
 		f.adicionarTexto("""
 				A senha deve conter:
@@ -176,33 +175,32 @@ public class Menu {
 				não deve conter espaços em branco
 				""");
 		f.adicionarInput("Nome", true);
-		f.adicionarInput("Identificação", true);
-		f.adicionarInput("Senha", true);
+		f.adicionarInput("Matrícula Institucional", true);
+		f.adicionarSenha("Senha");
 		f.adicionarInput("Departamento", true);
 
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
-			menuAdmin(f);
+			anterior.mostrar();
 		});
 
 		f.adicionarAcao("Cadastrar", () -> {
 			if (!f.valido()) return;
 
 			String nome = f.resposta("Nome");
-			String id = f.resposta("Identificação");
+			String matricula = f.resposta("Matrícula Institucional");
 			String senha = f.resposta("Senha");
 			String departamento = f.resposta("Departamento");
 
 			// TODO: Cadastrar professor usando Registro.adicionarServidor(...)
-			f.ocultar();
-			menuAdmin(f);
+
+			mostrarMensagem("Cadastro realizado com sucesso!");
 		});
 
 		f.mostrar();
 	}
 
-	private void menuCadastrarAluno() {
-		//noinspection ExtractMethodRecommender
+	private void menuCadastrarAluno(Formulario anterior) {
 		Formulario f = new Formulario("Cadastro de Aluno");
 
 		f.adicionarTexto("""
@@ -214,16 +212,16 @@ public class Menu {
 				não deve conter espaços em branco
 				""");
 		f.adicionarInput("Nome", true);
-		f.adicionarInput("Senha", true);
+		f.adicionarSenha("Senha");
 		f.adicionarInput("Matrícula", true);
 		f.adicionarInput("Email", true);
-		f.adicionarInput("Telefone", true);
-		f.adicionarInput("Semestre", true);
+		f.adicionarInput("Telefone", true, "ALGARISMOS");
+		f.adicionarRadio("Semestre",new String[]{"1º","2º","3º","4º","5º","6º","7º","8º","9º","10º"});
 		f.adicionarInput("Curso", true);
 
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
-			menuAdmin(f);
+			anterior.mostrar();
 		});
 
 		f.adicionarAcao("Cadastrar", () -> {
@@ -236,12 +234,13 @@ public class Menu {
 				String email = f.resposta("Email");
 				String telefone = f.resposta("Telefone");
 				String curso = f.resposta("Curso");
-				int semestre = Integer.parseInt(f.resposta("Semestre"));
+
+				String strSemestre = f.selecao("Semestre").replace("º", "");
+				int semestre = Integer.parseInt(strSemestre);
 
 				cadastrarAluno(nome, senha, matricula, email, telefone, curso, semestre);
 
-				f.ocultar();
-				menuAdmin(f);
+				mostrarMensagem("Cadastro realizado com sucesso!");
 			} catch (Exception e) {
 				f.atualizarErro(e.getMessage());
 			}
@@ -255,7 +254,7 @@ public class Menu {
 
 		f.adicionarTexto("Entre como Usuário");
 		f.adicionarInput("Matrícula", true);
-		f.adicionarInput("Senha", true);
+		f.adicionarSenha("Senha");
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
 			anterior.mostrar();
@@ -289,7 +288,7 @@ public class Menu {
 		f.adicionarAcao("Agendar espaço", () -> {
 			//todo
 			f.ocultar();
-			menuAgendarEspacoFisico(f);
+			menuAgendarEspacoFisico(f, null);
 		});
 
 		f.mostrar();
@@ -301,7 +300,7 @@ public class Menu {
 		String resposta = formatarAgendamentosUsuario(usuarioLogado);
 
 		f.adicionarAcao("Voltar", f::ocultar);
-		f.adicionarAcao("💾", ()->{
+		f.adicionarAcao("💾", () -> {
 			f.salvarArquivo(resposta, "Agendamentos de " + usuarioLogado.getNome() + ".txt");
 		});
 
@@ -346,8 +345,9 @@ public class Menu {
 						f.atualizarErro(e.getMessage());
 					}
 				});
-				f.adicionarBotao(espaco.getLocalizacao(), "📋", () -> {
-					f.copiarTexto(espaco.getLocalizacao());
+				f.adicionarBotao(espaco.getLocalizacao(), "Agendar", () -> {
+					f.ocultar();
+					menuAgendarEspacoFisico(f,espaco.getLocalizacao());
 				});
 			}
 
@@ -355,8 +355,10 @@ public class Menu {
 
 			String Datahoje = LocalDate.now().format(formatador);
 
-			f.adicionarInput("Data inicial", Datahoje);
-			f.adicionarInput("Data final");
+			f.adicionarInput("Data inicial", "DATA");
+			f.preencherInput(Datahoje);
+
+			f.adicionarInput("Data final", "DATA");
 		}
 
 		f.adicionarAcao("Voltar", () -> {
@@ -380,7 +382,7 @@ public class Menu {
 		Formulario f = new Formulario("Agendamentos de " + espaco.getLocalizacao());
 
 		f.adicionarAcao("Voltar", f::ocultar);
-		f.adicionarAcao("💾", ()->{
+		f.adicionarAcao("💾", () -> {
 			f.salvarArquivo(resposta, "Agendamentos de " + espaco.getLocalizacao() + ".txt");
 		});
 
@@ -389,18 +391,19 @@ public class Menu {
 		f.mostrar();
 	}
 
-	private void menuAgendarEspacoFisico(Formulario anterior) {
+	private void menuAgendarEspacoFisico(Formulario anterior, String localizacaoTransferida) {
 		Formulario f = new Formulario("Agendamento");
 
 		f.adicionarTexto("Agendar espaço físico");
 
-		f.adicionarInput("Data inicial", true);
-		f.adicionarInput("Horário inicial", true);
+		f.adicionarInput("Data inicial", true, "DATA");
+		f.adicionarInput("Horário inicial", true, "HORARIO");
 
-		f.adicionarInput("Data final", true);
-		f.adicionarInput("Horário final", true);
+		f.adicionarInput("Data final", true, "DATA");
+		f.adicionarInput("Horário final", true, "HORARIO");
 
 		f.adicionarInput("Localização", true);
+		f.preencherInput(localizacaoTransferida);
 
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();

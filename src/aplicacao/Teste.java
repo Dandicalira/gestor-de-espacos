@@ -68,8 +68,8 @@ public class Teste {
 	}
 
 	public static void gerarAgendamento2(Usuario usuario, EspacoFisico espaco) {
-		LocalDateTime inicio = LocalDateTime.of(2025, 7, 10, 10, 0);
-		LocalDateTime fim = LocalDateTime.of(2025, 7, 11, 8, 50);
+		LocalDateTime inicio = LocalDateTime.of(2025, 7, 12, 10, 0);
+		LocalDateTime fim = LocalDateTime.of(2025, 7, 13, 8, 50);
 		Agendar.validarAgendamento(usuario, inicio, fim, espaco);
 	}
 

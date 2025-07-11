@@ -1,21 +1,25 @@
 package aplicacao;
 
+import excecoes.CampoVazioException;
 import excecoes.ComponenteDuplicadoException;
 import excecoes.ComponenteNaoExisteException;
 import servicos.persistencia.PersistenciaService;
+import util.FiltroRegex;
 
 import javax.swing.*;
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static util.FiltroRegex.obterExpressaoRegular;
+
 public class Formulario {
-	private final Map<String, JTextField> mapaInputs = new HashMap<>();
+	private final Map<String, JTextField> mapaInputs = new LinkedHashMap<>();
 	private final Map<String, JComboBox<String>> mapaDropdowns = new HashMap<>();
 	private final Map<String, JPanel> mapaBotoes = new HashMap<>();
 	private final Map<String, ButtonGroup> mapaRadios = new HashMap<>();
@@ -148,16 +152,16 @@ public class Formulario {
 			}
 		}
 
-		return null;
+		throw new CampoVazioException();
 	}
 
-	protected void adicionarInput(String texto, boolean obrigatorio, String textoPadrao) {
+	protected void adicionarInput(String texto, boolean obrigatorio, String regex) {
 		verificarInputValido(texto);
 
 		String labelTexto = texto + (obrigatorio ? "*" : "");
 		painelPrincipal.add(new JLabel(labelTexto));
 
-		JTextField input = new JTextField(textoPadrao, 20);
+		JTextField input = new JTextField(20);
 		painelPrincipal.add(input);
 
 		mapaInputs.put(texto, input);
@@ -165,6 +169,27 @@ public class Formulario {
 		if (obrigatorio) {
 			camposObrigatorios.add(texto);
 		}
+
+		if (regex != null) {
+			String expressao = obterExpressaoRegular(regex);
+			((AbstractDocument) input.getDocument()).setDocumentFilter(new FiltroRegex(expressao));
+		}
+
+		atualizar();
+	}
+
+	protected void adicionarSenha(String texto) {
+		verificarInputValido(texto);
+
+		String labelTexto = texto + "*";
+		painelPrincipal.add(new JLabel(labelTexto));
+
+		JPasswordField inputSenha = new JPasswordField(20);
+		painelPrincipal.add(inputSenha);
+
+		mapaInputs.put(texto, inputSenha);
+
+		camposObrigatorios.add(texto);
 
 		atualizar();
 	}
@@ -177,8 +202,32 @@ public class Formulario {
 		adicionarInput(texto, obrigatorio, null);
 	}
 
-	protected void adicionarInput(String texto, String textoPadrao) {
-		adicionarInput(texto, false, textoPadrao);
+	protected void adicionarInput(String texto, String regex) {
+		adicionarInput(texto, false, regex);
+	}
+
+	protected void preencherInput(String input, String texto) {
+		JTextField campo = mapaInputs.get(input);
+
+		if (campo != null) {
+			campo.setText(texto);
+
+		} else {
+			throw new ComponenteNaoExisteException(input);
+		}
+	}
+
+	protected void preencherInput(String novoValor) {
+		if (mapaInputs.isEmpty()) return;
+
+		String ultimoInput = null;
+		for (String chave : mapaInputs.keySet()) {
+			ultimoInput = chave;
+		}
+
+		if (ultimoInput != null) {
+			preencherInput(ultimoInput, novoValor);
+		}
 	}
 
 	protected void adicionarDropdown(String texto, String[] opcoes) {
@@ -204,10 +253,16 @@ public class Formulario {
 		JPanel painelRadio = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		ButtonGroup radio = new ButtonGroup();
 
+		boolean selecionar = true;
 		for (String opcao : opcoes) {
 			JRadioButton botaoRadio = new JRadioButton(opcao);
 			radio.add(botaoRadio);
 			painelRadio.add(botaoRadio);
+
+			if (selecionar) {
+				botaoRadio.setSelected(true);
+				selecionar = false;
+			}
 		}
 
 		painelPrincipal.add(painelRadio);
@@ -215,6 +270,7 @@ public class Formulario {
 
 		atualizar();
 	}
+
 
 	protected void adicionarTexto(String texto) {
 		for (String linha : texto.split("\n")) {
