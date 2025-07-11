@@ -59,8 +59,9 @@ public class Formulario {
 	}
 
 	private void criarDialogo(String titulo) {
-		JOptionPane optionPane = new JOptionPane(painelCompleto, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
-		dialog = optionPane.createDialog(titulo);
+		dialog = new JDialog((Frame) null, titulo, true);
+		dialog.setContentPane(painelCompleto);
+		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		// Encerrar a aplicação ao fechar a janela
@@ -93,6 +94,8 @@ public class Formulario {
 
 	private void gerarPaineis() {
 		painelCompleto = new JPanel(new BorderLayout());
+		painelCompleto.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+
 		painelAcoes = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		painelInferior = new JPanel(new BorderLayout());
 
@@ -109,6 +112,7 @@ public class Formulario {
 
 	protected void mostrar() {
 		dialog.pack(); // ajusta o tamanho da janela
+		dialog.setLocationRelativeTo(null); // centraliza na tela
 		dialog.setVisible(true);
 	}
 
