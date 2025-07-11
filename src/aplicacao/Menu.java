@@ -12,9 +12,9 @@ import java.util.List;
 import static aplicacao.Formulario.mostrarMensagem;
 import static servicos.agendamento.AgendamentoService.*;
 import static servicos.agendamento.Agendar.validarAgendamento;
-import static servicos.autenticacao.AutenticacaoService.autenticarSuperUsuario;
-import static servicos.cadastro.CadastroService.cadastrarAluno;
-import static servicos.cadastro.Registro.*;
+import servicos.autenticacao.*;
+import servicos.cadastro.*;
+import servicos.persistencia.*;
 
 @SuppressWarnings("ExtractMethodRecommender")
 public class Menu {
@@ -56,7 +56,7 @@ public class Menu {
 		f.adicionarAcao("Entrar", () -> {
 			if (!f.valido()) return;
 			try {
-				autenticarSuperUsuario(f.resposta("Senha"));
+				AutenticacaoService.autenticarSuperUsuario(f.resposta("Senha"));
 				f.ocultar();
 				menuAdmin(f);
 			} catch (Exception e) {
@@ -238,9 +238,11 @@ public class Menu {
 				String strSemestre = f.selecao("Semestre").replace("º", "");
 				int semestre = Integer.parseInt(strSemestre);
 
-				cadastrarAluno(nome, senha, matricula, email, telefone, curso, semestre);
-
+				CadastroService.cadastrarAluno(nome, senha, matricula, email, telefone, curso, semestre);
 				mostrarMensagem("Cadastro realizado com sucesso!");
+				PersistenciaService.salvarDados();
+				f.ocultar();
+				anterior.mostrar();
 			} catch (Exception e) {
 				f.atualizarErro(e.getMessage());
 			}
@@ -261,9 +263,14 @@ public class Menu {
 		});
 		f.adicionarAcao("Entrar", () -> {
 			if (!f.valido()) return;
-			//todo
-			f.ocultar();
-			menuUsuario(f);
+			try {
+				usuarioLogado = AutenticacaoService.autenticarLogin(f.resposta("Matrícula"), f.resposta("Senha"));
+				//System.out.println(usuarioLogado);
+				f.ocultar();
+				menuUsuario(f);
+			} catch (Exception e) {
+				f.atualizarErro(e.getMessage());
+			}
 		});
 
 		f.mostrar();
@@ -327,9 +334,9 @@ public class Menu {
 
 	private void listarEspacoFisico(Formulario anterior) {
 		List<EspacoFisico> espacos = switch (anterior.opcao("Tipo")) {
-			case "Salas de aula" -> getSalasDeAula();
-			case "Laboratórios" -> getLaboratorios();
-			default -> getSalasDeEstudos();
+			case "Salas de aula" -> Registro.getSalasDeAula();
+			case "Laboratórios" -> Registro.getLaboratorios();
+			default -> Registro.getSalasDeEstudos();
 		};
 
 		Formulario f = new Formulario(anterior.opcao("Tipo"));
@@ -418,7 +425,7 @@ public class Menu {
 				LocalTime horarioFim = parseLocalTime(f.resposta("Horário final"));
 
 				String localizacao = f.resposta("Localização");
-				EspacoFisico espaco = obterEspacoFisicoLocalizacao(localizacao);
+				EspacoFisico espaco = Registro.obterEspacoFisicoLocalizacao(localizacao);
 
 				LocalDateTime dataHoraInicio = combinarDataEHora(dataInicio, horarioInicio);
 				LocalDateTime dataHoraFim = combinarDataEHora(dataFim, horarioFim);

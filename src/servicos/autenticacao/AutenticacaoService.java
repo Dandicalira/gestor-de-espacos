@@ -12,11 +12,15 @@ public class AutenticacaoService {
 	}
 	
 	
-	public static Usuario autenticar(String identificacao, String senha) {
+	public static Usuario autenticarLogin(String identificacao, String senha) {
 		
-		Usuario usuario = autenticarIdentificacao(identificacao);
-		autenticarSenha(usuario, senha);
-		return usuario;
+		try {
+			Usuario usuario = autenticarIdentificacao(identificacao);
+			autenticarSenha(usuario, senha);
+			return usuario;
+		} catch (Exception e) {
+			throw new LoginInvalidoException();
+		}
 
 	}
 	
