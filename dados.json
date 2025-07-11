@@ -26,7 +26,6 @@
     {
       "capacidade": 30,
       "localizacao": "S10",
-      "tipo": "Sala de Aula",
       "horarioInicialDisponivel": "08:00",
       "horarioFinalDisponivel": "18:00",
       "equipamentos": [
@@ -38,12 +37,12 @@
           "nome": "Quadro Branco",
           "quantidade": 2
         }
-      ]
+      ],
+      "tipo": "SALADEAULA"
     },
     {
       "capacidade": 25,
       "localizacao": "S11",
-      "tipo": "Sala de Aula",
       "horarioInicialDisponivel": "07:30",
       "horarioFinalDisponivel": "19:00",
       "equipamentos": [
@@ -51,12 +50,12 @@
           "nome": "Quadro Digital",
           "quantidade": 1
         }
-      ]
+      ],
+      "tipo": "SALADEAULA"
     },
     {
       "capacidade": 40,
       "localizacao": "S12",
-      "tipo": "Sala de Aula",
       "horarioInicialDisponivel": "09:00",
       "horarioFinalDisponivel": "17:00",
       "equipamentos": [
@@ -68,12 +67,12 @@
           "nome": "Ar Condicionado",
           "quantidade": 1
         }
-      ]
+      ],
+      "tipo": "SALADEAULA"
     },
     {
       "capacidade": 20,
       "localizacao": "S13",
-      "tipo": "Sala de Aula",
       "horarioInicialDisponivel": "08:00",
       "horarioFinalDisponivel": "20:00",
       "equipamentos": [
@@ -81,12 +80,12 @@
           "nome": "Quadro Branco",
           "quantidade": 1
         }
-      ]
+      ],
+      "tipo": "SALADEAULA"
     },
     {
       "capacidade": 35,
       "localizacao": "S14",
-      "tipo": "Sala de Aula",
       "horarioInicialDisponivel": "07:00",
       "horarioFinalDisponivel": "21:00",
       "equipamentos": [
@@ -98,12 +97,12 @@
           "nome": "Sistema de Som",
           "quantidade": 1
         }
-      ]
+      ],
+      "tipo": "SALADEAULA"
     },
     {
       "capacidade": 28,
       "localizacao": "S15",
-      "tipo": "Sala de Aula",
       "horarioInicialDisponivel": "08:00",
       "horarioFinalDisponivel": "19:00",
       "equipamentos": [
@@ -115,12 +114,12 @@
           "nome": "Ar Condicionado",
           "quantidade": 1
         }
-      ]
+      ],
+      "tipo": "SALADEAULA"
     },
     {
       "capacidade": 45,
       "localizacao": "S16",
-      "tipo": "Sala de Aula",
       "horarioInicialDisponivel": "09:00",
       "horarioFinalDisponivel": "18:30",
       "equipamentos": [
@@ -132,12 +131,12 @@
           "nome": "Quadro Digital",
           "quantidade": 1
         }
-      ]
+      ],
+      "tipo": "SALADEAULA"
     },
     {
       "capacidade": 33,
       "localizacao": "S17",
-      "tipo": "Sala de Aula",
       "horarioInicialDisponivel": "07:30",
       "horarioFinalDisponivel": "20:30",
       "equipamentos": [
@@ -149,12 +148,12 @@
           "nome": "Sistema de Som",
           "quantidade": 1
         }
-      ]
+      ],
+      "tipo": "SALADEAULA"
     },
     {
       "capacidade": 38,
       "localizacao": "S18",
-      "tipo": "Sala de Aula",
       "horarioInicialDisponivel": "08:00",
       "horarioFinalDisponivel": "17:00",
       "equipamentos": [
@@ -170,12 +169,12 @@
           "nome": "Ar Condicionado",
           "quantidade": 1
         }
-      ]
+      ],
+      "tipo": "SALADEAULA"
     },
     {
       "capacidade": 50,
       "localizacao": "S19",
-      "tipo": "Sala de Aula",
       "horarioInicialDisponivel": "07:00",
       "horarioFinalDisponivel": "22:00",
       "equipamentos": [
@@ -191,14 +190,14 @@
           "nome": "Ar Condicionado",
           "quantidade": 1
         }
-      ]
+      ],
+      "tipo": "SALADEAULA"
     }
   ],
   "laboratorios": [
     {
       "capacidade": 15,
       "localizacao": "I9",
-      "tipo": "Laboratório",
       "horarioInicialDisponivel": "07:00",
       "horarioFinalDisponivel": "16:00",
       "equipamentos": [
@@ -206,7 +205,8 @@
           "nome": "Mesas",
           "quantidade": 7
         }
-      ]
+      ],
+      "tipo": "LABORATORIO"
     }
   ],
   "salasDeEstudos": [],

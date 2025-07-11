@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 public class PersistenciaService {
 
     private static final String ARQUIVO_JSON = "dados.json";
