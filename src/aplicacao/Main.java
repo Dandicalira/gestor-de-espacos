@@ -1,7 +1,6 @@
 package aplicacao;
 
 import servicos.persistencia.PersistenciaService;
-import static aplicacao.Teste.gerarAluno;
 
 public class Main {
 	public static void main(String[] args) {
