@@ -77,13 +77,13 @@ public class CadastroService {
 			EspacoFisico espaco = new EspacoFisico(capacidade, horarioInicialDisponivel, horarioFinalDisponivel, 
 					                               localizacao, tipo, equipamentos);
 			switch (espaco.getTipo()) {
-			case EspacoFisico.TipoDeEspaco.SALADEAULA:
+			case SALADEAULA:
 				Registro.registrarSalaDeAula(espaco);
 				break;
-			case EspacoFisico.TipoDeEspaco.LABORATORIO:
+			case LABORATORIO:
 				Registro.registrarLaboratorio(espaco);
 				break;
-			case EspacoFisico.TipoDeEspaco.SALADEESTUDOS:
+			case SALADEESTUDOS:
 			}
 		}
 	
@@ -163,7 +163,7 @@ public class CadastroService {
 	}
 	
 	private static int cadastrarCapacidade(int capacidade) {
-		
+
 				Verificar.verificarCapacidade(capacidade);
 				return capacidade;
 	}

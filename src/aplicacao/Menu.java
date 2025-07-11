@@ -2,7 +2,6 @@ package aplicacao;
 
 import entidades.EspacoFisico;
 import entidades.Professor;
-import entidades.Professor;
 import entidades.Usuario;
 
 import java.time.LocalDate;
@@ -14,6 +13,8 @@ import java.util.List;
 import static aplicacao.Formulario.mostrarMensagem;
 import static servicos.agendamento.AgendamentoService.*;
 import static servicos.agendamento.Agendar.validarAgendamento;
+import static util.LocalDateTimeUtils.*;
+
 import servicos.autenticacao.*;
 import servicos.cadastro.*;
 import servicos.persistencia.*;
@@ -242,7 +243,11 @@ public class Menu {
 		f.adicionarInput("Email", true);
 		f.adicionarInput("Telefone", true, "ALGARISMOS");
 		f.adicionarInput("Matrícula", true);
-		f.adicionarRadio("Semestre",new String[]{"1º","2º","3º","4º","5º","6º","7º","8º","9º","10º"});
+
+		String[] semestres = new String[15];
+
+
+		f.adicionarRadio("Semestre",new String[]{"1º","2º","3º","4º","5º","6º","7º","8º","9º","10º","11º","12º","13º","14º","15º"});
 		f.adicionarInput("Curso", true);
 
 		f.adicionarAcao("Voltar", () -> {
@@ -291,7 +296,8 @@ public class Menu {
 			if (!f.valido()) return;
 			try {
 				usuarioLogado = AutenticacaoService.autenticarLogin(f.resposta("Matrícula"), f.resposta("Senha"));
-				//System.out.println(usuarioLogado);
+				System.out.println(usuarioLogado);
+
 				f.ocultar();
 				menuUsuario(f);
 			} catch (Exception e) {

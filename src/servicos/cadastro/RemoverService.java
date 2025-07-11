@@ -78,13 +78,13 @@ public class RemoverService {
 				}
 				else {
 					switch (espaco.getTipo()) {
-					case EspacoFisico.TipoDeEspaco.SALADEAULA:
+					case SALADEAULA:
 						Registro.excluirSalaDeAula(espaco);
 						break;
-					case EspacoFisico.TipoDeEspaco.LABORATORIO:
+					case LABORATORIO:
 						Registro.excluirLaboratorio(espaco);
 						break;
-					case EspacoFisico.TipoDeEspaco.SALADEESTUDOS:
+					case SALADEESTUDOS:
 						Registro.excluirSalaDeEstudos(espaco);
 						break;
 				}

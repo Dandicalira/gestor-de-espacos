@@ -3,43 +3,17 @@ package servicos.agendamento;
 import entidades.EspacoFisico;
 import entidades.Usuario;
 import excecoes.PeriodoInvalidoException;
-import util.LocalDateUtils;
-import util.LocalTimeUtils;
+import util.LocalDateTimeUtils;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
 public class AgendamentoService {
-
-	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
-
-	public static LocalDate parseLocalDate(String data) {
-		try {
-			return LocalDate.parse(data, DATE_FORMATTER);
-		} catch (DateTimeParseException e) {
-			throw new IllegalArgumentException("Data inválida. Use o formato DD/MM/YYYY.");
-		}
-	}
-
-	public static LocalTime parseLocalTime(String horario) {
-		try {
-			return LocalTime.parse(horario, TIME_FORMATTER);
-		} catch (DateTimeParseException e) {
-			throw new IllegalArgumentException("Horário inválido. Use o formato HH:mm.");
-		}
-	}
-
-	public static LocalDateTime combinarDataEHora(LocalDate data, LocalTime hora) {
-		return LocalDateTime.of(data, hora);
-	}
 
 	public static List<AgendamentoParcial> obterAgendamentosParciaisData(EspacoFisico espaco, LocalDate dataAlvo) {
 		List<AgendamentoParcial> agendamentosDia = new ArrayList<>();
@@ -176,13 +150,13 @@ public class AgendamentoService {
 	private static boolean mesmoDia(Agendamento agendamento, LocalDate data) {
 		LocalDate inicio = agendamento.dataInicio().toLocalDate();
 		LocalDate fim = agendamento.dataFim().toLocalDate();
-		return LocalDateUtils.isBetween(data, inicio, fim, true);
+		return LocalDateTimeUtils.isBetween(data, inicio, fim, true);
 	}
 
 	private static LocalTime calcularInicioParcial(Agendamento agendamento, LocalDate dataAlvo, LocalTime horarioMinimo) {
 		LocalDate inicio = agendamento.dataInicio().toLocalDate();
 		if (dataAlvo.equals(inicio)) {
-			return LocalTimeUtils.max(agendamento.dataInicio().toLocalTime(), horarioMinimo);
+			return LocalDateTimeUtils.max(agendamento.dataInicio().toLocalTime(), horarioMinimo);
 		}
 		return horarioMinimo;
 	}
@@ -190,7 +164,7 @@ public class AgendamentoService {
 	private static LocalTime calcularFimParcial(Agendamento agendamento, LocalDate dataAlvo, LocalTime horarioMaximo) {
 		LocalDate fim = agendamento.dataFim().toLocalDate();
 		if (dataAlvo.equals(fim)) {
-			return LocalTimeUtils.min(agendamento.dataFim().toLocalTime(), horarioMaximo);
+			return LocalDateTimeUtils.min(agendamento.dataFim().toLocalTime(), horarioMaximo);
 		}
 		return horarioMaximo;
 	}
