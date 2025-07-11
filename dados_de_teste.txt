@@ -1,0 +1,346 @@
+{
+  "alunos": [
+    {
+      "curso": "Ciencia Da Computacao",
+      "matricula": "231000001",
+      "semestre": 5,
+      "nome": "Ana Clara Borges",
+      "email": "231000001@aluno.unb.br",
+      "senha": "Senha@123",
+      "telefone": "61999990001"
+    },
+    {
+      "curso": "Engenharia De Software",
+      "matricula": "221000002",
+      "semestre": 7,
+      "nome": "Bruno Costa Dias",
+      "email": "221000002@estudante.unb.br",
+      "senha": "Senha@124",
+      "telefone": "61999990002"
+    },
+    {
+      "curso": "Medicina",
+      "matricula": "241000003",
+      "semestre": 2,
+      "nome": "Carla Lima E Silva",
+      "email": "241000003@aluno.unb.br",
+      "senha": "Senha@125",
+      "telefone": "61999990003"
+    },
+    {
+      "curso": "Direito",
+      "matricula": "211000004",
+      "semestre": 8,
+      "nome": "Daniel Martins",
+      "email": "211000004@aluno.unb.br",
+      "senha": "Senha@126",
+      "telefone": "61999990004"
+    },
+    {
+      "curso": "Relacoes Internacionais",
+      "matricula": "201000005",
+      "semestre": 10,
+      "nome": "Eduarda Ferreira",
+      "email": "201000005@estudante.unb.br",
+      "senha": "Senha@127",
+      "telefone": "61999990005"
+    }
+  ],
+  "professores": [
+    {
+      "curso": "Ciencia Da Computacao",
+      "cargoAcademico": "PROFESSOR_ADJUNTO",
+      "matriculaInstitucional": "1100001",
+      "nome": "Fernanda Goncalves",
+      "email": "fernanda.goncalves@unb.br",
+      "senha": "Professor#01",
+      "telefone": "61988880001"
+    },
+    {
+      "curso": "Engenharia De Software",
+      "cargoAcademico": "PROFESSOR_ASSISTENTE",
+      "matriculaInstitucional": "1100002",
+      "nome": "Gustavo Almeida",
+      "email": "gustavo.almeida@unb.br",
+      "senha": "Professor#02",
+      "telefone": "61988880002"
+    },
+    {
+      "curso": "Medicina",
+      "cargoAcademico": "PROFESSOR_TITULAR",
+      "matriculaInstitucional": "1100003",
+      "nome": "Helena Ribeiro",
+      "email": "helena.ribeiro@unb.br",
+      "senha": "Professor#03",
+      "telefone": "61988880003"
+    },
+    {
+      "curso": "Direito",
+      "cargoAcademico": "PROFESSOR_ASSOCIADO",
+      "matriculaInstitucional": "1100004",
+      "nome": "Igor Santos",
+      "email": "igor.santos@unb.br",
+      "senha": "Professor#04",
+      "telefone": "61988880004"
+    },
+    {
+      "curso": "Relacoes Internacionais",
+      "cargoAcademico": "PROFESSOR_ADJUNTO",
+      "matriculaInstitucional": "1100005",
+      "nome": "Julia Pereira",
+      "email": "julia.pereira@unb.br",
+      "senha": "Professor#05",
+      "telefone": "61988880005"
+    }
+  ],
+  "administrativos": [
+    {
+      "cargo": "Tecnico Em Informatica",
+      "departamento": "Departamento De Ciencia Da Computacao",
+      "matriculaInstitucional": "2200001",
+      "nome": "Lucas Oliveira",
+      "email": "lucas.oliveira@unb.br",
+      "senha": "Admin!2025",
+      "telefone": "61977770001"
+    },
+    {
+      "cargo": "Assistente Administrativo",
+      "departamento": "Secretaria Da Faculdade De Medicina",
+      "matriculaInstitucional": "2200002",
+      "nome": "Mariana Costa",
+      "email": "mariana.costa@unb.br",
+      "senha": "Admin!2026",
+      "telefone": "61977770002"
+    },
+    {
+      "cargo": "Tecnico De Laboratorio",
+      "departamento": "Instituto De Quimica",
+      "matriculaInstitucional": "2200003",
+      "nome": "Nicolas Souza",
+      "email": "nicolas.souza@unb.br",
+      "senha": "Admin!2027",
+      "telefone": "61977770003"
+    },
+    {
+      "cargo": "Bibliotecario",
+      "departamento": "Biblioteca Central",
+      "matriculaInstitucional": "2200004",
+      "nome": "Olivia Pereira",
+      "email": "olivia.pereira@unb.br",
+      "senha": "Admin!2028",
+      "telefone": "61977770004"
+    },
+    {
+      "cargo": "Analista De Pessoal",
+      "departamento": "Recursos Humanos",
+      "matriculaInstitucional": "2200005",
+      "nome": "Pedro Rocha",
+      "email": "pedro.rocha@unb.br",
+      "senha": "Admin!2029",
+      "telefone": "61977770005"
+    }
+  ],
+  "salasDeAula": [
+    {
+      "capacidade": 40,
+      "localizacao": "ICC-N-A1-101",
+      "horarioInicialDisponivel": "07:30",
+      "horarioFinalDisponivel": "22:00",
+      "equipamentos": [
+        { "nome": "Projetor", "quantidade": 1 },
+        { "nome": "Quadro Branco", "quantidade": 2 }
+      ],
+      "tipo": "SALADEAULA"
+    },
+    {
+      "capacidade": 60,
+      "localizacao": "PJC-AU-05",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "21:00",
+      "equipamentos": [
+        { "nome": "Projetor", "quantidade": 2 },
+        { "nome": "Sistema de Som", "quantidade": 1 }
+      ],
+      "tipo": "SALADEAULA"
+    },
+    {
+      "capacidade": 50,
+      "localizacao": "FT-A1-01",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "20:00",
+      "equipamentos": [
+        { "nome": "Projetor", "quantidade": 1 },
+        { "nome": "Quadro Negro", "quantidade": 1 }
+      ],
+      "tipo": "SALADEAULA"
+    },
+    {
+      "capacidade": 30,
+      "localizacao": "FAU-S1-12",
+      "horarioInicialDisponivel": "07:00",
+      "horarioFinalDisponivel": "22:00",
+      "equipamentos": [
+        { "nome": "Mesa de Desenho", "quantidade": 30 },
+        { "nome": "Quadro Branco", "quantidade": 1 }
+      ],
+      "tipo": "SALADEAULA"
+    },
+    {
+      "capacidade": 70,
+      "localizacao": "ICC-S-AT-24",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "18:00",
+      "equipamentos": [
+        { "nome": "Projetor", "quantidade": 1 },
+        { "nome": "Ar Condicionado", "quantidade": 2 },
+        { "nome": "Sistema de Som", "quantidade": 1 }
+      ],
+      "tipo": "SALADEAULA"
+    }
+  ],
+  "laboratorios": [
+    {
+      "capacidade": 25,
+      "localizacao": "CIC-LCC-01",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "18:00",
+      "equipamentos": [
+        { "nome": "Computador i5", "quantidade": 25 },
+        { "nome": "Bancada", "quantidade": 10 }
+      ],
+      "tipo": "LABORATORIO"
+    },
+    {
+      "capacidade": 20,
+      "localizacao": "IQ-LQ-03",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "17:00",
+      "equipamentos": [
+        { "nome": "Vidraria Completa", "quantidade": 20 },
+        { "nome": "Capela de Exaustao", "quantidade": 5 }
+      ],
+      "tipo": "LABORATORIO"
+    },
+    {
+      "capacidade": 15,
+      "localizacao": "ENM-L03",
+      "horarioInicialDisponivel": "09:00",
+      "horarioFinalDisponivel": "17:00",
+      "equipamentos": [
+        { "nome": "Bancada de Testes Mecanicos", "quantidade": 3 },
+        { "nome": "Ferramentas Diversas", "quantidade": 50 }
+      ],
+      "tipo": "LABORATORIO"
+    },
+    {
+      "capacidade": 20,
+      "localizacao": "IB-LBF-02",
+      "horarioInicialDisponivel": "08:30",
+      "horarioFinalDisponivel": "17:30",
+      "equipamentos": [
+        { "nome": "Microscopio", "quantidade": 20 },
+        { "nome": "Autoclave", "quantidade": 1 }
+      ],
+      "tipo": "LABORATORIO"
+    },
+    {
+      "capacidade": 25,
+      "localizacao": "ENE-LE-05",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "19:00",
+      "equipamentos": [
+        { "nome": "Osciloscopio", "quantidade": 12 },
+        { "nome": "Fonte de Tensao", "quantidade": 12 }
+      ],
+      "tipo": "LABORATORIO"
+    }
+  ],
+  "salasDeEstudos": [
+    {
+      "capacidade": 50,
+      "localizacao": "BCE-S-E-01",
+      "horarioInicialDisponivel": "07:00",
+      "horarioFinalDisponivel": "22:50",
+      "equipamentos": [
+        { "nome": "Mesa Individual", "quantidade": 50 },
+        { "nome": "Ponto de Energia", "quantidade": 50 }
+      ],
+      "tipo": "SALADEESTUDOS"
+    },
+    {
+      "capacidade": 8,
+      "localizacao": "BCE-S-G-02",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "22:00",
+      "equipamentos": [
+        { "nome": "Mesa de Reuniao", "quantidade": 1 },
+        { "nome": "Quadro Branco", "quantidade": 1 }
+      ],
+      "tipo": "SALADEESTUDOS"
+    },
+    {
+      "capacidade": 20,
+      "localizacao": "ICC-N-S-03",
+      "horarioInicialDisponivel": "07:00",
+      "horarioFinalDisponivel": "23:00",
+      "equipamentos": [
+        { "nome": "Baia de Estudo Individual", "quantidade": 20 }
+      ],
+      "tipo": "SALADEESTUDOS"
+    },
+    {
+      "capacidade": 10,
+      "localizacao": "FT-S-E-01",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "21:00",
+      "equipamentos": [
+        { "nome": "Mesa de Grupo", "quantidade": 2 },
+        { "nome": "Puff", "quantidade": 5 }
+      ],
+      "tipo": "SALADEESTUDOS"
+    },
+    {
+      "capacidade": 12,
+      "localizacao": "FD-S-E-01",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "22:00",
+      "equipamentos": [
+        { "nome": "Cabine Acustica", "quantidade": 12 },
+        { "nome": "Ponto de Energia", "quantidade": 12 }
+      ],
+      "tipo": "SALADEESTUDOS"
+    }
+  ],
+  "agendamentos": [
+    {
+      "dataInicio": "2025-08-04T10:00",
+      "dataFim": "2025-08-04T12:00",
+      "usuarioId": "1100001",
+      "espacoId": "ICC-N-A1-101"
+    },
+    {
+      "dataInicio": "2025-07-14T14:00",
+      "dataFim": "2025-07-14T16:00",
+      "usuarioId": "231000001",
+      "espacoId": "BCE-S-E-01"
+    },
+    {
+      "dataInicio": "2025-09-01T09:00",
+      "dataFim": "2025-09-03T18:00",
+      "usuarioId": "1100003",
+      "espacoId": "PJC-AU-05"
+    },
+    {
+      "dataInicio": "2025-07-21T08:30",
+      "dataFim": "2025-07-21T12:30",
+      "usuarioId": "2200003",
+      "espacoId": "IQ-LQ-03"
+    },
+    {
+      "dataInicio": "2025-07-15T13:00",
+      "dataFim": "2025-07-15T17:50",
+      "usuarioId": "221000002",
+      "espacoId": "CIC-LCC-01"
+    }
+  ]
+}
