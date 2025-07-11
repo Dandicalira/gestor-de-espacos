@@ -26,10 +26,6 @@ public class Menu {
 	public Menu() {
 	}
 
-	public Menu(Usuario usuario) {
-		usuarioLogado = usuario;
-	}
-
 	public void menuInicial() {
 		Formulario f = new Formulario();
 
@@ -296,7 +292,6 @@ public class Menu {
 			if (!f.valido()) return;
 			try {
 				usuarioLogado = AutenticacaoService.autenticarLogin(f.resposta("Matrícula"), f.resposta("Senha"));
-				System.out.println(usuarioLogado);
 
 				f.ocultar();
 				menuUsuario(f);
@@ -311,7 +306,8 @@ public class Menu {
 	private void menuUsuario(Formulario anterior) {
 		Formulario f = new Formulario();
 
-		f.adicionarTexto("Escolha uma opção:");
+		f.adicionarTexto(usuarioLogado.toString());
+
 		f.adicionarBotao("Histório de agendamentos", "Conferir", () -> {
 			listarAgendamentosUsuario(f); // popup
 		});

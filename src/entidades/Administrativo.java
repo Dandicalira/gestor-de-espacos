@@ -28,15 +28,17 @@ public class Administrativo extends Servidor{
 	
 	@Override
 	public String toString() {
-		String administrativo = "------------------------------------------------------------\n"
-				              + "               Ficha do Técnico-Administrativo\n"
-				              + "------------------------------------------------------------\n";
-		administrativo += "Nome                    : " + getNome() + "\n";
-		administrativo += "Matrícula Institucional : " + getIdentificacao() + "\n";
-		administrativo += "Email                   : " + getEmail() + "\n";
-		administrativo += "Cargo                   : " + getCargo() + "\n";
-		administrativo += "Departamento            : " + getDepartamento() + "\n";
-		administrativo += "------------------------------------------------------------\n\n";
+		String administrativo = """
+				------------------------------------------------------------
+				               Ficha do Técnico-Administrativo
+				------------------------------------------------------------
+				""";
+		administrativo += "Nome: " + getNome() + "\n \n";
+		administrativo += "Matrícula Institucional : " + getIdentificacao() + "\n \n";
+		administrativo += "Email: " + getEmail() + "\n \n";
+		administrativo += "Cargo: " + getCargo() + "\n \n";
+		administrativo += "Departamento: " + getDepartamento() + "\n";
+		administrativo += "------------------------------------------------------------\n";
 		return administrativo;
 	}
 }

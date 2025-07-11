@@ -28,14 +28,16 @@ public class Professor extends Servidor{
 	
 	@Override
 	public String toString() {
-		String professor = "------------------------------------------------------------\n"
-				         + "                      Ficha do Professor\n"
-				         + "------------------------------------------------------------\n";
-		professor += "Nome                    : " + getNome() + "\n";
-		professor += "Matrícula Institucional : " + getIdentificacao() + "\n";
-		professor += "Email                   : " + getEmail() + "\n";
-		professor += "Cargo Acadêmico         : " + getCargoAcademico() + "\n";
-		professor += "------------------------------------------------------------\n\n";
+		String professor = """
+				------------------------------------------------------------
+				                      Ficha do Professor
+				------------------------------------------------------------
+				""";
+		professor += "Nome: " + getNome() + "\n \n";
+		professor += "Matrícula Institucional: " + getIdentificacao() + "\n \n";
+		professor += "Email: " + getEmail() + "\n \n";
+		professor += "Cargo Acadêmico: " + obterCargo(cargoAcademico) + "\n";
+		professor += "------------------------------------------------------------\n";
 		return professor;
 	}
 	
@@ -49,26 +51,25 @@ public class Professor extends Servidor{
 	}
 	
 	public static CargoAcademico obterCargo(String cargo) {
-		
-		switch (cargo) {
-		
-		case "Professor Titular":
-			return CargoAcademico.PROFESSORTITULAR;
-			
-		case "Professor Associado":
-			return CargoAcademico.PROFESSORASSOCIADO;
-			
-		case "Professor Adjunto":
-			return CargoAcademico.PROFESSORADJUNTO;
-			
-		case "Professor Assistente":
-			return CargoAcademico.PROFESSORASSISTENTE;
-			
-		case "Professor Auxiliar":
-			return CargoAcademico.PROFESSORAUXILIAR;
-		default:
-			return CargoAcademico.PROFESSORTITULAR;
-		}
+
+		return switch (cargo) {
+			case "Professor Associado" -> CargoAcademico.PROFESSORASSOCIADO;
+			case "Professor Adjunto" -> CargoAcademico.PROFESSORADJUNTO;
+			case "Professor Assistente" -> CargoAcademico.PROFESSORASSISTENTE;
+			case "Professor Auxiliar" -> CargoAcademico.PROFESSORAUXILIAR;
+			default -> CargoAcademico.PROFESSORTITULAR;
+		};
+	}
+
+	public static String obterCargo(CargoAcademico cargo) {
+
+		return switch (cargo) {
+			case PROFESSORASSOCIADO -> "Professor Associado";
+			case PROFESSORADJUNTO -> "Professor Adjunto";
+			case PROFESSORASSISTENTE -> "Professor Assistente";
+			case PROFESSORAUXILIAR -> "Professor Auxiliar";
+			default -> "Professor Titular";
+		};
 	}
 }
 

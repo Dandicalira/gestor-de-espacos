@@ -56,14 +56,16 @@ public class Aluno extends Usuario{
 	
 	@Override
 	public String toString() {
-		String aluno = "------------------------------------------------------------\n"
-				     + "                      Ficha do Aluno\n"
-				     + "------------------------------------------------------------\n";
-		aluno += "Nome      : " + getNome() + "\n";
-		aluno += "Matrícula : " + getIdentificacao() + "\n";
-		aluno += "Email     : " + getEmail() + "\n";
-		aluno += "Curso     : " + getCurso() + "\n";
-		aluno += "------------------------------------------------------------\n\n";
+		String aluno = """
+				------------------------------------------------------------
+				                      Ficha do Aluno
+				------------------------------------------------------------
+				""";
+		aluno += "Nome: " + getNome() + "\n \n";
+		aluno += "Matrícula : " + getIdentificacao() + "\n \n";
+		aluno += "Email: " + getEmail() + "\n \n";
+		aluno += "Curso: " + getCurso() + "\n";
+		aluno += "------------------------------------------------------------\n";
 		return aluno;
 	}
 }
