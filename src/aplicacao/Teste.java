@@ -9,7 +9,7 @@ import java.time.LocalTime;
 
 public class Teste {
 	static int ano = 2025;
-	public static Usuario criarTeste() {
+	public static void criarTeste() {
 		Aluno aluno = gerarAluno();
 		Registro.registrarAluno(aluno);
 
@@ -56,8 +56,6 @@ public class Teste {
 		gerarAgendamento2(professor, laboratorio);
 
 		gerarAgendamento(aluno, laboratorio);
-
-		return professor;
 	}
 
 	public static void gerarAgendamento(Usuario usuario, EspacoFisico espaco) {
@@ -74,6 +72,18 @@ public class Teste {
 	}
 
 	public static Professor gerarProfessor() {
+		return new Professor(
+				"João Silva",
+				"joao.silva@email.com",
+				"123",
+				"(61) 91234-5678",
+				"1",
+				"Engenharia de Software",
+				Professor.CargoAcademico.PROFESSORTITULAR
+		);
+	}
+
+	public static Professor gerarAdmin() {
 		return new Professor(
 				"João Silva",
 				"joao.silva@email.com",

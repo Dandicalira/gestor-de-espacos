@@ -2,6 +2,9 @@ package servicos.cadastro;
 import excecoes.*;
 import entidades.*;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class Verificar {
 
 	//Método Construtor Privado
@@ -174,13 +177,19 @@ public class Verificar {
 			throw new ForaDoIntervaloException("Por favor, insira uma capacidade válida!");
 		}
 	}
+
+	public static void verificarHorarioFuncionamento(LocalTime horarioInicio, LocalTime horarioFim) {
+		if (horarioInicio.isAfter(horarioFim)) {
+			throw new PeriodoInvalidoException("O horário final deve ser posterior ao horário inicial");
+		}
+	}
 	
 	public static void verificarLocalizacao(String localizacao) {
 		if (localizacao == null || localizacao.isEmpty()) {
 			throw new CampoVazioException();
 		}
 		if (contemCaractereEspecial(localizacao)) {
-			throw new TipoInesperadoException("Por favor, não insira caracteres especiais na localização!");
+			throw new TipoInesperadoException("Não insira caracteres especiais na localização!");
 		}
 		for (EspacoFisico espaco : Registro.getLaboratorios()) {
 			if (localizacao.equals(espaco.getLocalizacao())) {
