@@ -169,18 +169,6 @@ public class Verificar {
 		}
 	}
 	
-	public static void verificarCargoAcademico(String cargoAcademico) {
-		if (cargoAcademico == null || cargoAcademico.isEmpty()) {
-			throw new CampoVazioException();
-		}
-		String auxiliar = cargoAcademico.replace(" ", "").toLowerCase();
-		if (!auxiliar.equals("professorauxiliar") && !auxiliar.equals("professoradjunto") && 
-		    !auxiliar.equals("professorassociado") && !auxiliar.equals("professortitular") && !auxiliar.equals("professorassistente")) {
-			throw new ForaDoIntervaloException("Insira um cargo acadêmico válido: Professor Auxiliar, Professor Assistente, "
-					                         + "Professor Adjunto, Professor Associado ou Professor Titular");
-		}
-	}
-	
 	public static void verificarCapacidade(int capacidade) {
 		if (capacidade <= 0) {
 			throw new ForaDoIntervaloException("Por favor, insira uma capacidade válida!");

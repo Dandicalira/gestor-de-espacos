@@ -27,7 +27,7 @@ public class CadastroService {
 		
 	}
 	
-	public static void cadastrarProfessor(String nome, String senha, String matriculaInstitucional, String email, String telefone, String curso, String cargoAcademico) {
+	public static void cadastrarProfessor(String nome, String senha, String matriculaInstitucional, String email, String telefone, String curso, Professor.CargoAcademico cargoAcademico) {
 		//Leitura dos Atributos
 		nome = cadastrarNome(nome);
 		senha = cadastrarSenha(senha);
@@ -152,9 +152,7 @@ public class CadastroService {
 				return departamento;
 	}
 	
-	private static String cadastrarCargoAcademico(String cargoAcademico) {
-				cargoAcademico = Formatar.capitalizar(cargoAcademico);
-				Verificar.verificarCargoAcademico(cargoAcademico);
+	private static Professor.CargoAcademico cadastrarCargoAcademico(Professor.CargoAcademico cargoAcademico) {
 				return cargoAcademico;
 	}
 	

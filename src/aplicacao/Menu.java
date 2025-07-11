@@ -1,6 +1,8 @@
 package aplicacao;
 
 import entidades.EspacoFisico;
+import entidades.Professor;
+import entidades.Professor;
 import entidades.Usuario;
 
 import java.time.LocalDate;
@@ -139,10 +141,12 @@ public class Menu {
 				não deve conter espaços em branco
 				""");
 		f.adicionarInput("Nome", true);
-		f.adicionarInput("Matrícula Institucional", true);
 		f.adicionarSenha("Senha");
-		f.adicionarInput("Setor", true);
-
+		f.adicionarInput("Email", true);
+		f.adicionarInput("Telefone", true, "ALGARISMOS");
+		f.adicionarInput("Matrícula Institucional", true);
+		f.adicionarInput("Cargo", true);
+		f.adicionarInput("Departamento", true);
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
 			anterior.mostrar();
@@ -151,14 +155,25 @@ public class Menu {
 		f.adicionarAcao("Cadastrar", () -> {
 			if (!f.valido()) return;
 
-			String nome = f.resposta("Nome");
-			String matricula = f.resposta("Matrícula Institucional");
-			String senha = f.resposta("Senha");
-			String setor = f.resposta("Setor");
+			try {
+				String nome = f.resposta("Nome");
+				String senha = f.resposta("Senha");
+				String matriculaInstitucional = f.resposta("Matrícula Institucional");
+				String email = f.resposta("Email");
+				String telefone = f.resposta("Telefone");
+				String cargo = f.resposta("Cargo");
+				
+				
+				String departamento = f.resposta("Departamento");
 
-			// TODO: Cadastrar técnico usando Registro.adicionarServidor(...)
-
-			mostrarMensagem("Cadastro realizado com sucesso!");
+				CadastroService.cadastrarAdministrativo(nome, senha, matriculaInstitucional, email, telefone, departamento, cargo);
+				mostrarMensagem("Cadastro do técnico-administrativo realizado com sucesso!");
+				PersistenciaService.salvarDados();
+				f.ocultar();
+				anterior.mostrar();
+			} catch (Exception e) {
+				f.atualizarErro(e.getMessage());
+			}
 		});
 
 		f.mostrar();
@@ -175,10 +190,13 @@ public class Menu {
 				não deve conter espaços em branco
 				""");
 		f.adicionarInput("Nome", true);
-		f.adicionarInput("Matrícula Institucional", true);
 		f.adicionarSenha("Senha");
-		f.adicionarInput("Departamento", true);
-
+		f.adicionarInput("Email", true);
+		f.adicionarInput("Telefone", true, "ALGARISMOS");
+		f.adicionarInput("Matrícula Institucional", true);
+		f.adicionarInput("Curso", true);
+		f.adicionarDropdown("Cargo Acadêmico", new String[]{"Professor Titular", "Professor Associado", "Professor Adjunto", "Professor Assistente", "Professor Auxiliar"});
+		
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
 			anterior.mostrar();
@@ -187,14 +205,22 @@ public class Menu {
 		f.adicionarAcao("Cadastrar", () -> {
 			if (!f.valido()) return;
 
-			String nome = f.resposta("Nome");
-			String matricula = f.resposta("Matrícula Institucional");
-			String senha = f.resposta("Senha");
-			String departamento = f.resposta("Departamento");
-
-			// TODO: Cadastrar professor usando Registro.adicionarServidor(...)
-
-			mostrarMensagem("Cadastro realizado com sucesso!");
+			try {
+				String nome = f.resposta("Nome");
+				String senha = f.resposta("Senha");
+				String matriculaInstitucional = f.resposta("Matrícula Institucional");
+				String email = f.resposta("Email");
+				String telefone = f.resposta("Telefone");
+				String curso = f.resposta("Curso");
+				Professor.CargoAcademico cargoAcademico = Professor.obterCargo(f.opcao("Cargo Acadêmico"));
+				CadastroService.cadastrarProfessor(nome, senha, matriculaInstitucional, email, telefone, curso, cargoAcademico);
+				mostrarMensagem("Cadastro do professor realizado com sucesso!");
+				PersistenciaService.salvarDados();
+				f.ocultar();
+				anterior.mostrar();
+			} catch (Exception e) {
+				f.atualizarErro(e.getMessage());
+			}
 		});
 
 		f.mostrar();
@@ -213,9 +239,9 @@ public class Menu {
 				""");
 		f.adicionarInput("Nome", true);
 		f.adicionarSenha("Senha");
-		f.adicionarInput("Matrícula", true);
 		f.adicionarInput("Email", true);
 		f.adicionarInput("Telefone", true, "ALGARISMOS");
+		f.adicionarInput("Matrícula", true);
 		f.adicionarRadio("Semestre",new String[]{"1º","2º","3º","4º","5º","6º","7º","8º","9º","10º"});
 		f.adicionarInput("Curso", true);
 
@@ -239,7 +265,7 @@ public class Menu {
 				int semestre = Integer.parseInt(strSemestre);
 
 				CadastroService.cadastrarAluno(nome, senha, matricula, email, telefone, curso, semestre);
-				mostrarMensagem("Cadastro realizado com sucesso!");
+				mostrarMensagem("Cadastro do aluno realizado com sucesso!");
 				PersistenciaService.salvarDados();
 				f.ocultar();
 				anterior.mostrar();

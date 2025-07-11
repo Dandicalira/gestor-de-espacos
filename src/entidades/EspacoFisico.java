@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import entidades.Professor.CargoAcademico;
+
 import java.util.Arrays;
 
 public class EspacoFisico {
@@ -115,6 +117,24 @@ public class EspacoFisico {
 		SALADEESTUDOS;
 		
 		
+	}
+	
+public static TipoDeEspaco obterTipoDeEspaco(String tipoDeEspaco) {
+		
+		switch (tipoDeEspaco) {
+		
+		case "Sala de Aula":
+			return TipoDeEspaco.SALADEAULA;
+			
+		case "Laboratório":
+			return TipoDeEspaco.LABORATORIO;
+			
+		case "Sala de Estudos":
+			return TipoDeEspaco.SALADEESTUDOS;
+			
+		default:
+			return TipoDeEspaco.SALADEAULA;
+		}
 	}
 
 }

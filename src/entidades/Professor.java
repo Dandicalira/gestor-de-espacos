@@ -3,15 +3,15 @@ package entidades;
 public class Professor extends Servidor{
 
 	//Atributos da Classe
-	private String curso,
-				   cargoAcademico;
+	private String curso;
+	private CargoAcademico cargoAcademico;
 	
 	//Métodos Construtores
 	public Professor() {
 		
 	}
 	
-	public Professor(String nome, String email, String senha, String telefone, String matriculaInstitucional, String curso, String cargoAcademico) {
+	public Professor(String nome, String email, String senha, String telefone, String matriculaInstitucional, String curso, CargoAcademico cargoAcademico) {
 		super(nome, email, senha, telefone, matriculaInstitucional);
 		this.curso = curso;
 		this.cargoAcademico = cargoAcademico;
@@ -22,7 +22,7 @@ public class Professor extends Servidor{
 		return curso;
 	}
 	
-	public String getCargoAcademico() {
+	public CargoAcademico getCargoAcademico() {
 		return cargoAcademico;
 	}
 	
@@ -37,6 +37,38 @@ public class Professor extends Servidor{
 		professor += "Cargo Acadêmico         : " + getCargoAcademico() + "\n";
 		professor += "------------------------------------------------------------\n\n";
 		return professor;
+	}
+	
+	public enum CargoAcademico {
+		
+		PROFESSORTITULAR,
+		PROFESSORASSOCIADO,
+		PROFESSORADJUNTO,
+		PROFESSORASSISTENTE,
+		PROFESSORAUXILIAR;
+	}
+	
+	public static CargoAcademico obterCargo(String cargo) {
+		
+		switch (cargo) {
+		
+		case "Professor Titular":
+			return CargoAcademico.PROFESSORTITULAR;
+			
+		case "Professor Associado":
+			return CargoAcademico.PROFESSORASSOCIADO;
+			
+		case "Professor Adjunto":
+			return CargoAcademico.PROFESSORADJUNTO;
+			
+		case "Professor Assistente":
+			return CargoAcademico.PROFESSORASSISTENTE;
+			
+		case "Professor Auxiliar":
+			return CargoAcademico.PROFESSORAUXILIAR;
+		default:
+			return CargoAcademico.PROFESSORTITULAR;
+		}
 	}
 }
 

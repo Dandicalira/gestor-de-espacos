@@ -81,7 +81,7 @@ public class Teste {
 				"(61) 91234-5678",
 				"1",
 				"Engenharia de Software",
-				"Professor"
+				Professor.CargoAcademico.PROFESSORTITULAR
 		);
 	}
 
