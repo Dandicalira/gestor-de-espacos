@@ -1,9 +1,7 @@
 package servicos.cadastro;
 import entidades.*;
 import excecoes.EntidadeInexistenteException;
-import excecoes.EspacoFisicoNaoExisteException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Registro {
@@ -64,7 +62,7 @@ public class Registro {
 			}
 		}
 
-		throw new EspacoFisicoNaoExisteException();
+		throw new EntidadeInexistenteException("O espaço físico informado não existe");
 	}
 	
 	//Registro de Entidades

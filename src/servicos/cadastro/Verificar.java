@@ -22,16 +22,16 @@ public class Verificar {
 		}
 	}
 	
-	public static void verificarEmailAluno(String email, String matricula) {
+	public static void verificarEmailAluno(String email) {
 		if (email == null || email.isEmpty()) {
 			throw new CampoVazioException();
 		}
-		if (!(email.equals((matricula + "@aluno.unb.br")) || email.equals(matricula + "@estudante.unb.br"))) {
-			throw new EmailAlunoFormatoInvalidoException();
+		if (!(email.endsWith("@aluno.unb.br") || email.endsWith("@estudante.unb.br"))) {
+			throw new EntradaFormatoInvalidoException("O e-mail deve ser no formato matricula@aluno.unb.br ou matricula@estudante.unb.br!");
 		}
 		for (Aluno aluno : Registro.getAlunos()) {
 			if (email.equals(aluno.getEmail())) {
-				throw new EmailDuplicadoException();
+				throw new EntidadeDuplicadaException("O email já existe no sistema!");
 			}
 		}
 	}
@@ -41,14 +41,14 @@ public class Verificar {
 			throw new CampoVazioException();
 		}
 		if (email.length() < 8) {
-			throw new EmailServidorFormatoInvalidoException();
+			throw new EntradaFormatoInvalidoException("O e-mail deve estar no formato nome.sobrenome@unb.br!");
 		}
 		if (!email.endsWith("@unb.br")) {
-			throw new EmailServidorFormatoInvalidoException();
+			throw new EntradaFormatoInvalidoException("O e-mail deve estar no formato nome.sobrenome@unb.br!");
 		}
 		for (Servidor servidor : Registro.getServidores()) {
 			if (email.equals(servidor.getEmail())) {
-				throw new EmailDuplicadoException();
+				throw new EntidadeDuplicadaException("O email já existe no sistema!");
 			}
 		}
 	}
@@ -65,12 +65,12 @@ public class Verificar {
 		}
 		for (Aluno aluno : Registro.getAlunos()) {
 			if (telefone.equals(aluno.getTelefone())) {
-				throw new TelefoneDuplicadoException();
+				throw new EntidadeDuplicadaException("Esse telefone já existe no sistema!");
 			}
 		}
 		for (Servidor servidor : Registro.getServidores()) {
 			if (telefone.equals(servidor.getTelefone())) {
-				throw new TelefoneDuplicadoException();
+				throw new EntidadeDuplicadaException("Esse telefone já existe no sistema!");
 			}
 		}
 	}
@@ -98,11 +98,11 @@ public class Verificar {
 			throw new TipoInesperadoException("Só são permitidos números em matrículas!");
 		}
 		if (matricula.length() != 9) {
-			throw new MatriculaFormatoInvalidoException();
+			throw new EntradaFormatoInvalidoException("A matrícula deve ter exatamente 9 dígitos!");
 		}
 		for (Aluno aluno : Registro.getAlunos()) {
 			if (matricula.equals(aluno.getMatricula())) {
-				throw new MatriculaDuplicadaException();
+				throw new EntidadeDuplicadaException("A matrícula já existe no sistema!");
 			}
 		}
 	}
@@ -119,7 +119,7 @@ public class Verificar {
 		}
 		for (Servidor servidor : Registro.getServidores()) {
 			if (matriculaInstitucional.equals(servidor.getMatriculaInstitucional())) {
-				throw new MatriculaDuplicadaException();
+				throw new EntidadeDuplicadaException("A matrícula institucional já existe no sistema!");
 			}
 		}
 	}
@@ -129,19 +129,19 @@ public class Verificar {
 			throw new CampoVazioException();
 		}
 		if (contemEspacos(senha)) {
-			throw new SenhaFormatoInvalidoException("Senhas não podem conter espaços em branco!");
+			throw new EntradaFormatoInvalidoException("Senhas não podem conter espaços em branco!");
 		}
 		if (senha.length() < 8 || senha.length() > 20) {
-			throw new SenhaFormatoInvalidoException("Senhas devem possuir, no mínimo, 8 caracteres e, no máximo, 20 caracteres");
+			throw new EntradaFormatoInvalidoException("Senhas devem possuir, no mínimo, 8 caracteres e, no máximo, 20 caracteres");
 		}
 		if (!contemCaractereEspecial(senha)) {
-			throw new SenhaFormatoInvalidoException("Senhas devem possuir, no mínimo, 1 caractere especial (@, #, ...)");
+			throw new EntradaFormatoInvalidoException("Senhas devem possuir, no mínimo, 1 caractere especial (@, #, ...)");
 		}
 		if (!contemDigito(senha)) {
-			throw new SenhaFormatoInvalidoException("Senhas devem possuir, no mínimo, 1 dígito numérico");
+			throw new EntradaFormatoInvalidoException("Senhas devem possuir, no mínimo, 1 dígito numérico");
 		}
 		if (!contemMaiuscula(senha) || !contemMinuscula(senha)) {
-			throw new SenhaFormatoInvalidoException("Senhas devem possuir, no mínimo, 1 letra maiúscula e 1 letra minúscula");
+			throw new EntradaFormatoInvalidoException("Senhas devem possuir, no mínimo, 1 letra maiúscula e 1 letra minúscula");
 		}
 	}
 	
@@ -196,17 +196,17 @@ public class Verificar {
 		}
 		for (EspacoFisico espaco : Registro.getLaboratorios()) {
 			if (localizacao.equals(espaco.getLocalizacao())) {
-				throw new LocalizacaoDuplicadaException();
+				throw new EntidadeDuplicadaException("A localização já existe no sistema!");
 			}
 		}
 		for (EspacoFisico espaco : Registro.getSalasDeAula()) {
 			if (localizacao.equals(espaco.getLocalizacao())) {
-				throw new LocalizacaoDuplicadaException();
+				throw new EntidadeDuplicadaException("A localização já existe no sistema!");
 			}
 		}
 		for (EspacoFisico espaco : Registro.getSalasDeEstudos()) {
 			if (localizacao.equals(espaco.getLocalizacao())) {
-				throw new LocalizacaoDuplicadaException();
+				throw new EntidadeDuplicadaException("A localização já existe no sistema!");
 			}
 		}
 	}
@@ -220,7 +220,7 @@ public class Verificar {
 		}
 		for (Equipamento equipamento : equipamentos) {
 			if (nome.equals(equipamento.getNome())) {
-				throw new EquipamentoDuplicadoException();
+				throw new EntidadeDuplicadaException("O equipamento já está cadastrado na sala!");
 			}
 		}
 	}

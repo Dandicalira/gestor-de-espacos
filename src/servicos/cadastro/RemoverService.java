@@ -1,5 +1,4 @@
 package servicos.cadastro;
-import aplicacao.EntradaDeDados;
 import entidades.*;
 import excecoes.VoltarException;
 import excecoes.EntidadeInexistenteException;
@@ -17,7 +16,7 @@ public class RemoverService {
 		while (true) {
 			try {
 				System.out.print("Digite a matrícula do aluno a ser removido (0 para voltar): ");
-				matricula = EntradaDeDados.lerString();
+				//matricula = EntradaDeDados.lerString();
 				if (matricula.equals("0")) {
 					throw new VoltarException();
 				}
@@ -30,10 +29,8 @@ public class RemoverService {
 					System.out.println("O aluno foi removido com êxito!");
 					break;
 				}
-			} catch(VoltarException e) {
+			} catch(Exception e) {
 				throw e;
-			} catch (EntidadeInexistenteException e) {
-				System.out.print(e.getMessage());
 			}
 		}
 	}
@@ -45,7 +42,7 @@ public class RemoverService {
 		while (true) {
 			try {
 				System.out.print("Digite a matrícula do servidor a ser removida (0 para voltar): ");
-				matriculaInstitucional = EntradaDeDados.lerString();
+				//matriculaInstitucional = EntradaDeDados.lerString();
 				if (matriculaInstitucional.equals("0")) {
 					throw new VoltarException();
 				}
@@ -58,10 +55,8 @@ public class RemoverService {
 					System.out.println("O servidor foi removido com êxito!");
 					break;
 				}
-			} catch(VoltarException e) {
+			} catch(Exception e) {
 				throw e;
-			} catch (EntidadeInexistenteException e) {
-				System.out.print(e.getMessage());
 			}
 		}
 	}
@@ -73,7 +68,7 @@ public class RemoverService {
 		while (true) {
 			try {
 				System.out.print("Digite a localização exata do espaço a ser removido (0 para voltar): ");
-				localizacao = EntradaDeDados.lerString();
+				//localizacao = EntradaDeDados.lerString();
 				if (localizacao.equals("0")) {
 					throw new VoltarException();
 				}
@@ -82,24 +77,21 @@ public class RemoverService {
 					throw new EntidadeInexistenteException("A localização não corresponde a nenhum espaço físico cadastrado no sistema. Por favor, tente novamente\n");
 				}
 				else {
-					if (espaco.getTipo().toLowerCase().replace(" ", "").equals("saladeaula")) {
+					switch (espaco.getTipo()) {
+					case EspacoFisico.TipoDeEspaco.SALADEAULA:
 						Registro.excluirSalaDeAula(espaco);
-						System.out.println("A sala de aula foi removida com êxito!");
-					}
-					if (espaco.getTipo().toLowerCase().replace(" ", "").equals("laboratório")) {
+						break;
+					case EspacoFisico.TipoDeEspaco.LABORATORIO:
 						Registro.excluirLaboratorio(espaco);
-						System.out.println("O laboratório foi removido com êxito!");
-					}
-					if (espaco.getTipo().toLowerCase().replace(" ", "").equals("saladeestudos")) {
+						break;
+					case EspacoFisico.TipoDeEspaco.SALADEESTUDOS:
 						Registro.excluirSalaDeEstudos(espaco);
-						System.out.println("A sala de estudos foi removida com êxito!");
-					}
+						break;
+				}
 					break;
 				}
-			} catch(VoltarException e) {
+			} catch(Exception e) {
 				throw e;
-			} catch (EntidadeInexistenteException e) {
-				System.out.print(e.getMessage());
 			}
 		}
 	}

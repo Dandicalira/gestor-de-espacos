@@ -39,6 +39,159 @@
           "quantidade": 2
         }
       ]
+    },
+    {
+      "capacidade": 25,
+      "localizacao": "S11",
+      "tipo": "Sala de Aula",
+      "horarioInicialDisponivel": "07:30",
+      "horarioFinalDisponivel": "19:00",
+      "equipamentos": [
+        {
+          "nome": "Quadro Digital",
+          "quantidade": 1
+        }
+      ]
+    },
+    {
+      "capacidade": 40,
+      "localizacao": "S12",
+      "tipo": "Sala de Aula",
+      "horarioInicialDisponivel": "09:00",
+      "horarioFinalDisponivel": "17:00",
+      "equipamentos": [
+        {
+          "nome": "Projetor",
+          "quantidade": 1
+        },
+        {
+          "nome": "Ar Condicionado",
+          "quantidade": 1
+        }
+      ]
+    },
+    {
+      "capacidade": 20,
+      "localizacao": "S13",
+      "tipo": "Sala de Aula",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "20:00",
+      "equipamentos": [
+        {
+          "nome": "Quadro Branco",
+          "quantidade": 1
+        }
+      ]
+    },
+    {
+      "capacidade": 35,
+      "localizacao": "S14",
+      "tipo": "Sala de Aula",
+      "horarioInicialDisponivel": "07:00",
+      "horarioFinalDisponivel": "21:00",
+      "equipamentos": [
+        {
+          "nome": "Projetor",
+          "quantidade": 1
+        },
+        {
+          "nome": "Sistema de Som",
+          "quantidade": 1
+        }
+      ]
+    },
+    {
+      "capacidade": 28,
+      "localizacao": "S15",
+      "tipo": "Sala de Aula",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "19:00",
+      "equipamentos": [
+        {
+          "nome": "Quadro Branco",
+          "quantidade": 1
+        },
+        {
+          "nome": "Ar Condicionado",
+          "quantidade": 1
+        }
+      ]
+    },
+    {
+      "capacidade": 45,
+      "localizacao": "S16",
+      "tipo": "Sala de Aula",
+      "horarioInicialDisponivel": "09:00",
+      "horarioFinalDisponivel": "18:30",
+      "equipamentos": [
+        {
+          "nome": "Projetor",
+          "quantidade": 1
+        },
+        {
+          "nome": "Quadro Digital",
+          "quantidade": 1
+        }
+      ]
+    },
+    {
+      "capacidade": 33,
+      "localizacao": "S17",
+      "tipo": "Sala de Aula",
+      "horarioInicialDisponivel": "07:30",
+      "horarioFinalDisponivel": "20:30",
+      "equipamentos": [
+        {
+          "nome": "Quadro Branco",
+          "quantidade": 2
+        },
+        {
+          "nome": "Sistema de Som",
+          "quantidade": 1
+        }
+      ]
+    },
+    {
+      "capacidade": 38,
+      "localizacao": "S18",
+      "tipo": "Sala de Aula",
+      "horarioInicialDisponivel": "08:00",
+      "horarioFinalDisponivel": "17:00",
+      "equipamentos": [
+        {
+          "nome": "Projetor",
+          "quantidade": 1
+        },
+        {
+          "nome": "Quadro Branco",
+          "quantidade": 1
+        },
+        {
+          "nome": "Ar Condicionado",
+          "quantidade": 1
+        }
+      ]
+    },
+    {
+      "capacidade": 50,
+      "localizacao": "S19",
+      "tipo": "Sala de Aula",
+      "horarioInicialDisponivel": "07:00",
+      "horarioFinalDisponivel": "22:00",
+      "equipamentos": [
+        {
+          "nome": "Quadro Digital",
+          "quantidade": 1
+        },
+        {
+          "nome": "Sistema de Som",
+          "quantidade": 1
+        },
+        {
+          "nome": "Ar Condicionado",
+          "quantidade": 1
+        }
+      ]
     }
   ],
   "laboratorios": [
@@ -59,14 +212,38 @@
   "salasDeEstudos": [],
   "agendamentos": [
     {
-      "dataInicio": "2025-07-10T07:00",
-      "dataFim": "2025-07-10T10:00",
+      "dataInicio": "2030-07-10T12:00",
+      "dataFim": "2030-07-10T14:50",
       "usuarioId": "2",
       "espacoId": "I9"
     },
     {
-      "dataInicio": "2025-07-10T10:00",
-      "dataFim": "2025-07-11T08:50",
+      "dataInicio": "2026-07-10T12:00",
+      "dataFim": "2026-07-10T14:50",
+      "usuarioId": "1",
+      "espacoId": "S10"
+    },
+    {
+      "dataInicio": "2027-07-10T12:00",
+      "dataFim": "2027-07-10T14:50",
+      "usuarioId": "1",
+      "espacoId": "S11"
+    },
+    {
+      "dataInicio": "2028-07-10T12:00",
+      "dataFim": "2028-07-10T14:50",
+      "usuarioId": "1",
+      "espacoId": "S12"
+    },
+    {
+      "dataInicio": "2029-07-10T12:00",
+      "dataFim": "2029-07-10T14:50",
+      "usuarioId": "1",
+      "espacoId": "S13"
+    },
+    {
+      "dataInicio": "2025-07-12T10:00",
+      "dataFim": "2025-07-13T08:50",
       "usuarioId": "1",
       "espacoId": "I9"
     }

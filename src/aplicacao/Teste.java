@@ -107,7 +107,7 @@ public class Teste {
 				LocalTime.of(8, 0),
 				LocalTime.of(18, 0),
 				"S10",
-				"Sala de Aula",
+				EspacoFisico.TipoDeEspaco.SALADEAULA,
 				equipamentos
 		);
 	}
@@ -121,7 +121,7 @@ public class Teste {
 				LocalTime.of(7, 30),
 				LocalTime.of(19, 0),
 				"S11",
-				"Sala de Aula",
+				EspacoFisico.TipoDeEspaco.SALADEAULA,
 				equipamentos
 		);
 	}
@@ -136,7 +136,7 @@ public class Teste {
 				LocalTime.of(9, 0),
 				LocalTime.of(17, 0),
 				"S12",
-				"Sala de Aula",
+				EspacoFisico.TipoDeEspaco.SALADEAULA,
 				equipamentos
 		);
 	}
@@ -150,7 +150,7 @@ public class Teste {
 				LocalTime.of(8, 0),
 				LocalTime.of(20, 0),
 				"S13",
-				"Sala de Aula",
+				EspacoFisico.TipoDeEspaco.SALADEAULA,
 				equipamentos
 		);
 	}
@@ -165,7 +165,7 @@ public class Teste {
 				LocalTime.of(7, 0),
 				LocalTime.of(21, 0),
 				"S14",
-				"Sala de Aula",
+				EspacoFisico.TipoDeEspaco.SALADEAULA,
 				equipamentos
 		);
 	}
@@ -180,7 +180,7 @@ public class Teste {
 				LocalTime.of(8, 0),
 				LocalTime.of(19, 0),
 				"S15",
-				"Sala de Aula",
+				EspacoFisico.TipoDeEspaco.SALADEAULA,
 				equipamentos
 		);
 	}
@@ -195,7 +195,7 @@ public class Teste {
 				LocalTime.of(9, 0),
 				LocalTime.of(18, 30),
 				"S16",
-				"Sala de Aula",
+				EspacoFisico.TipoDeEspaco.SALADEAULA,
 				equipamentos
 		);
 	}
@@ -210,7 +210,7 @@ public class Teste {
 				LocalTime.of(7, 30),
 				LocalTime.of(20, 30),
 				"S17",
-				"Sala de Aula",
+				EspacoFisico.TipoDeEspaco.SALADEAULA,
 				equipamentos
 		);
 	}
@@ -226,7 +226,7 @@ public class Teste {
 				LocalTime.of(8, 0),
 				LocalTime.of(17, 0),
 				"S18",
-				"Sala de Aula",
+				EspacoFisico.TipoDeEspaco.SALADEAULA,
 				equipamentos
 		);
 	}
@@ -242,7 +242,7 @@ public class Teste {
 				LocalTime.of(7, 0),
 				LocalTime.of(22, 0),
 				"S19",
-				"Sala de Aula",
+				EspacoFisico.TipoDeEspaco.SALADEAULA,
 				equipamentos
 		);
 	}
@@ -259,7 +259,7 @@ public class Teste {
 				inicio,          // horário inicial disponível
 				fim,             // horário final disponível
 				"I9",            // localização
-				"Laboratório",   // tipo
+				EspacoFisico.TipoDeEspaco.LABORATORIO,   // tipo
 				equipamentos     // equipamentos
 		);
 	}

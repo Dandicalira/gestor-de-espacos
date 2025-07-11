@@ -72,7 +72,7 @@ public class AgendamentoService {
 		sb.append("------------------------\n");
 
 		for (Agendamento agendamento : agendamentos) {
-			String tipo = agendamento.espaco().getTipo();
+			EspacoFisico.TipoDeEspaco tipo = agendamento.espaco().getTipo();
 			String localizacao = agendamento.espaco().getLocalizacao();
 			String inicio = agendamento.dataInicio().format(formatter);
 			String fim = agendamento.dataFim().format(formatter);

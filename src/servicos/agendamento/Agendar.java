@@ -33,7 +33,7 @@ public class Agendar {
 		List<EspacoFisico> espacos = getEspacosFisicos();
 
 		if (espaco == null || !espacos.contains(espaco)) {
-			throw new EspacoFisicoNaoExisteException();
+			throw new EntidadeInexistenteException("O espaço físico informado não existe");
 		}
 	}
 
@@ -41,7 +41,7 @@ public class Agendar {
 		List<Usuario> usuarios = getUsuarios();
 
 		if (usuario == null || !usuarios.contains(usuario)) {
-			throw new UsuarioNaoExisteException();
+			throw new EntidadeInexistenteException("O usuário informado não existe");
 		}
 	}
 

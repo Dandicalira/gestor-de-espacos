@@ -1,9 +1,6 @@
 package aplicacao;
 
-import entidades.Aluno;
-import servicos.cadastro.Registro;
 import servicos.persistencia.PersistenciaService;
-
 import static aplicacao.Teste.gerarAluno;
 
 public class Main {

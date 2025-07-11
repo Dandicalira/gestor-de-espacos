@@ -5,23 +5,24 @@ import servicos.agendamento.Agendamento;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Arrays;
 
 public class EspacoFisico {
 
 	//Atributos da Classe
 	private int capacidade;
-	private String localizacao,
-				   tipo; //Sala de Aula, Laboratório ou Sala de Estudos
+	private String localizacao; //Sala de Aula, Laboratório ou Sala de Estudos
 	private LocalTime horarioInicialDisponivel,
 				      horarioFinalDisponivel;
 	private Equipamento[] equipamentos;
 	private transient List<Agendamento> agendamentos = new ArrayList<>();
+	private TipoDeEspaco tipo;
 
 	//Métodos Construtores
 	public EspacoFisico() {}
 
-	public EspacoFisico(int capacidade, LocalTime horarioInicialDisponivel, LocalTime horarioFinalDisponivel, String localizacao, String tipo, Equipamento[] equipamentos) {
+	public EspacoFisico(int capacidade, LocalTime horarioInicialDisponivel, LocalTime horarioFinalDisponivel, String localizacao, TipoDeEspaco tipo, Equipamento[] equipamentos) {
 		this.capacidade = capacidade;
 		this.horarioInicialDisponivel = horarioInicialDisponivel;
 		this.horarioFinalDisponivel = horarioFinalDisponivel;
@@ -47,7 +48,7 @@ public class EspacoFisico {
 		return localizacao;
 	}
 	
-	public String getTipo() {
+	public TipoDeEspaco getTipo() {
 		return tipo;
 	}
 	
@@ -106,6 +107,14 @@ public class EspacoFisico {
 		espaco += "Equipamentos : " + Arrays.toString(equipamentos) + "\n";
 		espaco += "------------------------------------------------------------\n\n";
 		return espaco;
+	}
+	
+	public enum TipoDeEspaco {
+		SALADEAULA,
+		LABORATORIO,
+		SALADEESTUDOS;
+		
+		
 	}
 
 }
