@@ -250,8 +250,7 @@ public class Menu {
 
 		f.adicionarBotao("Equipamentos", "Cadastrar", () -> {
 			f.ocultar();
-			List<Equipamento> equipamentos = menuCadastrarEquipamento(f);
-			equipamentosRef.set(equipamentos); // Armazena os equipamentos
+			menuCadastrarEquipamento(f, equipamentosRef.get());
 		});
 
 		f.adicionarAcao("Voltar", () -> {
@@ -283,9 +282,8 @@ public class Menu {
 		f.mostrar();
 	}
 
-	private List<Equipamento> menuCadastrarEquipamento(Formulario anterior) {
+	private void menuCadastrarEquipamento(Formulario anterior, List<Equipamento> equipamentos) {
 		Formulario f = new Formulario("Cadastro de equipamento");
-		List<Equipamento> equipamentos = new ArrayList<>();
 
 		f.adicionarAcao("Voltar", () -> {
 			f.ocultar();
@@ -316,7 +314,6 @@ public class Menu {
 
 		f.mostrar();
 
-		return equipamentos;
 	}
 
 	private void validarEquipamento(Equipamento equipamento, List<Equipamento> equipamentos) {

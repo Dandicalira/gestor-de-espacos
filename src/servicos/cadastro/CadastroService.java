@@ -63,8 +63,9 @@ public class CadastroService {
 	
 		public static void cadastrarEspacoFisico(int capacidade, LocalTime horarioInicialDisponivel, LocalTime horarioFinalDisponivel,
 		                                         String localizacao, EspacoFisico.TipoDeEspaco tipo, List<Equipamento> equipamentos) {
+			localizacao = localizacao.toUpperCase().trim();
 			verificarCapacidade(capacidade);
-			verificarHorarioFuncionamento(horarioFinalDisponivel, horarioFinalDisponivel);
+			verificarHorarioFuncionamento(horarioInicialDisponivel, horarioFinalDisponivel);
 			Verificar.verificarLocalizacao(localizacao);
 
 			//Criação e Armazenamento do Objeto
