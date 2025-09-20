@@ -26,6 +26,7 @@ public class Formulario {
 	private final Set<String> camposObrigatorios = new HashSet<>();
 	private final JLabel mensagemAlerta = new JLabel();
 	private JDialog dialog;
+	private JFrame frameInvisivel;
 	private JPanel painelPrincipal;
 	private JPanel painelInferior;
 	private JPanel painelCompleto;
@@ -61,19 +62,28 @@ public class Formulario {
 	}
 
 	private void criarDialogo(String titulo) {
-		dialog = new JDialog((Frame) null, titulo, true);
+		criarFrameInvisivel();
+		dialog = new JDialog(frameInvisivel, titulo, true);
 		dialog.setContentPane(painelCompleto);
 		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-		// Encerrar a aplicação ao fechar a janela
+		// Quando o diálogo fechar, encerrar a aplicação
 		dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosed(java.awt.event.WindowEvent e) {
-				PersistenciaService.salvarDados();
+				frameInvisivel.dispose();
 				System.exit(0);
 			}
 		});
+	}
+
+	private void criarFrameInvisivel() {
+		frameInvisivel = new JFrame();
+		frameInvisivel.setUndecorated(true);
+		frameInvisivel.setSize(0, 0);
+		frameInvisivel.setLocationRelativeTo(null);
+		frameInvisivel.setOpacity(0f);
+		frameInvisivel.setVisible(true);
 	}
 
 	private void montarPainelCompleto() {
