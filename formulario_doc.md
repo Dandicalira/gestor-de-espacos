@@ -8,7 +8,7 @@ A classe `Formulario` fornece uma estrutura gráfica modular usando Swing (`JDia
 
 O título é opcional.
 
-```java
+```
 Formulario f = new Formulario("Título do Formulário");
 ```
 
@@ -18,7 +18,7 @@ Formulario f = new Formulario("Título do Formulário");
 
 Adiciona textos no topo do formulário.
 
-```java
+```
 f.adicionarTexto("Preencha os campos abaixo:");
 ```
 
@@ -28,27 +28,24 @@ f.adicionarTexto("Preencha os campos abaixo:");
 
 Adiciona campos de entrada de texto (inputs).
 
-```java
+```
 f.adicionarInput("Nome"); // simples
 f.adicionarInput("Email", true); // obrigatório
-f.adicionarInput("Horário", true, "HORARIO"); // com regex
-f.adicionarInput("ID", "ALGARISMOS"); // com regex, não obrigatório
+f.adicionarInput("Horário", "HORARIO"); // com regex
 ```
-
-### 🔎 Ler valor do input:
-
-```java
-String nome = f.resposta("Nome");
-```
-
----
 
 ## 🔒 `adicionarSenha(String texto)`
 
-Adiciona um campo de senha (com máscara oculta).
+Adiciona um campo de senha (obrigatório).
 
-```java
+```
 f.adicionarSenha("Senha");
+```
+
+### 🔎 Ler valor do input/senha:
+
+```
+String nome = f.resposta("Nome");
 ```
 
 ---
@@ -57,13 +54,13 @@ f.adicionarSenha("Senha");
 
 Adiciona um menu suspenso de seleção única.
 
-```java
+```
 f.adicionarDropdown("Curso", new String[]{"Engenharia", "Design", "Direito"});
 ```
 
 ### 🔍 Obter valor selecionado:
 
-```java
+```
 String curso = f.opcao("Curso");
 ```
 
@@ -73,13 +70,13 @@ String curso = f.opcao("Curso");
 
 Adiciona um grupo de botões de seleção única (radio buttons).
 
-```java
+```
 f.adicionarRadio("Turno", new String[]{"Manhã", "Tarde", "Noite"});
 ```
 
 ### 🔍 Obter valor selecionado:
 
-```java
+```
 String turno = f.selecao("Turno");
 ```
 
@@ -89,7 +86,7 @@ String turno = f.selecao("Turno");
 
 Adiciona um botão ao corpo do formulário. Se a `label` já existir, novos botões são agrupados na mesma linha.
 
-```java
+```
 f.adicionarBotao("Ações", "Salvar", () -> salvarDados());
 f.adicionarBotao("Ações", "Cancelar", f::ocultar);
 ```
@@ -98,43 +95,31 @@ f.adicionarBotao("Ações", "Cancelar", f::ocultar);
 
 ## 🖱️ `adicionarAcao(String texto, Runnable acao)`
 
-Adiciona um botão na parte inferior (painel de ações).
+Adiciona um botão no painel de ações.
 
-```java
+```
 f.adicionarAcao("Voltar", () -> voltarTelaAnterior());
 ```
 
 ---
 
-## ❌ `atualizarErro(String texto)`
+## ⚠️ `exibirAlerta(...)`
 
-Exibe uma mensagem de erro em vermelho. Se `texto` for nulo ou vazio, a mensagem é apagada.
+Exibe uma mensagem de alerta na parte inferior do formulário.
 
-```java
-f.atualizarErro("O campo Nome é obrigatório");
-f.atualizarErro(); // limpa erro
 ```
-
----
-
-## 🔵 `atualizarErro(String texto, Boolean azul)`
-
-Permite exibir mensagens em azul (informativas), se o parâmetro azul for `true`.
-
-Exibe a mensagem em preto caso o parâmetro seja `false`.
-
-```java
-f.atualizarErro("Cadastrado com sucesso!", true);
+f.exibirAlerta(); // limpa a mensagem de alerta
+f.exibirAlerta("Senha incorreta!"); // exibe o alerta em vermelho, por padrão
+f.exibirAlerta("Cadastro realizado com sucesso!", Color.BLUE); // exibe o alerta na cor desejada
 ```
-
 
 ---
 
 ## 📋 `copiarTexto(String texto)`
 
-Copia o texto informado para a área de transferência do sistema.
+Copia o texto informado para a área de transferência do sistema e exibe um alerta azul de confirmação.
 
-```java
+```
 f.copiarTexto("123456");
 ```
 
@@ -142,9 +127,9 @@ f.copiarTexto("123456");
 
 ## 💾 `salvarArquivo(String texto, String nomeArquivo)`
 
-Salva o conteúdo de `texto` em um arquivo dentro da pasta `saida/`.
+Salva o conteúdo de `texto` em um arquivo dentro da pasta `saida/` e exibe o feedback como alerta.
 
-```java
+```
 f.salvarArquivo("Dados importantes", "relatorio.txt");
 ```
 
@@ -154,14 +139,9 @@ f.salvarArquivo("Dados importantes", "relatorio.txt");
 
 Preenche o valor de um campo de texto.
 
-```java
-f.preencherInput("Nome", "João da Silva");
 ```
-
-Se quiser preencher o último campo adicionado:
-
-```java
-f.preencherInput("Valor padrão");
+f.preencherInput("Nome", "João da Silva"); // especifica um input
+f.preencherInput("Valor padrão"); // preenche o último campo adicionado
 ```
 
 ---
@@ -170,30 +150,30 @@ f.preencherInput("Valor padrão");
 
 Verifica se todos os campos obrigatórios foram preenchidos.
 
-```java
+```
 if (!f.valido()) return;
 ```
 
 ---
 
-## 👁️ Mostrar / 🔒 Ocultar formulário
+## 👁️ Visibilidade do formulário
 
-```java
+```
 f.mostrar();
 f.ocultar();
 ```
 
 ---
 
-## 📌 Exemplo
+## 📌 Exemplo Completo
 
-```java
+```
 Formulario f = new Formulario("Cadastro de Usuário");
 
 f.adicionarTexto("""
-	Bem-vindo ao sistema de cadastro.
-	Preencha os dados abaixo para criar seu perfil.
-	""");
+Bem-vindo ao sistema de cadastro.
+Preencha os dados abaixo para criar seu perfil.
+""");
 
 f.adicionarInput("Nome", true);
 f.adicionarInput("Email", true);
@@ -202,20 +182,18 @@ f.adicionarDropdown("Curso", new String[]{"Engenharia", "Medicina", "Arquitetura
 f.adicionarRadio("Turno", new String[]{"Manhã", "Tarde", "Noite"});
 
 f.adicionarAcao("Confirmar", () -> {
-	if (!f.valido()) return;
+if (!f.valido()) return;
 
     String nome = f.resposta("Nome");
     String email = f.resposta("Email");
     String curso = f.opcao("Curso");
     String turno = f.selecao("Turno");
-	
+
     System.out.printf("Usuário: %s | %s | %s (%s)\n", nome, email, curso, turno);
-    f.atualizarErro("Cadastro realizado com sucesso!", true);
+    f.exibirAlerta("Cadastro realizado com sucesso!", Color.BLUE);
 });
 
 f.adicionarAcao("Cancelar", f::ocultar);
 
 f.mostrar();
 ```
-
----

@@ -9,6 +9,7 @@ import servicos.cadastro.CadastroService;
 import servicos.cadastro.Registro;
 import servicos.persistencia.PersistenciaService;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -70,7 +71,7 @@ public class Menu {
 				f.ocultar();
 				menuAdmin(f);
 			} catch (Exception e) {
-				f.atualizarErro(e.getMessage());
+				f.exibirAlerta(e.getMessage());
 			}
 		});
 
@@ -122,7 +123,7 @@ public class Menu {
 					try {
 						listarAgendamentosUsuario(administrativo);
 					} catch (Exception e) {
-						f.atualizarErro(e.getMessage());
+						f.exibirAlerta(e.getMessage());
 					}
 				});
 
@@ -161,7 +162,7 @@ public class Menu {
 					try {
 						listarAgendamentosUsuario(professor);
 					} catch (Exception e) {
-						f.atualizarErro(e.getMessage());
+						f.exibirAlerta(e.getMessage());
 					}
 				});
 
@@ -200,7 +201,7 @@ public class Menu {
 					try {
 						listarAgendamentosUsuario(aluno);
 					} catch (Exception e) {
-						f.atualizarErro(e.getMessage());
+						f.exibirAlerta(e.getMessage());
 					}
 				});
 
@@ -275,7 +276,7 @@ public class Menu {
 
 				mostrarMensagem("Cadastro realizado com sucesso!");
 			} catch (Exception e) {
-				f.atualizarErro(e.getMessage());
+				f.exibirAlerta(e.getMessage());
 			}
 		});
 
@@ -299,9 +300,9 @@ public class Menu {
 				validarEquipamento(equipamento, equipamentos);
 
 				equipamentos.add(equipamento);
-				f.atualizarErro("Equipamento adicionado com sucesso!", true);
+				f.exibirAlerta("Equipamento adicionado com sucesso!", Color.BLUE);
 			} catch (Exception e) {
-				f.atualizarErro(e.getMessage());
+				f.exibirAlerta(e.getMessage());
 			}
 		});
 
@@ -401,7 +402,7 @@ public class Menu {
 				f.ocultar();
 				anterior.mostrar();
 			} catch (Exception e) {
-				f.atualizarErro(e.getMessage());
+				f.exibirAlerta(e.getMessage());
 			}
 		});
 
@@ -448,7 +449,7 @@ public class Menu {
 				f.ocultar();
 				anterior.mostrar();
 			} catch (Exception e) {
-				f.atualizarErro(e.getMessage());
+				f.exibirAlerta(e.getMessage());
 			}
 		});
 
@@ -503,7 +504,7 @@ public class Menu {
 				f.ocultar();
 				anterior.mostrar();
 			} catch (Exception e) {
-				f.atualizarErro(e.getMessage());
+				f.exibirAlerta(e.getMessage());
 			}
 		});
 
@@ -528,7 +529,7 @@ public class Menu {
 				f.ocultar();
 				menuUsuario(f);
 			} catch (Exception e) {
-				f.atualizarErro(e.getMessage());
+				f.exibirAlerta(e.getMessage());
 			}
 		});
 
@@ -607,7 +608,7 @@ public class Menu {
 					try {
 						imprimirAgendamentosEspaco(espaco, f);
 					} catch (Exception e) {
-						f.atualizarErro(e.getMessage());
+						f.exibirAlerta(e.getMessage());
 					}
 				});
 
@@ -649,7 +650,7 @@ public class Menu {
 	}
 
 	private void imprimirAgendamentosEspaco(EspacoFisico espaco, Formulario anterior) {
-		anterior.atualizarErro();
+		anterior.exibirAlerta();
 
 		String stringDataInicio = "";
 		String stringDataFim = "";
@@ -715,7 +716,7 @@ public class Menu {
 				anterior.mostrar();
 
 			} catch (Exception e) {
-				f.atualizarErro(e.getMessage());
+				f.exibirAlerta(e.getMessage());
 			}
 		});
 

@@ -24,36 +24,38 @@ public class Formulario {
 	private final Map<String, JPanel> mapaBotoes = new HashMap<>();
 	private final Map<String, ButtonGroup> mapaRadios = new HashMap<>();
 	private final Set<String> camposObrigatorios = new HashSet<>();
-	private final JLabel mensagemErro = new JLabel();
+	private final JLabel mensagemAlerta = new JLabel();
 	private JDialog dialog;
 	private JPanel painelPrincipal;
 	private JPanel painelInferior;
 	private JPanel painelCompleto;
-	private JPanel painelErro;
+	private JPanel painelAlerta;
 	private JPanel painelAcoes;
 	private JPanel painelTexto;
 
-	protected Formulario() {
+	private static final String TITULO_PADRAO = "Gestor de espaços";
+
+	public Formulario() {
 		montarFormulario();
-		criarDialogo("Gestor de espaços");
+		criarDialogo(TITULO_PADRAO);
 	}
 
-	protected Formulario(String titulo) {
+	public Formulario(String titulo) {
 		montarFormulario();
 		criarDialogo(titulo);
 	}
 
-	protected static void mostrarMensagem(String mensagem, String titulo) {
+	public static void mostrarMensagem(String mensagem, String titulo) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.PLAIN_MESSAGE);
 	}
 
-	protected static void mostrarMensagem(String mensagem) {
-		JOptionPane.showMessageDialog(null, mensagem, "Gestor de espaços", JOptionPane.PLAIN_MESSAGE);
+	public static void mostrarMensagem(String mensagem) {
+		JOptionPane.showMessageDialog(null, mensagem, TITULO_PADRAO, JOptionPane.PLAIN_MESSAGE);
 	}
 
 	private void montarFormulario() {
 		gerarPaineis();
-		configurarMensagemErro();
+		configurarMensagemAlerta();
 		montarPainelInferior();
 		montarPainelCompleto();
 	}
@@ -81,15 +83,15 @@ public class Formulario {
 	}
 
 	private void montarPainelInferior() {
-		painelInferior.add(painelErro, BorderLayout.CENTER);
+		painelInferior.add(painelAlerta, BorderLayout.CENTER);
 		painelInferior.add(painelAcoes, BorderLayout.SOUTH);
 	}
 
-	private void configurarMensagemErro() {
-		mensagemErro.setForeground(Color.RED);
-		painelErro.add(mensagemErro);
-		painelErro.setPreferredSize(new Dimension(0, 20));
-		painelErro.setVisible(true);
+	private void configurarMensagemAlerta() {
+		mensagemAlerta.setForeground(Color.RED);
+		painelAlerta.add(mensagemAlerta);
+		painelAlerta.setPreferredSize(new Dimension(0, 20));
+		painelAlerta.setVisible(true);
 	}
 
 	private void gerarPaineis() {
@@ -102,25 +104,25 @@ public class Formulario {
 		painelPrincipal = new JPanel(new GridLayout(0, 2));
 		painelPrincipal.setBorder(BorderFactory.createEmptyBorder(2, 2, 8, 2));
 
-		painelErro = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		painelErro.setPreferredSize(new Dimension(0, 30));
+		painelAlerta = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		painelAlerta.setPreferredSize(new Dimension(0, 30));
 
 		painelTexto = new JPanel();
 		painelTexto.setLayout(new BoxLayout(painelTexto, BoxLayout.Y_AXIS));
 		painelTexto.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 	}
 
-	protected void mostrar() {
+	public void mostrar() {
 		dialog.pack(); // ajusta o tamanho da janela
 		dialog.setLocationRelativeTo(null); // centraliza na tela
 		dialog.setVisible(true);
 	}
 
-	protected void ocultar() {
+	public void ocultar() {
 		dialog.setVisible(false);
 	}
 
-	protected String resposta(String input) {
+	public String resposta(String input) {
 		JTextField campo = mapaInputs.get(input);
 
 		if (campo == null) {
@@ -130,7 +132,7 @@ public class Formulario {
 		return campo.getText();
 	}
 
-	protected String opcao(String dropdown) {
+	public String opcao(String dropdown) {
 		JComboBox<String> opcoes = mapaDropdowns.get(dropdown);
 
 		if (opcoes == null) {
@@ -143,7 +145,7 @@ public class Formulario {
 		return selecionado.toString();
 	}
 
-	protected String selecao(String radio) {
+	public String selecao(String radio) {
 		ButtonGroup opcoes = mapaRadios.get(radio);
 
 		if (opcoes == null) {
@@ -159,7 +161,7 @@ public class Formulario {
 		throw new CampoVazioException();
 	}
 
-	protected void adicionarInput(String texto, boolean obrigatorio, String regex) {
+	public void adicionarInput(String texto, boolean obrigatorio, String regex) {
 		verificarInputValido(texto);
 
 		String labelTexto = texto + (obrigatorio ? "*" : "");
@@ -182,7 +184,7 @@ public class Formulario {
 		atualizar();
 	}
 
-	protected void adicionarSenha(String texto) {
+	public void adicionarSenha(String texto) {
 		verificarInputValido(texto);
 
 		String labelTexto = texto + "*";
@@ -198,19 +200,19 @@ public class Formulario {
 		atualizar();
 	}
 
-	protected void adicionarInput(String texto) {
+	public void adicionarInput(String texto) {
 		adicionarInput(texto, false, null);
 	}
 
-	protected void adicionarInput(String texto, boolean obrigatorio) {
+	public void adicionarInput(String texto, boolean obrigatorio) {
 		adicionarInput(texto, obrigatorio, null);
 	}
 
-	protected void adicionarInput(String texto, String regex) {
+	public void adicionarInput(String texto, String regex) {
 		adicionarInput(texto, false, regex);
 	}
 
-	protected void preencherInput(String input, String texto) {
+	public void preencherInput(String input, String texto) {
 		JTextField campo = mapaInputs.get(input);
 
 		if (campo != null) {
@@ -221,7 +223,7 @@ public class Formulario {
 		}
 	}
 
-	protected void preencherInput(String novoValor) {
+	public void preencherInput(String novoValor) {
 		if (mapaInputs.isEmpty()) return;
 
 		String ultimoInput = null;
@@ -234,7 +236,7 @@ public class Formulario {
 		}
 	}
 
-	protected void adicionarDropdown(String texto, String[] opcoes) {
+	public void adicionarDropdown(String texto, String[] opcoes) {
 		verificarDropdownValido(texto);
 
 		painelPrincipal.add(new JLabel(texto));
@@ -247,7 +249,7 @@ public class Formulario {
 		atualizar();
 	}
 
-	protected void adicionarRadio(String texto, String[] opcoes) {
+	public void adicionarRadio(String texto, String[] opcoes) {
 		if (mapaRadios.containsKey(texto)) {
 			throw new EntidadeDuplicadaException("Componente \"" + texto + "\" duplicado");
 		}
@@ -276,38 +278,43 @@ public class Formulario {
 	}
 
 
-	protected void adicionarTexto(String texto) {
+	public void adicionarTexto(String texto) {
 		for (String linha : texto.split("\n", -1)) {
 			JLabel componente = new JLabel(linha.isBlank() ? " " : linha);
 			painelTexto.add(componente);
 		}
 	}
 
-	protected void atualizarErro(String texto) {
-		mensagemErro.setForeground(Color.RED);
+	public void exibirAlerta(String texto) {
+		mensagemAlerta.setForeground(Color.RED);
 
 		if (texto == null || texto.isBlank()) {
-			mensagemErro.setText(" ");
+			mensagemAlerta.setText(" ");
 		} else {
-			mensagemErro.setText(texto);
+			mensagemAlerta.setText(texto);
 		}
 		atualizar();
 	}
 
-	protected void atualizarErro(String texto, Boolean azul) {
-		atualizarErro(texto);
+	public void exibirAlerta(String texto, Color cor) {
+		exibirAlerta(texto);
 
-		if (azul) mensagemErro.setForeground(Color.BLUE);
+		if (cor != null) mensagemAlerta.setForeground(cor);
 		atualizar();
 	}
 
-	protected void copiarTexto(String texto) {
-		StringSelection selecao = new StringSelection(texto);
-		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selecao, null);
-		atualizarErro("'" + texto + "' copiado para a área de transferência!", true);
+	public void exibirAlerta() {
+		mensagemAlerta.setText(" ");
+		atualizar();
 	}
 
-	protected void salvarArquivo(String texto, String nomeArquivo) {
+	public void copiarTexto(String texto) {
+		StringSelection selecao = new StringSelection(texto);
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selecao, null);
+		exibirAlerta("'" + texto + "' copiado para a área de transferência!", Color.BLUE);
+	}
+
+	public void salvarArquivo(String texto, String nomeArquivo) {
 		try {
 			Path pastaOutput = Paths.get("saida");
 			if (!Files.exists(pastaOutput)) {
@@ -317,19 +324,14 @@ public class Formulario {
 			Path caminhoCompleto = pastaOutput.resolve(nomeArquivo);
 			Files.writeString(caminhoCompleto, texto);
 
-			atualizarErro("Arquivo salvo com sucesso!", true);
+			exibirAlerta("Arquivo salvo com sucesso!", Color.BLUE);
 		} catch (IOException e) {
-			atualizarErro("Erro ao salvar arquivo.");
+			exibirAlerta("Erro ao salvar arquivo.");
 			System.out.println(e.getMessage());
 		}
 	}
 
-	protected void atualizarErro() {
-		mensagemErro.setText(" ");
-		atualizar();
-	}
-
-	protected void adicionarBotao(String texto, String textoBotao, Runnable acao) {
+	public void adicionarBotao(String texto, String textoBotao, Runnable acao) {
 		if (texto == null) {
 			texto = "";
 		}
@@ -351,8 +353,7 @@ public class Formulario {
 		atualizar();
 	}
 
-
-	protected void adicionarAcao(String texto, Runnable acao) {
+	public void adicionarAcao(String texto, Runnable acao) {
 		JButton botao = new JButton(texto);
 		botao.addActionListener(e -> acao.run());
 		painelAcoes.add(botao);
@@ -360,15 +361,15 @@ public class Formulario {
 		atualizar();
 	}
 
-	protected boolean valido() {
+	public boolean valido() {
 		for (String campo : camposObrigatorios) {
 			String valor = resposta(campo);
 			if (valor == null || valor.isBlank()) {
-				atualizarErro("O campo \"" + campo + "\" é obrigatório.");
+				exibirAlerta("O campo \"" + campo + "\" é obrigatório.");
 				return false;
 			}
 		}
-		atualizarErro(null);
+		exibirAlerta(null);
 		return true;
 	}
 
